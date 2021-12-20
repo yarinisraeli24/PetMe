@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+.card{
+  position: absolute;
+  display: grid;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%,-50%);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
