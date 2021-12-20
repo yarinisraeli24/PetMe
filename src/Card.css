@@ -1,0 +1,16 @@
+.swiper{
+    grid-row: 1;
+    grid-column: 1;
+}
+.content {
+    height: 750px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    align-content: flex-end;
+}
+
+.content-fade{
+    background: linear-gradient(transparent 0%, white 100%);
+}
