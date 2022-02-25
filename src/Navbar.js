@@ -15,6 +15,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+
 import './App.css';
 
 const Search = styled('div')(({ theme }) => ({
@@ -195,6 +197,12 @@ export default function PrimarySearchAppBar() {
               <MoreIcon />
             </IconButton>
           </Box>
+          <Button color="inherit"
+            onClick={() => {
+              //implement onclick ...
+              alert('clicked');
+            }}>
+            Login</Button>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
