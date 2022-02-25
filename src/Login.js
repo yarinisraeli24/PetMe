@@ -12,12 +12,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {useNavigate} from 'react-router-dom';
 
 function Copyright(props) {
+  const navigate = useNavigate()
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" onClick={()=> navigate('/')}>
         PetMe
       </Link>{' '}
       {new Date().getFullYear()}
@@ -28,7 +30,8 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function Login() {
+  const navigate = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -55,7 +58,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+          Login
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -88,25 +91,17 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Login
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2"             
-                  onClick={() => {
-                  //implement onclick ...
-                  alert('clicked');
-                }}>
+                <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2"             
-                  onClick={() => {
-                  //implement onclick ...
-                  alert('clicked');
-                }}>
-                  {"Don't have an account? Sign Up"}
+                <Link onClick={()=> navigate('/user/register')} variant="body2">
+                  Don't have an account? Register
                 </Link>
               </Grid>
             </Grid>

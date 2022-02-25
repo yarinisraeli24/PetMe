@@ -16,6 +16,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
+import {useNavigate} from 'react-router-dom';
+import Login from './Login';
 
 import './App.css';
 
@@ -62,6 +64,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const navigate = useNavigate()
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -197,12 +201,7 @@ export default function PrimarySearchAppBar() {
               <MoreIcon />
             </IconButton>
           </Box>
-          <Button color="inherit"
-            onClick={() => {
-              //implement onclick ...
-              alert('clicked');
-            }}>
-            Login</Button>
+          <Button color="inherit" onClick={()=> navigate('/user/login')}>Login</Button>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
