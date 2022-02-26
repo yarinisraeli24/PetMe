@@ -1,21 +1,30 @@
-const jwt = require('jsonwebtoken');
 const config = require('../config');
-
+const User = require('../models/users')
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
 
-module.exports = (req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, config.JWT_SECRET);
-    const userId = decodedToken.userId;
-    if (req.body.userId && req.body.userId !== userId) {
-      throw 'Invalid user ID';
-    } else {
-      next();
-    }
-  } catch {
-    res.status(401).json({
-      error: new Error('Invalid request!')
-    });
+module.exports = async (req, res, next) => {
+  const {body: { 
+    username, 
+    password
+  }} = req;
+
+  if(!username || !password) 
+    return res.status(401).send("1 No such username or password")
+
+  try{ 
+    const user = await User.findOne({'username': username})
+    if (!username)
+      return res.status(401).send("2 No such username or password")
+
+    const match = await bcrypt.compare(password, user.password);
+    if(!match) 
+    return res.status(401).send("No such username or password")
+    
+    const token = jwt.sign(user.data, config.JWT_SECRET);
+    res.send(token);
+    
+  } catch (error) {
+    res.send("Error:", error)
   }
 };

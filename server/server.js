@@ -1,15 +1,18 @@
 const express = require('express')
 const app = express();
-const port = 3000;
 const jwt = require('jsonwebtoken');
 const authorize = require('./middlewares/authorization')
-const dotenv = require("dotenv").config();
+const env = require("dotenv").config();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const users = require('./routes/user')
 const config = require('./config');
+const cors = require('cors');
+const port = 5000;
 
-
+app.use(cors({
+    origin: 'http://localhost:3000/'
+}));
 
 app.use(bodyParser.urlencoded({extended:true, limit: '1mb'}));
 app.use(bodyParser.json());

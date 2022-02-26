@@ -13,7 +13,6 @@ import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   const images = ['https://thediscerningcat.com/wp-content/uploads/2021/09/british-short-hair-chincilla-up-close.jpg.webp','https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=980:*']
-  console.log('rendered')
   return (
     <div className="App"> 
       <Router>

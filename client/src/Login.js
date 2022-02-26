@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,15 +33,29 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate()
-  const handleSubmit = (event) => {
+
+  const encryptPassword = async (password) => {
+    const salt = await bcrypt.genSalt(10);
+    const encryptedPassword = await bcrypt.hash(password, salt);
+    return encryptedPassword;
+}
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const encryptedPassword = await encryptPassword
+    (password);
+    const data = {username, password};
+    const token = await axios.post('/users/login', data);
+    console.log(token);
+    if (!token) {
+      console.log("blat")
+      return
+    }
+
+    localStorage.setItem('token', token.data);
   };
 
   return (
@@ -70,6 +86,9 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(event) => {
+                setUsername(event.target.value)
+              }}
             />
             <TextField
               margin="normal"
@@ -80,6 +99,9 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(event) => {
+                setPassword(event.target.value)
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
