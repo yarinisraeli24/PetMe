@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import bcrypt from 'bcryptjs';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -40,23 +39,16 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
 
-  const encryptPassword = async (password) => {
-      const salt = await bcrypt.genSalt(10);
-      const encryptedPassword = await bcrypt.hash(password, salt);
-      return encryptedPassword;
-  }
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const encryptedPassword = await encryptPassword
-    (password);
     
-    const userData = {
+    const payload = {
       firstName,
       lastName,
-      email,
-      password: encryptedPassword,
+      username: email,
+      password,
     } 
-    await axios.post('/users/register/member', userData);
+    await axios.post('/users/register/member', payload);
   };
 
   return (

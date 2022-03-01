@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import bcrypt from 'bcryptjs';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,25 +36,17 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
 
-  const encryptPassword = async (password) => {
-    const salt = await bcrypt.genSalt(10);
-    const encryptedPassword = await bcrypt.hash(password, salt);
-    return encryptedPassword;
-}
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const encryptedPassword = await encryptPassword
-    (password);
-    const data = {username, password};
-    const token = await axios.post('/users/login', data);
-    console.log(token);
+    const payload = { username, password };
+    const token = await axios.post('/users/login', payload);
+
     if (!token) {
-      console.log("blat")
       return
     }
-
     localStorage.setItem('token', token.data);
+    navigate('/users/swipes')
   };
 
   return (

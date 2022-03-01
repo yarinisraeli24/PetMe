@@ -19,7 +19,7 @@ import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
 import Login from './Login';
 
-import './App.css';
+import '../App.css';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

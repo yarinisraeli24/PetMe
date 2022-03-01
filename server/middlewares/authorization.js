@@ -8,7 +8,7 @@ module.exports = (credentials = []) => {
 
         const token = req.headers.authorization;
         if(!token) {
-            return res.status(401).send('Unauthorized: access denied');
+            return res.redirect('/login');
         }
 
         jwt.verify(token, config.JWT_SECRET, (error, decoded) => {

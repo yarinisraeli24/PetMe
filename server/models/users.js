@@ -10,10 +10,6 @@ const usersScheme = new mongoose.Schema({
         type: String,
         required: true
     },
-    id:{
-        type: String,
-        required: true
-    },
     data: {
         type: Object,
         required: true
