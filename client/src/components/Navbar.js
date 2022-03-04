@@ -157,7 +157,7 @@ export default function PrimarySearchAppBar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            sx={{cursor:'pointer', display: { xs: 'none', sm: 'block' } }}
           >
             PetMe
           </Typography>
