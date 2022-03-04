@@ -202,6 +202,7 @@ export default function PrimarySearchAppBar() {
             </IconButton>
           </Box>
           <Button color="inherit" onClick={()=> navigate('/user/login')}>Login</Button>
+          <Button color="inherit" onClick={()=> navigate('/preferences')}>Preferences</Button>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

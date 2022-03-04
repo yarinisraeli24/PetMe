@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import RecipeReviewCard from './components/Card'
 import './App.css';
 import Login from './components/Login';
+import Preferences from './components/Preferences';
 import Register from './components/Register';
 import Home from './components/Home';
 import { BrowserRouter as Router,Routes, Route,Navigate } from 'react-router-dom';
@@ -21,6 +22,7 @@ function App() {
       <Routes>
           <Route exact path='/' element={<Home />}></Route>
           <Route exact path='/login' element={<Login />}></Route>
+          <Route exact path='/Preferences' element={<Preferences />}></Route>
           <Route exact path='/register' element={<Register />}></Route>
           <Route path="/users/" element={<PrivateRoute />}>
             <Route path="swipes" element={<RecipeReviewCard image={images} zIndex={5}/>} />
