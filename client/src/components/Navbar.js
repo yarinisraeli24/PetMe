@@ -195,9 +195,6 @@ export default function PrimarySearchAppBar() {
             </IconButton>
           </Box>
 
-    
-          <Button color="inherit" onClick={()=> navigate('/preferences')}>Preferences</Button>
-
           {isLoggedIn ?
            <Button color="inherit" onClick={onLogOut}>Login Out</Button> :
           <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }

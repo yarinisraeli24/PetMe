@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
     }
     const data = {id: user._id, ...user.data}
     const token = jwt.sign(data, config.JWT_SECRET, {expiresIn: "2h",});
-    res.send(token);
+    res.send({token, data});
     
   } catch (error) {
     res.send("Error:", error)

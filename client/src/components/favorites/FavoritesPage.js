@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState} from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,18 +6,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Avatar from '@mui/material/Avatar';
+import { UserDataContext } from "../../contexts/UserDataContext";
+import axios from "axios";
 
 const FavoritesPage = () => {
+    const { id } = useContext(UserDataContext)
+    const [favoritePets, setFavoritePets] = useState([])
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
+    useEffect(()=>{
+        const getUserFavoritePets = async (userId) => {
+            const response = await axios.post('/users/getFavoritePets', {userId})
+            setFavoritePets(response.data)
+        }
+        getUserFavoritePets(id);
+    }, [])
 
-    const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-      ];
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="caption table">
@@ -32,15 +36,18 @@ function createData(name, calories, fat, carbs, protein) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {rows.map((row) => (
-                <TableRow key={row.name}>
+                {favoritePets.map((pet) => (
+                <TableRow key={pet.name}>
                     <TableCell component="th" scope="row">
-                    {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <Avatar
+                        alt="Remy Sharp"
+                        src={pet.media[0]}
+                        sx={{ width: 56, height: 56 }}
+                        /></TableCell>
+                    <TableCell align="right">{pet.name}</TableCell>
+                    <TableCell align="right">{pet.association}</TableCell>
+                    <TableCell align="right">{pet.age}</TableCell>
+                    <TableCell align="right">{pet.petKind}</TableCell>
                 </TableRow>
                 ))}
             </TableBody>

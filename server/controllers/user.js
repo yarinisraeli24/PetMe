@@ -1,8 +1,11 @@
 
 const User = require('../models/users')
+const Pet = require('../models/pets')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
 const bcrypt = require('bcryptjs')
+const { mongo } = require('mongoose')
+
 
 const login = async (req, res, next) => {
     res.send(token);
@@ -41,8 +44,35 @@ const register = async (req, res, next) => {
     return res.status(200).send('')
     
 }
+const addPet = async (req, res, next) => {
+    const { body } = req;
+    if(!body.userId || !body.petId){
+        res.status(400).send('No such user or pet')
+    }
+    const filter = {_id: mongo.ObjectId(body.userId)}
+    const update = {pets: body.petId}
+    const user = await User.findOneAndUpdate(filter, {$push: update})
 
+    if(!user){
+        res.status(400).send('Failed on add pet')
+    }
+    res.status(200).send('Success')
+}
+const getFavoritePets = async (req, res, next) => {
+    const { body } = req;
+    if(!body.userId){
+        res.status(400).send('No such user or pet')
+    }
+    const user = await User.findOne({_id: body.userId})
+    if(!user){
+        res.status(400).send('Cant find userId')
+    }
+    const userFavoritePets = await Pet.find({_id: user.pets})
+    res.send(userFavoritePets)
+}
 module.exports = {
     login,
-    register
+    register,
+    addPet,
+    getFavoritePets,
 }

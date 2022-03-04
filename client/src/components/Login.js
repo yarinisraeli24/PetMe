@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
+import { UserDataContext } from '../contexts/UserDataContext';
 
 function Copyright(props) {
   const navigate = useNavigate()
@@ -35,17 +36,20 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
-
+  const { setToken, setData } = useContext(UserDataContext)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const payload = { username, password };
-    const token = await axios.post('/users/login', payload);
+    const response = await axios.post('/users/login', payload);
+    const {token, data} = response.data;
 
     if (!token) {
       return
     }
-    localStorage.setItem('token', token.data);
+    setToken(token);
+    setData(data);
+    localStorage.setItem('token', token);
     navigate('/users/swipes')
   };
 

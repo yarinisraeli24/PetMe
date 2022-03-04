@@ -6,4 +6,8 @@ const authorization = require('../middlewares/authorization');
 
 router.post('/register/member' , User.register)
 router.post('/login', authenticate, User.login);
+router.post('/addPet', User.addPet);
+router.post('/getFavoritePets', User.getFavoritePets);
+
+
 module.exports = router;
