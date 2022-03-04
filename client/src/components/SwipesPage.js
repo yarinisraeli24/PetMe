@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CardSwiper } from "react-card-rotate-swiper";
 
 import './Card.css'
+import axios from 'axios';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,39 +28,22 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function SwipesPage(props) {
+
   const [expanded, setExpanded] = useState(false);
   const [showMore,setShowMore] = useState(false);
+  const [pets, setPets] = useState([]);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  const items =  [
-    {
-      image: "https://thediscerningcat.com/wp-content/uploads/2021/09/british-short-hair-chincilla-up-close.jpg.webp",
-      zIndex: 5,
-      description: `This impressive paella is a perfect party dish and a fun meal to cook
-      together with your guests. Add 1 cup of frozen peas along with the mussels,
-      if you like.`,
-      moreInfo: `Add rice and stir very gently to distribute. Top with artichokes and
-      peppers, and cook without stirring, until most of the liquid is absorbed,
-      15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-      mussels, tucking them down into the rice, and cook again without
-      stirring, until mussels have opened and rice is just tender, 5 to 7
-      minutes more. (Discard any mussels that don’t open.)`
-    },
-    {
-      image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=980:*',
-      zIndex: 4,
-      description: `This impressive paella is a perfect party dish and a fun meal to cook
-      together with your guests. Add 1 cup of frozen peas along with the mussels,
-      if you like.`,
-      moreInfo: `Add rice and stir very gently to distribute. Top with artichokes and
-      peppers, and cook without stirring, until most of the liquid is absorbed,
-      15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-      mussels, tucking them down into the rice, and cook again without
-      stirring, until mussels have opened and rice is just tender, 5 to 7
-      minutes more. (Discard any mussels that don’t open.)`
-    }]
+  
+  useEffect(()=> {
+    const getAllPets = async () => {
+      const response = await axios.get('/pets/getAllPets');
+      setPets(response.data);
+      console.log(response.data)
+    }
+    getAllPets();
+   }, []);
 
     const addToFavorites = (item) => {
       console.log('added')
@@ -75,24 +59,25 @@ export default function SwipesPage(props) {
       }
     }
 
-    const pets = items.map( item =>  
-      <CardSwiper onSwipe={(direction) => handleSwipe(direction, item)} className="swiper" contents={
-        <Card sx={{background: `url(${item.image}) no-repeat center center`,backgroundSize: 'cover', maxWidth: 800, height: 750, zIndex: item.zIndex}}>
+    const PetCards = <div className='swiperContainer'>
+      {pets.map((pet, index) =>
+      <CardSwiper onSwipe={(direction) => handleSwipe(direction, pet)} className="swiper"  contents={
+        <Card sx={{background: `url(${pet.media[0]}) no-repeat center center`,backgroundSize: 'cover', maxWidth: 800, height: 750}}>
           <div className="content">
             <div className="content-fade">
           <CardHeader
-            title="Shrimp and Chorizo Paella"
+            title={pet.name}
           />
           <CardContent>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography paragraph>
-                {item.moreInfo}
+                {pet.moreInfo}
               </Typography>
             </CardContent>
           </Collapse>
             <Typography variant="body2" color="text.secondary">
-              {item.description}
+              {pet.description}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
@@ -114,8 +99,9 @@ export default function SwipesPage(props) {
           </div>
           </div>
         </Card>
-        }/>
-    )
+        }/>  
+      )} 
+    </div>
 
-  return pets
+  return PetCards
 }

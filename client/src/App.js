@@ -22,10 +22,11 @@ function App() {
       <Router>
       <Navbar />
       <Routes>
-          <Route exact path='/' element={<Home />}></Route>
           <Route path="" element={<ProtectedRoute />}>
             <Route exact path='/login' element={<Login />}></Route>
             <Route exact path='/register' element={<Register />}></Route>
+            <Route exact path='/' element={<Home />}></Route>
+
           </Route>
 
           <Route path="/users/" element={<PrivateRoute />}>

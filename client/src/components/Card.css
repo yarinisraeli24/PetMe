@@ -1,6 +1,9 @@
 .swiper{
     grid-row: 1;
     grid-column: 1;
+    display: block;
+    width: 100%;
+    position: absolute;
 }
 .content {
     height: 750px;
