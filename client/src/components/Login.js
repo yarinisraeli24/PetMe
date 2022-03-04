@@ -113,7 +113,7 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link onClick={()=> navigate('/user/register')} variant="body2">
+                <Link onClick={()=> navigate('/register')} variant="body2">
                   Don't have an account? Register
                 </Link>
               </Grid>

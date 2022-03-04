@@ -18,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
 import Login from './Login';
+import { getToken } from '../common/utils';
 
 import '../App.css';
 
@@ -62,9 +63,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  const token = getToken();
+  const isLoggedIn = !!token;
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const navigate = useNavigate()
 
   const isMenuOpen = Boolean(anchorEl);
@@ -87,6 +90,10 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const onLogOut = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -104,8 +111,8 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem color="inherit" onClick={onLogOut}>Login Out</MenuItem>
     </Menu>
   );
 
@@ -144,7 +151,6 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -201,7 +207,9 @@ export default function PrimarySearchAppBar() {
               <MoreIcon />
             </IconButton>
           </Box>
-          <Button color="inherit" onClick={()=> navigate('/user/login')}>Login</Button>
+          {isLoggedIn ?
+           <Button color="inherit" onClick={onLogOut}>Login Out</Button> :
+          <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
