@@ -24,7 +24,6 @@ const register = async (req, res, next) => {
         return res.status(409).send("Username Already Exist.")
     }
     const encryptedPassword = await bcrypt.hash(password, 10);
-
     const data = {
         createdData: new Date(),
         firstName,
@@ -38,9 +37,9 @@ const register = async (req, res, next) => {
         password: encryptedPassword,
         data
     })
-
     user.save()
-    res.status(200)
+    return res.status(200).send('')
+    
 }
 
 module.exports = {

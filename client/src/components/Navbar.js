@@ -18,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
 import Login from './Login';
+import { getToken } from '../common/utils';
 
 import '../App.css';
 
@@ -62,17 +63,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  const token = getToken();
+  const isLoggedIn = !!token;
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const navigate = useNavigate()
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -87,6 +87,10 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const onLogOut = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -104,8 +108,8 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem color="inherit" onClick={onLogOut}>Login Out</MenuItem>
     </Menu>
   );
 
@@ -132,9 +136,6 @@ export default function PrimarySearchAppBar() {
             <FavoriteIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -144,7 +145,6 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -153,15 +153,6 @@ export default function PrimarySearchAppBar() {
     <Box className="navbar-container" sx={{ flexGrow: 1 }}>
       <AppBar className="navbar-container" position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -170,6 +161,9 @@ export default function PrimarySearchAppBar() {
           >
             PetMe
           </Typography>
+          <Button color="inherit" sx={{ marginLeft: 2 }}>Swipes</Button>
+          <Button color="inherit">About us</Button>
+          <Button color="inherit">Associations</Button>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -183,7 +177,6 @@ export default function PrimarySearchAppBar() {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
               color="inherit"
             >
               <AccountCircle />
@@ -201,8 +194,14 @@ export default function PrimarySearchAppBar() {
               <MoreIcon />
             </IconButton>
           </Box>
-          <Button color="inherit" onClick={()=> navigate('/user/login')}>Login</Button>
+
+    
           <Button color="inherit" onClick={()=> navigate('/preferences')}>Preferences</Button>
+
+          {isLoggedIn ?
+           <Button color="inherit" onClick={onLogOut}>Login Out</Button> :
+          <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
+
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
