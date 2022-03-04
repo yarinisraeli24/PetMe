@@ -25,4 +25,5 @@ module.exports = async (req, res, next) => {
   } catch (error) {
     res.send("Error:", error)
   }
+  next()
 };

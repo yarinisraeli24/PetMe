@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
 
@@ -38,18 +39,28 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
+  const [didSubmit, setDidSubmit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('')
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+    setDidSubmit(true);
     const payload = {
       firstName,
       lastName,
       username: email,
       password,
-    } 
-    await axios.post('/users/register/member', payload);
-  };
+    }
+      axios.post('/users/register/member', payload)
+      .then(() => navigate('/login'))
+      .catch((error) => {
+        if (error.response) {
+          setErrorMessage(error.response.data);
+        }
+      });
+    
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -72,6 +83,9 @@ export default function SignUp() {
           <Box component="form" noValidate onSubmit={handleSubmit} 
           sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+            <Grid item xs={12}>
+                {errorMessage && <Alert variant="filled" severity="error">{errorMessage}</Alert>}
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -84,6 +98,7 @@ export default function SignUp() {
                   onChange={(event) => {
                     setFirstName(event.target.value)
                   }}
+                  error={didSubmit && !firstName}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -97,6 +112,7 @@ export default function SignUp() {
                   onChange={(event) => {
                     setLastName(event.target.value)
                   }}
+                  error={didSubmit && !lastName}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -110,6 +126,7 @@ export default function SignUp() {
                   onChange={(event) => {
                     setEmail(event.target.value)
                   }}
+                  error={didSubmit && !email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -124,6 +141,7 @@ export default function SignUp() {
                   onChange={(event) => {
                     setPassword(event.target.value)
                   }}
+                  error={didSubmit && !password}
                 />
               </Grid>
               <Grid item xs={12}>
