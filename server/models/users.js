@@ -13,7 +13,12 @@ const usersScheme = new mongoose.Schema({
     data: {
         type: Object,
         required: true
-    }
+    },
+    pets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pet',
+
+    }]
 
 })
 module.exports = mongoose.model('User',usersScheme)

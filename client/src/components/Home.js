@@ -7,6 +7,7 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 
 import './Home.css'
+import { useNavigate } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -22,6 +23,7 @@ function Copyright() {
 }
 
 export default function StickyFooter() {
+  const navigate = useNavigate();
   return (
     <Box className='home'
       sx={{
@@ -38,7 +40,7 @@ export default function StickyFooter() {
         <Typography variant="h5" component="h2" gutterBottom>
           {'give home and get your favorite pet.'}
         </Typography>
-        <Button variant="outlined">Start Here</Button>
+        <Button variant="outlined" onClick={() => navigate('/login')}>Start Here</Button>
       </Container>
       <Box
         component="footer"
