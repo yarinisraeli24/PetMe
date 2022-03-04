@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import SwipesPage from './components/SwipesPage'
 import './App.css';
 import Login from './components/Login';
+import Preferences from './components/Preferences';
 import Register from './components/Register';
 import Home from './components/Home';
 import { BrowserRouter as Router,Routes, Route,Navigate } from 'react-router-dom';
@@ -25,7 +26,9 @@ function App() {
           <Route path="" element={<ProtectedRoute />}>
             <Route exact path='/login' element={<Login />}></Route>
             <Route exact path='/register' element={<Register />}></Route>
+            <Route exact path='/Preferences' element={<Preferences />}></Route>
           </Route>
+
           <Route path="/users/" element={<PrivateRoute />}>
             <Route path="swipes" element={<SwipesPage image={images} zIndex={5}/>} />
             <Route path="favorites" element={<FavoritesPage image={images} zIndex={5}/>} />

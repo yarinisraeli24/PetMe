@@ -20,7 +20,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" onClick={()=> navigate('/')}>
+      <Link color="inherit" sx={{cursor:'pointer'}} onClick={()=> navigate('/')}>
         PetMe
       </Link>{' '}
       {new Date().getFullYear()}
@@ -113,7 +113,7 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link onClick={()=> navigate('/register')} variant="body2">
+                <Link onClick={()=> navigate('/register')} sx={{cursor:'pointer'}} variant="body2">
                   Don't have an account? Register
                 </Link>
               </Grid>

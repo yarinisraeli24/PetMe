@@ -157,7 +157,7 @@ export default function PrimarySearchAppBar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            sx={{cursor:'pointer', display: { xs: 'none', sm: 'block' } }}
           >
             PetMe
           </Typography>
@@ -194,9 +194,14 @@ export default function PrimarySearchAppBar() {
               <MoreIcon />
             </IconButton>
           </Box>
+
+    
+          <Button color="inherit" onClick={()=> navigate('/preferences')}>Preferences</Button>
+
           {isLoggedIn ?
            <Button color="inherit" onClick={onLogOut}>Login Out</Button> :
           <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
+
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
