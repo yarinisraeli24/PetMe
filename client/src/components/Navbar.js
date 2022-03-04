@@ -161,12 +161,12 @@ export default function PrimarySearchAppBar() {
           >
             PetMe
           </Typography>
-          <Button color="inherit" sx={{ marginLeft: 2 }}>Swipes</Button>
-          <Button color="inherit">About us</Button>
-          <Button color="inherit">Associations</Button>
+          <Button color="inherit" sx={{ marginLeft: 2 }} onClick={() => navigate('/users/swipes')}>Swipes</Button>
+          <Button color="inherit" onClick={() => navigate('/about')}>About us</Button>
+          <Button color="inherit" onClick={() => navigate('/associations')}>Associations</Button>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={() => navigate('/users/favorites')}>
               <Badge badgeContent={4} color="error">
                 <FavoriteIcon />
               </Badge>

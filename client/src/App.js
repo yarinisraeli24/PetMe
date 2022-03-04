@@ -1,7 +1,7 @@
 
 import React , {useState, useEffect} from 'react';
 import Navbar from './components/Navbar';
-import RecipeReviewCard from './components/Card'
+import SwipesPage from './components/SwipesPage'
 import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -10,6 +10,7 @@ import { BrowserRouter as Router,Routes, Route,Navigate } from 'react-router-dom
 import { getToken } from './common/utils';
 import PrivateRoute from './components/routes/PrivateRoute';
 import ProtectedRoute from './components/routes/ProtectedRoute';
+import FavoritesPage from './components/favorites/FavoritesPage';
 
 
 
@@ -26,7 +27,8 @@ function App() {
             <Route exact path='/register' element={<Register />}></Route>
           </Route>
           <Route path="/users/" element={<PrivateRoute />}>
-            <Route path="swipes" element={<RecipeReviewCard image={images} zIndex={5}/>} />
+            <Route path="swipes" element={<SwipesPage image={images} zIndex={5}/>} />
+            <Route path="favorites" element={<FavoritesPage image={images} zIndex={5}/>} />
           </Route>
           <Route path="/AdminPannel/" element={<PrivateRoute />}>
           </Route>
