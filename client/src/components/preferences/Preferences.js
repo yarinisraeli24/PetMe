@@ -9,13 +9,14 @@ import PersonalSettings from './PersonalSettings';
 import PetSettings from './PetSettings';
 import AdditionalInfo from './AdditionalInfo';
 import { Container } from '@mui/material';
+import { getToken } from '../../common/utils';
 
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
 export default function HorizontalNonLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
-
+  const token = getToken();
   const totalSteps = () => {
     return steps.length;
   };
@@ -54,6 +55,10 @@ export default function HorizontalNonLinearStepper() {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
+    if(completedSteps() === totalSteps()){
+     localStorage.setItem('doneWizard_' + token, 'true')
+     window.location.reload();
+    }
     handleNext();
   };
 

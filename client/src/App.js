@@ -1,6 +1,6 @@
 
 import React , {useState} from 'react';
-import Navbar from './components/Navbar';
+import NavBarMenu from './components/NavBarMenu';
 import SwipesPage from './components/SwipingPage'
 import './App.css';
 import Login from './components/Login';
@@ -21,7 +21,7 @@ function App() {
     <UserDataProvider>
       <div className="App"> 
         <Router>
-        <Navbar />
+        <NavBarMenu />
         <Routes>
             <Route path="" element={<ProtectedRoute />}>
               <Route exact path='/login' element={<Login />}></Route>

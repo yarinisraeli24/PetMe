@@ -1,0 +1,8 @@
+.menu{ 
+    width: 240px;
+}
+
+.listItem{
+    display: flex;
+    justify-content: space-between;
+}

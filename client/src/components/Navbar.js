@@ -198,7 +198,6 @@ export default function PrimarySearchAppBar() {
           {isLoggedIn ?
            <Button color="inherit" onClick={onLogOut}>Login Out</Button> :
           <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
-
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
@@ -206,3 +205,5 @@ export default function PrimarySearchAppBar() {
     </Box>
   );
 }
+
+

@@ -10,6 +10,9 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import InfoIcon from '@mui/icons-material/Info';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
 
 
@@ -68,7 +71,7 @@ export default function HorizontalNonLinearStepper() {
             onChange={(event) => {
             }}
           />
-          <FormControl>
+          {/* <FormControl>
           <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
           <RadioGroup
               row
@@ -99,8 +102,39 @@ export default function HorizontalNonLinearStepper() {
               <FormControlLabel value="kids" control={<Radio />} label="I have kids" />
               <FormControlLabel value="noKids" control={<Radio />} label="I don't have kids" />
           </RadioGroup>
-          </FormControl>
+          </FormControl> */}
         </Box>
+        <Box>
+            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '20px'}}>
+            <FormControl fullWidth>
+            <InputLabel id="gender-simple-select-label">Gender</InputLabel>
+            <Select
+              labelId="gender-simple-select-label"
+              id="demo-simple-select"
+              value={''}
+              label="Gender"
+              onChange={(selected)=>(selected.target.value)}
+            >
+              <MenuItem value={'male'}>Male</MenuItem>
+              <MenuItem value={'female'}>Female</MenuItem>
+            </Select>
+            </FormControl>
+            <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Family Status</InputLabel>
+          <Select
+              labelId="status-simple-select-label"
+              id="status-simple-select"
+              value={''}
+              label="Family Status"
+              onChange={(selected)=>{}}
+          >
+              <MenuItem value="single">Single</MenuItem>
+              <MenuItem value="married">Married</MenuItem>
+              <MenuItem value="relationship">In Relationship</MenuItem>
+          </Select>
+            </FormControl>
+            </div>
+          </Box>
       </Box>
     </Container>
   );
