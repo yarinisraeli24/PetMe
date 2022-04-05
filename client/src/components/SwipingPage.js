@@ -114,7 +114,7 @@ export default function SwipesPage(props) {
           </IconButton>
           <div>
       <Button variant="" onClick={handleClickOpen}>
-        Take Me Home !
+        Take Me Home ! 
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add me to your family!</DialogTitle>
