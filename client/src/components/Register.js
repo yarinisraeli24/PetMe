@@ -15,6 +15,9 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
+import PasswordStrengthBar from 'react-password-strength-bar';
+
+const emailValidator = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
 
 function Copyright(props) {
@@ -41,6 +44,7 @@ export default function SignUp() {
   const navigate = useNavigate()
   const [didSubmit, setDidSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('')
+  const [passwordScore, setPasswordScore] = useState('');
 
 
   const handleSubmit = async (event) => {
@@ -51,6 +55,16 @@ export default function SignUp() {
       lastName,
       username: email,
       password,
+    }
+
+    if(!emailValidator.test(email)){
+      setErrorMessage("Email not valid")
+      return
+    }
+
+    if(passwordScore < 3){
+      setErrorMessage('Please use strongger password')
+      return
     }
       axios.post('/users/register/member', payload)
       .then(() => navigate('/login'))
@@ -143,6 +157,7 @@ export default function SignUp() {
                   }}
                   error={didSubmit && !password}
                 />
+              <PasswordStrengthBar password={password} onChangeScore={(score)=> {setPasswordScore(score)}} />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
