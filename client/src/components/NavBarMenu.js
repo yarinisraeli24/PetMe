@@ -21,6 +21,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PetsIcon from '@mui/icons-material/Pets';
 import './Navbar.css';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 
 import { getToken } from '../common/utils';
 
@@ -97,6 +98,13 @@ const NavBarMenu = () => {
               <ListItemText primary="Profile" />
             </ListItem>
             }
+
+            <ListItem button className='listItem' onClick={() => navigate('/allAssociations')}>
+              <ListItemIcon>
+              <ConnectWithoutContactIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Associations" />
+            </ListItem>
 
           </List>
 
