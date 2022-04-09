@@ -3,19 +3,24 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import {Link, useNavigate} from 'react-router-dom';
+import { Autocomplete } from '@mui/material';
+import { flexbox, textAlign } from '@mui/system';
 
 
 const AllAssociationsPage = () => {
     const navigate = useNavigate()
 
   return (
-    <ImageList style={{margin: 50}}>
+    <ImageList cols={3}>
       {itemData.map((item) => (
-        <ImageListItem key={item.img} sx={{ width: 500, height: 500, margin: 10 }}>
+        <ImageListItem 
+        style={{cursor:'pointer'}} 
+        onClick= {()=> window.open(item.link)} 
+        key={item.img} 
+        sx={{ width: 500, height: 500, justifySelf: 'center', margin: 10, borderWidth: 5, backgroundColor: "#EFF0F2",
+      }}>
           <img
-            onClick= {()=> window.open(item.link)}
             // onClick={() => navigate('/users/favorites')}
-            style={{cursor:'pointer'}}
             src={`${item.img}?w=248&fit=crop&auto=format`}
             srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
             alt={item.title}
