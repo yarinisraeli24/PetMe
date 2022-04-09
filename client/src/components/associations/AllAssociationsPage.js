@@ -6,7 +6,6 @@ import {Link, useNavigate} from 'react-router-dom';
 import { Autocomplete } from '@mui/material';
 import { flexbox, textAlign } from '@mui/system';
 
-
 const AllAssociationsPage = () => {
     const navigate = useNavigate()
 
@@ -37,7 +36,6 @@ const AllAssociationsPage = () => {
 }
 
 const itemData = [
-  
     {
         img: 'https://static.wixstatic.com/media/2325d2_568d9d1681414fff807caf6762a2e313~mv2.png/v1/crop/x_50,y_0,w_1401,h_1060/fill/w_232,h_152,al_c,usm_0.66_1.00_0.01,enc_auto/Sos%20logo%20small%20%20%D7%9C%D7%95%D7%92%D7%95%20%D7%A8%D7%A9%D7%9E%D7%99.png',
         name: 'S.O.S.',
