@@ -12,7 +12,8 @@ import { getToken } from './common/utils';
 import PrivateRoute from './components/routes/PrivateRoute';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import FavoritesPage from './components/favorites/FavoritesPage';
-import {UserDataProvider} from './contexts/UserDataContext'
+import {UserDataProvider} from './contexts/UserDataContext';
+import AllAssociationsPage from './components/associations/AllAssociationsPage';
 
 
 
@@ -36,6 +37,9 @@ function App() {
               <Route path='preferences' element={<Preferences />} />
             </Route>
             <Route path="/AdminPannel/" element={<PrivateRoute />}>
+            </Route>
+
+            <Route path="/allAssociations" element={<AllAssociationsPage />}>
             </Route>
         </Routes>
         </Router>
