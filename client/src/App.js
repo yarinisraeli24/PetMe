@@ -14,6 +14,7 @@ import ProtectedRoute from './components/routes/ProtectedRoute';
 import FavoritesPage from './components/favorites/FavoritesPage';
 import {UserDataProvider} from './contexts/UserDataContext';
 import AllAssociationsPage from './components/associations/AllAssociationsPage';
+import CreatePetPage from './pets/CreatePetPage';
 
 
 
@@ -37,6 +38,7 @@ function App() {
               <Route path='preferences' element={<Preferences />} />
             </Route>
             <Route path="/AdminPannel/" element={<PrivateRoute />}>
+              <Route path="createPet" element={<CreatePetPage/>} />
             </Route>
 
             <Route path="/allAssociations" element={<AllAssociationsPage />}>

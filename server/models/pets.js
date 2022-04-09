@@ -34,10 +34,10 @@ const petScheme = new mongoose.Schema({
     preference: {
         type: String,
     },
-    media: {
-        type: Array,
-        required: true
-    },
+    images: [{
+        title:  String,
+        image:  String
+    }],
     description: {
         type: String,
         required: true,

@@ -18,8 +18,9 @@ app.use(cors({
     origin: 'http://localhost:3000/'
 }));
 
-app.use(bodyParser.urlencoded({extended:true, limit: '1mb'}));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended:true, limit: '1mb'}));
+// app.use(bodyParser.json());
+app.use(express.json({limit: "30mb",extended:true}));
 
 app.use('/users', users);
 app.use('/pets', pets);
