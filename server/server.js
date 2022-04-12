@@ -2,7 +2,7 @@ const express = require('express')
 const app = express();
 const jwt = require('jsonwebtoken');
 const authorize = require('./middlewares/authorization')
-const env = require("dotenv").config();
+const env = require('dotenv').config()
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const users = require('./routes/user')
@@ -13,6 +13,7 @@ const authorization = require('./middlewares/authorization');
 const init = require('./common/init')
 const Pet = require('./models/pets')
 const port = 5000;
+
 
 app.use(cors({
     origin: 'http://localhost:3000/'

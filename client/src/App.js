@@ -15,6 +15,8 @@ import FavoritesPage from './components/favorites/FavoritesPage';
 import {UserDataProvider} from './contexts/UserDataContext';
 import AllAssociationsPage from './components/associations/AllAssociationsPage';
 import CreatePetPage from './pets/CreatePetPage';
+import SwaggerUI from "swagger-ui-react"
+import "swagger-ui-react/swagger-ui.css"
 
 
 
@@ -27,6 +29,7 @@ function App() {
         <Routes>
             <Route path="" element={<ProtectedRoute />}>
               <Route exact path='/login' element={<Login />}></Route>
+              <Route exact path='/api-docs' element={<SwaggerUI url="https://petstore.swagger.io/v2/swagger.json" />}></Route>
               <Route exact path='/register' element={<Register />}></Route>
               <Route exact path='/' element={<Home />}></Route>
 
@@ -51,3 +54,5 @@ function App() {
 }
 
 export default App;
+// export default App = () => <SwaggerUI url="https://petstore.swagger.io/v2/swagger.json" />;
+
