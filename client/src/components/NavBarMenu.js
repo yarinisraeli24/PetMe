@@ -68,7 +68,7 @@ const NavBarMenu = () => {
         </DrawerHeader>
         <Divider />
           <List className='menu'>
-            <ListItem button className='listItem'>
+            <ListItem button className='listItem' onClick={() => navigate('/')}>
             <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>

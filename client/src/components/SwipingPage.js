@@ -113,15 +113,15 @@ export default function SwipesPage(props) {
             <ShareIcon />
           </IconButton>
           <div>
-      <Button variant="" onClick={handleClickOpen}>
+      <Button onClick={handleClickOpen}>
         Take Me Home ! 
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add me to your family!</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To take me home with you
-            please leave here your contact information and someone from the assosiation will contact you soon!
+            To take me home with you,
+            Please leave here your contact information and someone from the assosiation will contact you soon!
           </DialogContentText>
           <TextField
             autoFocus
