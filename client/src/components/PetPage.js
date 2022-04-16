@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -16,6 +17,27 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function PetPage() {
 
     const [open1, setOpen1] = React.useState(false);
+
+    const [petId,setPetId] = useState()
+    const [username,setUsername] = useState()
+    const [email,setEmail] = useState()
+    const [phone,setPhone] = useState()
+
+
+    const onSubmitHandler = async (e) => {
+      e.preventDefault();
+      console.log(email,phone)
+      const {data} = await axios.post('takeMeHomes/takeMeHome', {petId: 0, username: 'test-user', email: 'email', phone: 'phone'});
+    }
+
+    useEffect(() => {
+      const fetchData = async () => {
+        // const result = await getItems();
+        // console.log('fetch data;m', result)
+        // setItems(result)
+      }
+      fetchData()
+    }, [])
 
     const handleClickOpen1 = () => {
       setOpen1(true);
@@ -75,6 +97,8 @@ export default function PetPage() {
             type="email"
             fullWidth
             variant="standard"
+            onChange={(e)=>{setEmail(e.target.value)}}
+
           />
           <TextField
             autoFocus
@@ -83,6 +107,7 @@ export default function PetPage() {
             label="Phone Number"
             fullWidth
             variant="standard"
+            onChange={(e)=>{setPhone(e.target.value)}}
           />
         </DialogContent>
         <DialogActions>

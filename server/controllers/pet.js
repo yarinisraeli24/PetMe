@@ -6,6 +6,7 @@ const config = require('../config')
 const bcrypt = require('bcryptjs')
 const Pet = require('../models/pets')
 const pets = require('../models/pets')
+const TakeMeHome = require('../models/takeMeHome')
 const Image = require('../models/image')
 
 
@@ -30,6 +31,12 @@ const createPet = (req, res, next) => {
     const {name, age, color, breed, kind, gender,size, images} = req.body;
     const pet = Pet({association: 'test', description: 'test', name, age, color, breed, petKind: kind, gender,size, images})
     pet.save();
+}
+
+const takeMeHome = (req, res, next) => {
+    const {petId, username, email, phone} = req.body;
+    const takeMeHome = TakeMeHome({petId, username, email, phone})
+    TakeMeHome.save();
 }
 
 module.exports = {
