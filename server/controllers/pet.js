@@ -35,12 +35,14 @@ const createPet = (req, res, next) => {
 
 const takeMeHome = (req, res, next) => {
     const {petId, username, email, phone} = req.body;
+    console.log("hi")
     const takeMeHome = TakeMeHome({petId, username, email, phone})
-    TakeMeHome.save();
+    takeMeHome.save();
 }
 
 module.exports = {
     getAllPets,
     addImages,
     createPet,
+    takeMeHome,
 }

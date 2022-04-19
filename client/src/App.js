@@ -17,7 +17,7 @@ import AllAssociationsPage from './components/associations/AllAssociationsPage';
 import CreatePetPage from './pets/CreatePetPage';
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
-import PetPage from './components/PetPage';
+import PetPage from './pets/PetPage';
 
 
 
