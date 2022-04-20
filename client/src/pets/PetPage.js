@@ -24,9 +24,13 @@ export default function PetPage() {
     const [phone,setPhone] = useState()
 
 
+    // const contactSaveAlert = () => {
+    //   handleClose1();
+    //   alert("your contact information saved succesfully !");
+    // }
+
     const onSubmitHandler = async (e) => {
       e.preventDefault();
-      console.log(email,phone)
       const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', username: 'username', email, phone});
     }
 
