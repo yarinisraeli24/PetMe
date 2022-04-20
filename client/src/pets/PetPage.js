@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom';
 import Card from '@mui/material/Card';
@@ -13,13 +13,18 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import {UserDataContext} from '../contexts/UserDataContext';
 
-export default function PetPage() {
+
+export default function PetPage(props) {
+
+    const {id} = useContext(UserDataContext);
+    const [pets, setPets] = useState([]);
 
     const [open1, setOpen1] = React.useState(false);
 
     const [petId,setPetId] = useState()
-    const [username,setUsername] = useState()
+    // const [username,setUsername] = useState()
     const [email,setEmail] = useState()
     const [phone,setPhone] = useState()
 
@@ -31,7 +36,8 @@ export default function PetPage() {
 
     const onSubmitHandler = async (e) => {
       e.preventDefault();
-      const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', username: 'username', email, phone});
+      console.log("hi:" ,id);
+      const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', userId: id, email, phone});
     }
 
     const handleClickOpen1 = () => {
