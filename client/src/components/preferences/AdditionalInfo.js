@@ -20,6 +20,12 @@ const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
 export default function HorizontalNonLinearStepper() {
 
+  const [house, setHouse] = useState('')
+  const [kidsolds, setKidsolds] = useState('')
+  const [allergic, setAllergic] = useState('')
+  const [morepets, setMorepets] = useState('')
+  const [energy, setEnergy] = useState('')
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -37,104 +43,77 @@ export default function HorizontalNonLinearStepper() {
         <Typography component="h1" variant="h5">
         Additional Information
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="country"
-            label="Country"
-            name="Country"
-            autoComplete="country"
-            autoFocus
-            onChange={(event) => {}}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="City"
-            label="City"
-            id="city"
-            autoComplete="City"
-            onChange={(event) => {
-            }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="Age"
-            label="Age"
-            id="age"
-            autoComplete="Age"
-            onChange={(event) => {
-            }}
-          />
-          {/* <FormControl>
-          <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
-          <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-          >
-              <FormControlLabel value="female" control={<Radio />} label="Female" />
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-              <FormControlLabel value="other" control={<Radio />} label="Other" />
-          </RadioGroup>
-          </FormControl>
-          <FormControl>
-          <FormLabel id="demo-row-radio-buttons-group-label">Family Status</FormLabel>
-          <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-          >
-              <FormControlLabel value="single" control={<Radio />} label="Single" />
-              <FormControlLabel value="married" control={<Radio />} label="Married" />
-              <FormControlLabel value="relationship" control={<Radio />} label="In a relationship" />
-          </RadioGroup>
-          <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-          >
-              <FormControlLabel value="kids" control={<Radio />} label="I have kids" />
-              <FormControlLabel value="noKids" control={<Radio />} label="I don't have kids" />
-          </RadioGroup>
-          </FormControl> */}
-        </Box>
-        <Box>
-            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '20px'}}>
-            <FormControl fullWidth>
-            <InputLabel id="gender-simple-select-label">Gender</InputLabel>
+        <Box maxWidth={3000} noValidate>
+        <div style={{justifyContent: 'space-between', marginTop: '20px'}}>
+        <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="house-simple-select-label">House</InputLabel>
             <Select
-              labelId="gender-simple-select-label"
-              id="demo-simple-select"
-              value={''}
-              label="Gender"
-              onChange={(selected)=>(selected.target.value)}
-            >
-              <MenuItem value={'male'}>Male</MenuItem>
-              <MenuItem value={'female'}>Female</MenuItem>
+                labelId="house-simple-select-label"
+                id="house-simple-select"
+                value={house}
+                label="House"
+                onChange={(selected)=>{setHouse(selected.target.value)}}
+              >
+                  <MenuItem value="apartment">Apartment</MenuItem>
+                  <MenuItem value="garden">A house with a garden</MenuItem>
             </Select>
             </FormControl>
-            <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Family Status</InputLabel>
-          <Select
-              labelId="status-simple-select-label"
-              id="status-simple-select"
-              value={''}
-              label="Family Status"
-              onChange={(selected)=>{}}
-          >
-              <MenuItem value="single">Single</MenuItem>
-              <MenuItem value="married">Married</MenuItem>
-              <MenuItem value="relationship">In Relationship</MenuItem>
-          </Select>
-            </FormControl>
-            </div>
-          </Box>
+        <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="kidsolds-simple-select-label">For kids/olds</InputLabel>
+            <Select
+                labelId="kidsolds-simple-select-label"
+                id="kidsolds-simple-select"
+                value={kidsolds}
+                label="Kidsolds"
+                onChange={(selected)=>{setKidsolds(selected.target.value)}}
+              >
+                  <MenuItem value="kids">For kids</MenuItem>
+                  <MenuItem value="old">For old people</MenuItem>
+                  <MenuItem value='none'>Doesn't matter</MenuItem>
+            </Select>
+        </FormControl>
+        <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="allergic-simple-select-label">Allergic</InputLabel>
+            <Select
+                labelId="allergic-simple-select-label"
+                id="allergic-simple-select"
+                value={allergic}
+                label="Allergic"
+                onChange={(selected)=>{setAllergic(selected.target.value)}}
+              >
+                  <MenuItem value="yes">Yes</MenuItem>
+                  <MenuItem value="no">No</MenuItem>
+            </Select>
+        </FormControl>
+        <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="morepets-simple-select-label">Live with more pets</InputLabel>
+            <Select
+                labelId="morepets-simple-select-label"
+                id="morepets-simple-select"
+                value={morepets}
+                label="Morepets"
+                onChange={(selected)=>{setMorepets(selected.target.value)}}
+              >
+                  <MenuItem value="yes">Yes</MenuItem>
+                  <MenuItem value="no">No</MenuItem>
+            </Select>
+        </FormControl>
+        <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="energy-simple-select-label">Energy level</InputLabel>
+            <Select
+                labelId="energy-simple-select-label"
+                id="energy-simple-select"
+                value={energy}
+                label="Energy"
+                onChange={(selected)=>{setEnergy(selected.target.value)}}
+              >
+                  <MenuItem value="high">High</MenuItem>
+                  <MenuItem value="medium">Medium</MenuItem>
+                  <MenuItem value="low">Low</MenuItem>
+            </Select>
+        </FormControl>
+        </div>
+        </Box>
       </Box>
     </Container>
   );
