@@ -21,6 +21,7 @@ import Login from './Login';
 import { getToken } from '../common/utils';
 
 import '../App.css';
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -87,9 +88,14 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const onLogOut = () => {
+  const onLogOut = async () => {
     localStorage.removeItem('token')
+    try{
+    await axios.get('/logout')
     navigate('/login')
+    }catch (error) {
+      console.log(error.message) 
+    }
   }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -196,7 +202,7 @@ export default function PrimarySearchAppBar() {
           </Box>
 
           {isLoggedIn ?
-           <Button color="inherit" onClick={onLogOut}>Login Out</Button> :
+           <Button color="inherit" onClick={async () => {await onLogOut()}}>Login Out</Button> :
           <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
         </Toolbar>
       </AppBar>

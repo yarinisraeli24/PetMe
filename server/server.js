@@ -2,6 +2,7 @@ const express = require('express')
 const app = express();
 const jwt = require('jsonwebtoken');
 const authorize = require('./middlewares/authorization')
+var cookieParser = require('cookie-parser');
 const env = require('dotenv').config()
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -22,6 +23,7 @@ app.use(cors({
 // app.use(bodyParser.urlencoded({extended:true, limit: '1mb'}));
 // app.use(bodyParser.json());
 app.use(express.json({limit: "30mb",extended:true}));
+app.use(cookieParser());
 
 app.use('/users', users);
 app.use('/pets', pets);
@@ -42,6 +44,6 @@ db.once('open', ()=>{
 })
 
 
-app.listen(port, () => {
-    console.log(`app listening to port ${port}`)
+app.listen(process.env.PORT, () => {
+    console.log(`app listening to port ${process.env.PORT}`)
 });
