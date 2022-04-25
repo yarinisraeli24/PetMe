@@ -17,7 +17,6 @@ axios.interceptors.response.use(resp => resp, async error => {
         refresh = true;
         localStorage.setItem('token', localStorage.getItem('refreshToken'))
         const response = await axios.get('/users/refreshToken');
-        debugger;
         
         if (response.status === 200) {
             const {accessToken,refreshToken, data} = response.data;
