@@ -40,10 +40,8 @@ db.once('open', ()=>{
        const newPet = Pet({...pet})
        newPet.save()
     })
-    console.log('connected to mongo!')
+   // console.log('connected to mongo!')
 })
 
 
-app.listen(process.env.PORT, () => {
-    console.log(`app listening to port ${process.env.PORT}`)
-});
+module.exports = app
