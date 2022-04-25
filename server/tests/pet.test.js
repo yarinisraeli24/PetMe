@@ -2,13 +2,7 @@ const app = require('../server')
 const request = require('supertest')
 const mongoose = require('mongoose');
 const User = require('../models/users')
-
-
-const email = 'test@test.com'
-const pwd = '1234'
-const firtName = 'test'
-const lastName = 'test'
-
+const email = 'test@test.com';
 
 beforeAll(done=>{
     User.remove({'email' : email}, (err)=>{
@@ -25,19 +19,19 @@ afterAll(done=>{
 
 
 describe('Testing Pet API',()=>{
-    const postMessage = 'this is my test post'
-    const sender = 'Eliav'
-    let accessToken = ''
-    let userId = ''
+    const username = 'test@test.com'
+    const password = '1234'
+    const firstName = 'test'
+    const lastName = 'test'
 
     test('test registration',async ()=>{
-        const response = await request(app).post('/users/register').send({
-            'username' : email,
-            'password':pwd,
-            'firstName': firtName,
-            'lastName': lastName
+        const response = await request(app).post('/users/register/member').send({
+            username,
+            password,
+            firstName,
+            lastName
         })
-        expect(response.status).toEqual("200")
+        expect(response.status).toEqual(200)
     })
 
     // test('test login',async ()=>{

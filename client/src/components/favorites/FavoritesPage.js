@@ -8,18 +8,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import { UserDataContext } from "../../contexts/UserDataContext";
-import axios from "axios";
+import { getUserFavoritePets } from '../../common/serverApi';
 
 const FavoritesPage = () => {
     const { id } = useContext(UserDataContext)
     const [favoritePets, setFavoritePets] = useState([])
 
     useEffect(()=>{
-        const getUserFavoritePets = async (userId) => {
-            const response = await axios.post('/users/getFavoritePets', {userId})
-            setFavoritePets(response.data)
+        const setUserFavoritePets = async (userId) => {
+            const data = await getUserFavoritePets(userId);
+            setFavoritePets(data)
         }
-        getUserFavoritePets(id);
+        setUserFavoritePets(id);
     }, [])
 
     return (

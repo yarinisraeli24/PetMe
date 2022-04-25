@@ -24,6 +24,7 @@ import './Navbar.css';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import { getToken } from '../common/utils';
 import axios from 'axios';
+import { logout } from '../common/serverApi';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -40,7 +41,7 @@ const NavBarMenu = () => {
   const isLoggedIn = !!token;
   const onLogOut = async () => {
     try{
-    await axios.get('/users/logout');
+    await logout();
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')
     navigate('/login')

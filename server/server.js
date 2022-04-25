@@ -13,7 +13,7 @@ const cors = require('cors');
 const authorization = require('./middlewares/authorization');
 const init = require('./common/init')
 const Pet = require('./models/pets')
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 
 app.use(cors({
@@ -40,8 +40,6 @@ db.once('open', ()=>{
        const newPet = Pet({...pet})
        newPet.save()
     })
-   // console.log('connected to mongo!')
 })
-
 
 module.exports = app

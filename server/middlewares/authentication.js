@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs')
 module.exports = async (req, res, next) => {
   const authHeaders = req.headers['authorization'];
   const token = authHeaders && authHeaders.split(' ')[1]
-  console.log(token)
 
   if(!token) return res.sendStatus('401')
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, user) => {

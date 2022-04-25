@@ -47,7 +47,6 @@ const login = async (req, res, next) => {
 const logout = async (req, res, next) => {
     const authHeaders = req.headers['authorization']
     const token = authHeaders && authHeaders.split(' ')[1];
-    console.log(token);
     if(!token) return res.sendStatus('401');
 
     jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, async (error, user) => {
@@ -55,7 +54,6 @@ const logout = async (req, res, next) => {
         const userId = user.id;
         try {
             user = await User.findById(userId);
-            console.log(0)
             if(!user) return res.status(403).send('invalid request');
             if(user.refreshToken !== token){
                 user.refreshToken = '';
@@ -109,7 +107,6 @@ const register = async (req, res, next) => {
 const refreshToken = async  (req, res, next) => {
     const authHeaders = req.headers['authorization']
     const token = authHeaders && authHeaders.split(' ')[1];
-    console.log(token)
     if(!token) return res.sendStatus('401');
 
     jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, async (error, user) => {

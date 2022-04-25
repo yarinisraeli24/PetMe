@@ -21,7 +21,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import {getAllPets} from '../common/serverApi'
+import {getAllPets, addPetToFavorites} from '../common/serverApi'
+
 
 import './Card.css'
 
@@ -68,15 +69,11 @@ export default function SwipesPage(props) {
     tgetAllPets();
    }, []);
 
-    const addToFavorites = (pet) => {
-      // axios.post('/users/addPet', {userId: id, petId: pet._id})
-    }
-
     const handleSwipe = (direction, pet) => {
       switch (direction) {
-        case 'right': return addToFavorites(pet);
+        case 'right': return addPetToFavorites(pet);
         case 'left': break;
-        case 'up': return addToFavorites(pet);
+        case 'up': return addPetToFavorites(pet);
         case 'down': break;
         default: break;
       }

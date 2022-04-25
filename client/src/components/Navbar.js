@@ -22,6 +22,7 @@ import { getToken } from '../common/utils';
 
 import '../App.css';
 import axios from 'axios';
+import { logout } from '../common/serverApi';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -91,7 +92,7 @@ export default function PrimarySearchAppBar() {
   const onLogOut = async () => {
     localStorage.removeItem('token')
     try{
-    await axios.get('/logout')
+    await logout()
     navigate('/login')
     }catch (error) {
       console.log(error.message) 

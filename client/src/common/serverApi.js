@@ -35,3 +35,29 @@ export const getAllPets = async () => {
     return response
 }
 
+export const logout = async () => {
+    await axios.get('/logout')
+}
+
+export const login = async (payload) => {
+    const { data } = await axios.post('/users/login', payload);
+    return data;
+}
+
+export const register = async (payload) => {
+    await axios.post('/users/register/member', payload)
+}
+
+export const addPetToFavorites = async (userId, petId) => {
+    await axios.post('/users/addPet', {userId, petId})
+}
+
+export const getUserFavoritePets = async (userId) => {
+    const { data } = await axios.post('/users/getFavoritePets', {userId})
+    return data
+}
+
+export const createNewPet = async (petData) => {
+    const { data } = await axios.post('/pets/createPet', petData);
+    return data;
+}

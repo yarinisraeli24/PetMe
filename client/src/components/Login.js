@@ -15,6 +15,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
 import { UserDataContext } from '../contexts/UserDataContext';
+import { login } from '../common/serverApi';
 
 function Copyright(props) {
   const navigate = useNavigate()
@@ -40,8 +41,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const payload = { username, password };
-    const response = await axios.post('/users/login', payload);
-    const {accessToken,refreshToken, data} = response.data;
+    const {accessToken,refreshToken, data} = await login(payload);
 
     if (!accessToken || !refreshToken) {
       return
