@@ -15,7 +15,8 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(resp => resp, async error => {
     if (error.response.status === 401 && !refresh) {
         refresh = true;
-        const response = await axios.post('/users/refreshToken', {}, {headers: {'Authorization': `Basic `}});
+        localStorage.setItem('token', localStorage.getItem('refreshToken'))
+        const response = await axios.get('/users/refreshToken');
         debugger;
         
         if (response.status === 200) {

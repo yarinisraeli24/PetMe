@@ -6,8 +6,8 @@ const User = require('../controllers/user');
 
 router.post('/register/member' , User.register)
 router.get('/logout', User.logout);
+router.get('/refreshToken', User.refreshToken);
 router.post('/login', User.login);
-router.post('/refreshToken', User.refreshToken);
 router.post('/addPet', User.addPet);
 router.post('/getFavoritePets', User.getFavoritePets);
 

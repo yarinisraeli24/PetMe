@@ -108,7 +108,6 @@ const register = async (req, res, next) => {
 
 const refreshToken = async  (req, res, next) => {
     const authHeaders = req.headers['authorization']
-    console.log(req.headers);
     const token = authHeaders && authHeaders.split(' ')[1];
     console.log(token)
     if(!token) return res.sendStatus('401');
@@ -125,9 +124,9 @@ const refreshToken = async  (req, res, next) => {
                 await user.save()
                 return res.status(403).send('invalid request');
             }
-        const userData = user.data;
-        const accessToken = jwt.sign(user.data, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.JWT_TOKEN_EXPIRATION});
-        const refreshToken = jwt.sign(user.data, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1y'});
+        const userData = {...user.data, id: userId};
+        const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.JWT_TOKEN_EXPIRATION});
+        const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1y'});
         user.refreshToken = refreshToken;
         await user.save();
         res.status(200).send({accessToken, refreshToken, userData});

@@ -8,7 +8,6 @@ import Preferences from './components/preferences/Preferences';
 import Register from './components/Register';
 import Home from './components/Home';
 import { BrowserRouter as Router,Routes, Route,Navigate } from 'react-router-dom';
-
 import PrivateRoute from './components/routes/PrivateRoute';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import FavoritesPage from './components/favorites/FavoritesPage';
@@ -21,8 +20,6 @@ import PetPage from './components/PetPage';
 
 
 function App() {
-
-
   return (
       <div className="App"> 
         <Router>
