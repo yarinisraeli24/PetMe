@@ -49,17 +49,12 @@ const logout = async (req, res, next) => {
     const token = authHeaders && authHeaders.split(' ')[1];
     if(!token) return res.sendStatus('401');
 
-    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, async (error, user) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (error, user) => {
         if(error) return res.status(403).send(error.message);
         const userId = user.id;
         try {
             user = await User.findById(userId);
             if(!user) return res.status(403).send('invalid request');
-            if(user.refreshToken !== token){
-                user.refreshToken = '';
-                await user.save();
-                return res.status(403).send('invalid request');
-            }
             user.refreshToken = '';
             await user.save();
             res.status(200).send();
@@ -140,7 +135,6 @@ const addPet = async (req, res, next) => {
     const filter = {_id: mongo.ObjectId(body.userId)}
     const update = {pets: body.petId}
     const user = await User.findOneAndUpdate(filter, {$push: update})
-
     if(!user){
         res.status(400).send('Failed on add pet')
     }

@@ -1,8 +1,18 @@
 const app = require('../server')
 const request = require('supertest')
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const User = require('../models/users')
+const User = require('../models/users');
+const { exists } = require('../models/users');
+const { petDataMock } = require('./mockData');
+
 const email = 'test@test.com';
+const username = 'test@test.com'
+const password = '1234'
+const firstName = 'test'
+const lastName = 'test'
+let accessToken;
+let data = {};
 
 beforeAll(done=>{
     User.remove({'email' : email}, (err)=>{
@@ -18,13 +28,9 @@ afterAll(done=>{
 })
 
 
-describe('Testing Pet API',()=>{
-    const username = 'test@test.com'
-    const password = '1234'
-    const firstName = 'test'
-    const lastName = 'test'
+describe('Authentication check ',()=>{
 
-    test('test registration',async ()=>{
+    test('Register new user',async ()=>{
         const response = await request(app).post('/users/register/member').send({
             username,
             password,
@@ -34,33 +40,45 @@ describe('Testing Pet API',()=>{
         expect(response.status).toEqual(200)
     })
 
-    // test('test login',async ()=>{
-    //     const response = await request(app).post('/users/login').send({
-    //         'email' : email,
-    //         'password':pwd
-    //     })
-    //     expect(response.statusCode).toEqual(200)
-    // })
+    test('Check authentication',async ()=>{
+        const response = await request(app).post('/users/login').send({
+            username,
+            password,
+        })
+        data = response._body.data;
+        expect(response.status).toEqual(200)
+    })
 
-    // test('post get',async ()=>{
-    //     const response = await request(app).get('/post').set({ authorization: 'JWT ' + accessToken })
-    //     expect(response.statusCode).toEqual(200)
-    // })
+    test('accessToken should be expired',async ()=>{
+        accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1'});
+        const response = await request(app).get('/pets/getAllPets').set('Authorization', `Bearer ${accessToken}`)
+        expect(response.status).toEqual(401)
+    })
 
-    // test('add new post',async ()=>{
-    //     const response = await request(app).post('/post').set({ authorization: 'JWT ' + accessToken })
-    //     .send({
-    //         'message' : postMessage,
-    //         'sender' : sender
-    //     })
-    //     expect(response.statusCode).toEqual(200)
-    //     const newPost = response.body
-    //     expect(newPost.message).toEqual(postMessage)
-        
-    //     const response2 = await request(app).get('/post/' + newPost._id)
-    //     .set({ authorization: 'JWT ' + accessToken })
-    //     expect(response2.statusCode).toEqual(200)
-    //     const post2 = response2.body
-    //     expect(post2.message).toEqual(postMessage)
-    // })
+    test('Should generate new RefreshToken and AccessToken',async ()=>{
+        const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1y'});
+        const response = await request(app).get('/users/refreshToken').set('Authorization', `Bearer ${refreshToken}`)
+        accessToken = response._body.accessToken;
+        expect(response.status).toEqual(200)
+    })
+
+
+    test('Logout should remove refreshToken from mongo',async ()=>{
+        await request(app).get('/users/logout').set('Authorization', `Bearer ${accessToken}`)
+        User.findById(data.id, (error, userInfo) => {
+            if(!error){
+                expect(userInfo.refreshToken).toEqual("");
+            }
+        })
+    })
+
+    test('Add pet to user', async () => {
+        const response = await request(app).post('/users/addPet').send({userId: data.id, petId: petDataMock._id}).set('Authorization', `Bearer ${accessToken}`)
+        expect(response.status).toEqual(200)
+    })
+
+    test('Expect user pet to be equal the petDataMock', async () => {
+        const response = await request(app).post('/users/getFavoritePets').send({userId: data.id}).set('Authorization', `Bearer ${accessToken}`)
+        expect(response._body[0]).toEqual(petDataMock)
+    })
 })
