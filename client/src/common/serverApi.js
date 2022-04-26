@@ -56,7 +56,10 @@ export const getUserFavoritePets = async (userId) => {
     const { data } = await axios.post('/users/getFavoritePets', {userId})
     return data
 }
-
+export const getUserDetails = async (userId) => {
+    const { data } = await axios.post('/users/getUserDetails', {userId})
+    return data
+}
 export const createNewPet = async (petData) => {
     const { data } = await axios.post('/pets/createPet', petData);
     return data;

@@ -152,11 +152,20 @@ const getFavoritePets = async (req, res, next) => {
     const userFavoritePets = await Pet.find({_id: user.pets})
     res.send(userFavoritePets)
 }
+const getUserDetails = async (req, res, next) => {
+    const { body } = req;
+    if(!body.userId){
+        res.status(400).send('No such user or pet')
+    }
+    const user = await User.findOne({_id: body.userId})
+    res.send(user)
+}
 module.exports = {
     login,
     logout,
     refreshToken,
     register,
     addPet,
+    getUserDetails,
     getFavoritePets,
 }

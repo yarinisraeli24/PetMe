@@ -14,6 +14,7 @@ router.get('/refreshToken', User.refreshToken);
 router.post('/login', User.login);
 router.post('/addPet', User.addPet);
 router.post('/getFavoritePets', User.getFavoritePets);
+router.post('/getUserDetails', User.getUserDetails);
 
 
 
