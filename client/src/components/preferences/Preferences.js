@@ -70,11 +70,11 @@ export default function HorizontalNonLinearStepper() {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <PersonalSettings/>;
+        return <PersonalSettings handleNext={handleNext}/> 
       case 1:
-        return <PetSettings/>;
+        return <PetSettings handleNext={handleNext}/>;
       case 2:
-        return <AdditionalInfo/>;
+        return <AdditionalInfo handleComplete={handleComplete}/>;
       default:
         return "Unknown step";
     }

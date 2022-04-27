@@ -109,7 +109,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem color="inherit" onClick={onLogOut}>Login Out</MenuItem>
+      <MenuItem color="inherit" onClick={onLogOut}>Logout</MenuItem>
     </Menu>
   );
 
@@ -196,7 +196,7 @@ export default function PrimarySearchAppBar() {
           </Box>
 
           {isLoggedIn ?
-           <Button color="inherit" onClick={onLogOut}>Login Out</Button> :
+           <Button color="inherit" onClick={onLogOut}>Logout</Button> :
           <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
         </Toolbar>
       </AppBar>

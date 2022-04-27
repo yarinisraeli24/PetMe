@@ -12,12 +12,26 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Avatar from '@mui/material/Avatar';
+import { Button } from '@mui/material';
+import { usePreviousProps } from '@mui/utils';
 
-export default function HorizontalNonLinearStepper() {
+export default function HorizontalNonLinearStepper(props) {
 
   const [gender, setGender] = useState('');
   const [status, setStatus] = useState('');
+  const [age, setAge] = useState('')
+  const [city, setCity] = useState('')
+  const [country, setCountry] = useState('')
+  
+  const [didSubmit, setDidSubmit] = useState(false);
 
+
+  function validateNext() {
+    const isValid = gender && status && age && city && country
+    setDidSubmit(true);
+    if (isValid)
+      props.handleNext()
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,9 +59,11 @@ export default function HorizontalNonLinearStepper() {
             label="Country"
             name="Country"
             autoComplete="country"
+            value={country}
             autoFocus
-            onChange={(event) => {}}
-          />
+            onChange={(selected)=>{setCountry(selected.target.value)}}
+            error={didSubmit && !country}
+            />
           <TextField
             margin="normal"
             required
@@ -56,8 +72,9 @@ export default function HorizontalNonLinearStepper() {
             label="City"
             id="city"
             autoComplete="City"
-            onChange={(event) => {
-            }}
+            value={city}
+            onChange={(selected)=>{setCity(selected.target.value)}}
+            error={didSubmit && !city}
           />
           <TextField
             margin="normal"
@@ -66,9 +83,10 @@ export default function HorizontalNonLinearStepper() {
             name="Age"
             label="Age"
             id="age"
+            value={age}
             autoComplete="Age"
-            onChange={(event) => {
-            }}
+            onChange={(selected)=>{setAge(selected.target.value)}}
+            error={didSubmit && !age}
           /> 
           <Box>
             <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '20px'}}>
@@ -80,6 +98,7 @@ export default function HorizontalNonLinearStepper() {
               value={gender}
               label="Gender"
               onChange={(selected)=>{setGender(selected.target.value)}}
+              error={didSubmit && !gender}
             >
               <MenuItem value={'male'}>Male</MenuItem>
               <MenuItem value={'female'}>Female</MenuItem>
@@ -93,6 +112,7 @@ export default function HorizontalNonLinearStepper() {
               value={status}
               label="Family Status"
               onChange={(selected)=>{setStatus(selected.target.value)}}
+              error={didSubmit && !status}
           >
               <MenuItem value="single">Single</MenuItem>
               <MenuItem value="married">Married</MenuItem>
@@ -101,6 +121,7 @@ export default function HorizontalNonLinearStepper() {
             </FormControl>
             </div>
           </Box>
+          <Button onClick={validateNext}>Next</Button>
         </Box>
       </Box>
     </Container>

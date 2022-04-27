@@ -10,11 +10,13 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
 import PetsIcon from '@mui/icons-material/Pets';
+import { Button } from '@mui/material';
+
 
 
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
-export default function HorizontalNonLinearStepper() {
+export default function HorizontalNonLinearStepper(props) {
 
   const [petGender, setPetGender] = useState('')
   const [petKind, setPetKind] = useState('')
@@ -24,6 +26,16 @@ export default function HorizontalNonLinearStepper() {
   const [color, setColor] = useState('')
   const [district, setDistrict] = useState('')
 
+
+  const [didSubmit, setDidSubmit] = useState(false);
+
+
+  function validateNext() {
+    const isValid = petGender && petKind && size && hair && age && color && district
+    setDidSubmit(true);
+    if (isValid)
+      props.handleNext()
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -52,6 +64,7 @@ export default function HorizontalNonLinearStepper() {
               value={petGender}
               label="Gender"
               onChange={(selected)=>setPetGender(selected.target.value)}
+              error={didSubmit && !petGender}
             >
               <MenuItem value='male'>Male</MenuItem>
               <MenuItem value='female'>Female</MenuItem>
@@ -66,6 +79,7 @@ export default function HorizontalNonLinearStepper() {
                 value={petKind}
                 label="Pet Kind"
                 onChange={(selected)=>{setPetKind(selected.target.value)}}
+                error={didSubmit && !petKind}
               >
                   <MenuItem value="dog">Dog</MenuItem>
                   <MenuItem value="cat">Cat</MenuItem>
@@ -80,6 +94,7 @@ export default function HorizontalNonLinearStepper() {
                 value={size}
                 label="Size"
                 onChange={(selected)=>{setSize(selected.target.value)}}
+                error={didSubmit && !size}
               >
                   <MenuItem value="small">Small</MenuItem>
                   <MenuItem value="medium">Medium</MenuItem>
@@ -94,6 +109,7 @@ export default function HorizontalNonLinearStepper() {
                 value={hair}
                 label="Hair"
                 onChange={(selected)=>{setHair(selected.target.value)}}
+                error={didSubmit && !hair}
               >
                   <MenuItem value="little">Little</MenuItem>
                   <MenuItem value="medium">Medium</MenuItem>
@@ -108,6 +124,7 @@ export default function HorizontalNonLinearStepper() {
                 value={age}
                 label="Age"
                 onChange={(selected)=>{setAge(selected.target.value)}}
+                error={didSubmit && !age}
               >
                   <MenuItem value="0-1">0-1</MenuItem>
                   <MenuItem value="2-4">2-4</MenuItem>
@@ -124,6 +141,7 @@ export default function HorizontalNonLinearStepper() {
                 value={color}
                 label="Color"
                 onChange={(selected)=>{setColor(selected.target.value)}}
+                error={didSubmit && !color}
               >
                   <MenuItem value="bright">Bright</MenuItem>
                   <MenuItem value="dark">Dark</MenuItem>
@@ -138,6 +156,7 @@ export default function HorizontalNonLinearStepper() {
                 value={district}
                 label="District"
                 onChange={(selected)=>{setDistrict(selected.target.value)}}
+                error={didSubmit && !district}
               >
                   <MenuItem value="north">North</MenuItem>
                   <MenuItem value="center">Center</MenuItem>
@@ -148,6 +167,8 @@ export default function HorizontalNonLinearStepper() {
             </FormControl>
             </div>
           </Box>
+          <Button onClick={validateNext}>Next</Button>
+
           </Box>
 
     </Container>

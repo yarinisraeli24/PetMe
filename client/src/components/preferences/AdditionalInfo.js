@@ -14,11 +14,13 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
+import { Button } from '@mui/material';
+
 
 
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
-export default function HorizontalNonLinearStepper() {
+export default function HorizontalNonLinearStepper(props) {
 
   const [house, setHouse] = useState('')
   const [kidsolds, setKidsolds] = useState('')
@@ -26,6 +28,14 @@ export default function HorizontalNonLinearStepper() {
   const [morepets, setMorepets] = useState('')
   const [energy, setEnergy] = useState('')
   
+
+  const [didSubmit, setDidSubmit] = useState(false);
+
+
+  function Complete() {
+      props.handleComplete()
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -114,6 +124,7 @@ export default function HorizontalNonLinearStepper() {
         </FormControl>
         </div>
         </Box>
+        <Button onClick={Complete}>Finish</Button>
       </Box>
     </Container>
   );
