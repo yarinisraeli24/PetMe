@@ -1,17 +1,23 @@
 import React from 'react';
 import { Card, Typography, Button} from '@mui/material';
 import { useEffect, useState } from 'react';
-import { getAllPets } from '../../../common/serverApi';
+import { getAssociationPets } from '../../../common/serverApi';
+import { useNavigate } from 'react-router-dom';
+import { UserDataContext } from '../../../contexts/UserDataContext';
 import PetRow from './PetRow';
+import { useContext } from 'react';
 
 
 const PetsSection = () => {
     const [pets, setPets] = useState([])
+    const navigate = useNavigate();
+    const {userData} = useContext(UserDataContext);
+
     useEffect(()=> {
         const getUserPets = async () => {
             //TODO: change to Association related pets
-            const {data} = await getAllPets();
-            setPets(data);
+            const {data} = await getAssociationPets(userData.id);
+            setPets(data.slice(-5));
         }
         getUserPets();
     }, [])
@@ -25,7 +31,9 @@ const PetsSection = () => {
                        <PetRow petData={pet}/>
                 )
             })}
-            <Button sx={{bottom: 0}}>All Pets</Button>
+            <Button sx={{bottom: 0}}>View All Pets</Button>
+            <Button onClick={()=>{navigate('/admin/createPet')}} sx={{bottom: 0}}>Add New Pet</Button>
+
         </Card>
     )
 }

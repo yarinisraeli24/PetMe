@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const users = require('./routes/user')
 const pets = require('./routes/pet')
+const admin = require('./routes/admin')
 const config = require('./config');
 const cors = require('cors');
 const authorization = require('./middlewares/authorization');
@@ -27,6 +28,7 @@ app.use(express.json({limit: "30mb",extended:true}));
 app.use(cookieParser());
 
 app.use('/users', users);
+app.use('/admin', admin);
 app.use('/pets', pets);
 
 
@@ -38,11 +40,5 @@ app.get('/refreshToken', User.refreshToken);
 mongoose.connect('mongodb://localhost:27017',{ useNewUrlParser: true })
 const db = mongoose.connection
 db.on('error', error=>{console.error(error)})
-db.once('open', ()=>{
-    init.map((pet) => {
-       const newPet = Pet({...pet})
-       newPet.save()
-    })
-})
 
 module.exports = app

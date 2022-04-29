@@ -52,9 +52,15 @@ export const getAllPets = async () => {
     return response
 }
 
+//Admin Endpoints
+
 export const createNewPet = async (petData) => {
-    const { data } = await axios.post('/pets/createPet', petData);
+    const { data } = await axios.post('/admin/createPet', petData);
     return data;
+}
+export const getAssociationPets = async (associationId) => {
+    const response = await axios.get(`/admin/getAllPets?id=${associationId}`);
+    return response
 }
 
 //Users Endpoints

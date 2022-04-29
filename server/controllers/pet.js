@@ -26,14 +26,7 @@ const addImages = async (req, res, next) => {
     }
 }
 
-const createPet = (req, res, next) => {
-    const {name, age, color, breed, kind, gender,size, images} = req.body;
-    const pet = Pet({association: 'test', description: 'test', name, age, color, breed, petKind: kind, gender,size, images})
-    pet.save();
-}
-
 module.exports = {
     getAllPets,
     addImages,
-    createPet,
 }

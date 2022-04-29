@@ -8,20 +8,20 @@ export const UserDataProvider = ({children}) => {
     useEffect(()=> {
         const getUserData = async () => {
             const data = await getUserDetails();
-            setData(data)
+            setUserData(data)
             setIsAdmin(data.permissions === 'admin')
         }
         getUserData()
     }, [])
     const [token, setToken] = useState(getToken())
-    const [data, setData] = useState({});
+    const [userData, setUserData] = useState({});
     const [isAdmin, setIsAdmin] = useState(false);
     return (
         <UserDataContext.Provider value={{
             token,
             setToken,
-            setData,
-            data,
+            setUserData,
+            userData,
             isAdmin,
         }}>
             {children}
