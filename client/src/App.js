@@ -6,6 +6,8 @@ import './App.css';
 import Login from './components/Login';
 import Preferences from './components/preferences/Preferences';
 import Register from './components/Register';
+import AdminRegister from './components/AdminRegister';
+
 import Home from './components/Home';
 import { BrowserRouter as Router,Routes, Route,Navigate } from 'react-router-dom';
 import PrivateRoute from './components/routes/PrivateRoute';
@@ -30,6 +32,7 @@ function App() {
               <Route exact path='/api-docs' element={<SwaggerUI url="https://petstore.swagger.io/v2/swagger.json" />}></Route>
               <Route exact path='/register' element={<Register />}></Route>
               <Route exact path='/' element={<Home />}></Route>
+              <Route path="/admin/register" element={<AdminRegister />} />
 
             </Route>
 
@@ -38,7 +41,7 @@ function App() {
               <Route path="favorites" element={<FavoritesPage/>} />
               <Route path='preferences' element={<Preferences />} />
             </Route>
-            <Route path="/AdminPannel/" element={<PrivateRoute />}>
+            <Route path="/admin/" element={<PrivateRoute />}>
               <Route path="createPet" element={<CreatePetPage/>} />
             </Route>
 

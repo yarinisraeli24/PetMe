@@ -61,3 +61,8 @@ export const createNewPet = async (petData) => {
     const { data } = await axios.post('/pets/createPet', petData);
     return data;
 }
+
+export const adminRegister = async (payload) => {
+    const { data } = await axios.post('/adminRegister', payload);
+    return data;
+}

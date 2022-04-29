@@ -4,6 +4,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import Card from '@mui/material/Card';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
@@ -121,6 +122,19 @@ export default function Login() {
               </Grid>
             </Grid>
           </Box>
+        <Card sx={{ width: 1000, height: 200, marginTop: 5 }}>
+        <br />
+        Help us to help you! <br /> 
+        Do you have an association? <br />
+        Register as an association upload the pet's details and improve your exposure to more people
+        <br />
+        <Button
+        onClick={() => navigate('/admin/register')}
+        variant="contained"
+        sx={{ mt: 3, mb: 2 }}>
+          Register
+        </Button>
+        </Card>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
