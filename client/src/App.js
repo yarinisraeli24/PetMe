@@ -6,10 +6,12 @@ import './App.css';
 import Login from './components/Login';
 import Preferences from './components/preferences/Preferences';
 import Register from './components/Register';
-import AdminRegister from './components/AdminRegister';
+import AdminRegister from './components/associations/AdminRegister';
 
 import Home from './components/Home';
-import { BrowserRouter as Router,Routes, Route,Navigate } from 'react-router-dom';
+import AdminHome from './components/associations/AdminHome';
+
+import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
 import PrivateRoute from './components/routes/PrivateRoute';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import FavoritesPage from './components/favorites/FavoritesPage';
@@ -19,10 +21,12 @@ import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
 import PetPage from './components/PetPage';
 import ProfileDetailsPage from './components/profile/ProfileDetailsPage';
+import { UserDataProvider } from './contexts/UserDataContext';
 
 
 function App() {
   return (
+    <UserDataProvider>
       <div className="App"> 
         <Router>
         <NavBarMenu />
@@ -43,6 +47,7 @@ function App() {
               <Route path='preferences' element={<Preferences />} />
             </Route>
             <Route path="/admin/" element={<PrivateRoute />}>
+              <Route path="home" element={<AdminHome/>} />
               <Route path="createPet" element={<CreatePetPage/>} />
             </Route>
 
@@ -52,6 +57,7 @@ function App() {
         </Routes>
         </Router>
       </div>
+      </UserDataProvider>
   );
 }
 

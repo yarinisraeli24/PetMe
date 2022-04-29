@@ -38,18 +38,19 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
+  const { setData } = useContext(UserDataContext)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const payload = { username, password };
     const {accessToken,refreshToken, data} = await login(payload);
-
+    setData(data)
     if (!accessToken || !refreshToken) {
       return
     }
     localStorage.setItem('token', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
-    navigate('/users/swipes')
+    data.permissions === 'admin' ? navigate('/admin/home') : navigate('/users/swipes')
   };
 
   return (

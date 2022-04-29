@@ -16,7 +16,7 @@ import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
 import PasswordStrengthBar from 'react-password-strength-bar';
-import { register } from '../common/serverApi';
+import { register } from '../../common/serverApi';
 
 const emailValidator = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
