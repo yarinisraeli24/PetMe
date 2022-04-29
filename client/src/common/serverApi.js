@@ -30,31 +30,26 @@ axios.interceptors.response.use(resp => resp, async error => {
     return error;
 });
 
-export const getAllPets = async () => {
-    const response = await axios.get('/pets/getAllPets');
-    return response
+//General Endpoints
+
+export const login = async (payload) => {
+    const { data } = await axios.post('/login', payload);
+    return data;
 }
 
 export const logout = async () => {
     await axios.get('/logout')
 }
 
-export const login = async (payload) => {
-    const { data } = await axios.post('/users/login', payload);
-    return data;
-}
-
 export const register = async (payload) => {
-    await axios.post('/users/register/member', payload)
+    await axios.post('/register', payload)
 }
 
-export const addPetToFavorites = async (userId, petId) => {
-    await axios.post('/users/addPet', {userId, petId})
-}
+//Pets Endpoints
 
-export const getUserFavoritePets = async (userId) => {
-    const { data } = await axios.post('/users/getFavoritePets', {userId})
-    return data
+export const getAllPets = async () => {
+    const response = await axios.get('/pets/getAllPets');
+    return response
 }
 
 export const createNewPet = async (petData) => {
@@ -62,7 +57,12 @@ export const createNewPet = async (petData) => {
     return data;
 }
 
-export const adminRegister = async (payload) => {
-    const { data } = await axios.post('/adminRegister', payload);
-    return data;
+//Users Endpoints
+export const addPetToFavorites = async (userId, petId) => {
+    await axios.post('/users/addPet', {userId, petId})
+}
+
+export const getUserFavoritePets = async (userId) => {
+    const { data } = await axios.post('/users/getFavoritePets', {userId})
+    return data
 }

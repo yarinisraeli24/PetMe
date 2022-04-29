@@ -16,7 +16,7 @@ import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
 import PasswordStrengthBar from 'react-password-strength-bar';
-import { adminRegister } from '../common/serverApi';
+import { register } from '../common/serverApi';
 
 const emailValidator = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
@@ -51,6 +51,7 @@ export default function AdminSignUp() {
     event.preventDefault();
     setDidSubmit(true);
     const payload = {
+      isAdmin: true,
       association,
       username: email,
       password,
@@ -66,7 +67,7 @@ export default function AdminSignUp() {
       setErrorMessage('Please use strongger password')
       return
     }
-      adminRegister(payload)
+      register(payload)
       .then(() => navigate('/login'))
       .catch((error) => {
         if (error.response) {
