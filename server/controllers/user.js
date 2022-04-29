@@ -153,13 +153,16 @@ const getFavoritePets = async (req, res, next) => {
     res.send(userFavoritePets)
 }
 const getUserDetails = async (req, res, next) => {
-    const { body } = req;
-    if(!body.userId){
-        res.status(400).send('No such user or pet')
-    }
-    const user = await User.findOne({_id: body.userId})
-    res.send(user)
+    const authHeaders = req.headers['authorization']
+    const token = authHeaders && authHeaders.split(' ')[1];
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (error, user) => {
+        if(error) res.status(401).send('Invalid token')
+        res.send(user)
+        
+    })
 }
+
 module.exports = {
     login,
     logout,
