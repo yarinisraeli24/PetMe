@@ -158,6 +158,7 @@ const getUserDetails = async (req, res, next) => {
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (error, user) => {
         if(error) res.status(401).send('Invalid token')
+        
         res.send(user)
         
     })
