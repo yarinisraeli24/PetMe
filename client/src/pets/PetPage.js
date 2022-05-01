@@ -13,20 +13,29 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {UserDataContext} from '../contexts/UserDataContext';
+import { getUserDetails } from '../common/serverApi';
+
 
 
 export default function PetPage(props) {
 
-    const {id} = useContext(UserDataContext);
-    const [pets, setPets] = useState([]);
+
+  const [userDetails, setUserDetails] = useState({})
+  useEffect(()=>{
+    const userDetailsFunc = async () => {
+        const data = await getUserDetails();
+        setUserDetails(data);
+
+    }
+    userDetailsFunc();
+}, [])
+
+  const [pets, setPets] = useState([]);
 
     const [open1, setOpen1] = React.useState(false);
 
     const [petId,setPetId] = useState()
     // const [username,setUsername] = useState()
-    const [email,setEmail] = useState()
-    const [phone,setPhone] = useState()
 
 
     // const contactSaveAlert = () => {
@@ -36,8 +45,10 @@ export default function PetPage(props) {
 
     const onSubmitHandler = async (e) => {
       e.preventDefault();
-      console.log("hi:" ,id);
-      const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', userId: id, email, phone});
+      handleClickOpen1();
+      console.log("hi: 2  :   " ,userDetails);
+
+      const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', email: userDetails.email});
     }
 
     const handleClickOpen1 = () => {
@@ -80,40 +91,18 @@ export default function PetPage(props) {
         </Typography>
         </CardContent>
         <CardActions>
-        <Button onClick={handleClickOpen1}>
+        <Button onClick={onSubmitHandler}>
         Take Me Home ! 
       </Button>
       <Dialog open={open1} onClose={handleClose1}>
         <DialogTitle>Add me to your family!</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To take me home with you,
-            Please leave here your contact information and someone from the assosiation will contact you soon!
+          We got your request. Our team will contact you soon for more information !
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e)=>{setEmail(e.target.value)}}
-
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Phone Number"
-            fullWidth
-            variant="standard"
-            onChange={(e)=>{setPhone(e.target.value)}}
-          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose1}>Cancel</Button>
-          <Button onClick={onSubmitHandler}>Submit</Button>
+          <Button onClick={handleClose1}>Close</Button>
         </DialogActions>
       </Dialog>
           <Button size="small" onClick={handleClickOpen2}>Contact with a Vet</Button>

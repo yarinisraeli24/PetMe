@@ -10,6 +10,9 @@ const usersScheme = new mongoose.Schema({
         type: String,
         required: true
     },
+    refreshToken: {
+        type: String,
+    },
     data: {
         type: Object,
         required: true

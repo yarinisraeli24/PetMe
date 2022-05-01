@@ -34,8 +34,8 @@ const createPet = (req, res, next) => {
 }
 
 const takeMeHome = (req, res, next) => {
-    const {petId, userId, email, phone} = req.body;
-    const takeMeHome = TakeMeHome({petId, userId, email, phone})
+    const {petId, email} = req.body;
+    const takeMeHome = TakeMeHome({petId, email})
     takeMeHome.save();
 }
 

@@ -15,6 +15,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
 import { UserDataContext } from '../contexts/UserDataContext';
+import { login } from '../common/serverApi';
 
 function Copyright(props) {
   const navigate = useNavigate()
@@ -36,20 +37,17 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
-  const { setToken, setData } = useContext(UserDataContext)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const payload = { username, password };
-    const response = await axios.post('/users/login', payload);
-    const {token, data} = response.data;
+    const {accessToken,refreshToken, data} = await login(payload);
 
-    if (!token) {
+    if (!accessToken || !refreshToken) {
       return
     }
-    setToken(token);
-    setData(data);
-    localStorage.setItem('token', token);
+    localStorage.setItem('token', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
     navigate('/users/swipes')
   };
 

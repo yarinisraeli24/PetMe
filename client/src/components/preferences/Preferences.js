@@ -56,7 +56,7 @@ export default function HorizontalNonLinearStepper() {
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
     if(completedSteps() === totalSteps()){
-     localStorage.setItem('doneWizard_' + token, 'true')
+     localStorage.setItem('doneWizard' , 'true')
      window.location.reload();
     }
     handleNext();

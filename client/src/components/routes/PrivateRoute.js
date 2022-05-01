@@ -6,8 +6,7 @@ import Preferences from '../preferences/Preferences';
 const PrivateRoute = ({children}) => {
     const token = getToken();
     const isLoggedIn = !!token
-    const doneWizard = localStorage.getItem('doneWizard_' + token) === 'true'
-    console.log('test: '+  localStorage.getItem('doneWizard_' + token))
+    const doneWizard = localStorage.getItem('doneWizard') === 'true'
     if(isLoggedIn){
         return !doneWizard ? <Preferences /> : <Outlet />;
     }else {

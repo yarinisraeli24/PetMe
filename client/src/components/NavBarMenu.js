@@ -23,6 +23,8 @@ import PetsIcon from '@mui/icons-material/Pets';
 import './Navbar.css';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import { getToken } from '../common/utils';
+import axios from 'axios';
+import { logout } from '../common/serverApi';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -37,9 +39,15 @@ const NavBarMenu = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const token = getToken();
   const isLoggedIn = !!token;
-  const onLogOut = () => {
+  const onLogOut = async () => {
+    try{
+    await logout();
     localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
     navigate('/login')
+    }catch (error) {
+      console.log(error.message) 
+    }
   }
 
   return (
@@ -109,7 +117,7 @@ const NavBarMenu = () => {
         </Drawer>
 
         {isLoggedIn ?
-          <Button color="inherit" onClick={onLogOut}>Login Out</Button> :
+          <Button color="inherit" onClick={async () => {await onLogOut()}}>Login Out</Button> :
           <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
 
       </Toolbar>

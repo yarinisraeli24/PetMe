@@ -21,8 +21,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import {getAllPets, addPetToFavorites} from '../common/serverApi'
+
+
 import './Card.css'
-import axios from 'axios';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -48,8 +50,6 @@ export default function SwipesPage(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const {id} = useContext(UserDataContext);
   const [expanded, setExpanded] = useState(false);
   const [pets, setPets] = useState([]);
   const handleExpandClick = () => {
@@ -57,27 +57,23 @@ export default function SwipesPage(props) {
   };
   
   useEffect(()=> {
-    const getAllPets = async () => {
+    const tgetAllPets = async () => {
       try{
-      const response = await axios.get('/pets/getAllPets');
+      const response = await getAllPets()
       setPets(response.data);
       console.log(response.data)
       } catch (e) { 
         console.log('please refresh the page')
       }
     }
-    getAllPets();
+    tgetAllPets();
    }, []);
-
-    const addToFavorites = (pet) => {
-      axios.post('/users/addPet', {userId: id, petId: pet._id})
-    }
 
     const handleSwipe = (direction, pet) => {
       switch (direction) {
-        case 'right': return addToFavorites(pet);
+        case 'right': return addPetToFavorites(pet);
         case 'left': break;
-        case 'up': return addToFavorites(pet);
+        case 'up': return addPetToFavorites(pet);
         case 'down': break;
         default: break;
       }
@@ -85,9 +81,9 @@ export default function SwipesPage(props) {
 
   return (
     <>
-      {pets.map((pet, index) =>
+      {pets.length > 0? pets.map((pet, index) =>
     <CardSwiper key={pet.index} onSwipe={(direction) => handleSwipe(direction, pet)} className="swiper"  contents={
-      <Card sx={{background: `url(${pet.media[0]}) no-repeat center center`,backgroundSize: 'cover', maxWidth: 800, height: 750}}>
+      <Card sx={{background: `url() no-repeat center center`,backgroundSize: 'cover', maxWidth: 800, height: 750}}>
         <div className="content">
           <div className="content-fade">
         <CardHeader
@@ -160,6 +156,6 @@ export default function SwipesPage(props) {
         </div>
       </Card>
       }/>  
-    )} 
+    ): <div></div>} 
 </>
   )};

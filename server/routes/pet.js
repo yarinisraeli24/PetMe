@@ -5,7 +5,7 @@ const Pet = require('../controllers/pet');
 const authorization = require('../middlewares/authorization');
 const { route } = require('./user');
 
-router.get('/getAllPets' , Pet.getAllPets);
+router.get('/getAllPets' ,authenticate, Pet.getAllPets);
 router.post('/addImages', Pet.addImages);
 router.post('/createPet', Pet.createPet)
 router.post('/takeMeHome', Pet.takeMeHome)
