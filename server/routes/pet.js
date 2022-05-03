@@ -7,4 +7,8 @@ const { route } = require('./user');
 
 router.get('/getAllPets' ,authenticate, Pet.getAllPets);
 router.post('/addImages', Pet.addImages);
+router.post('/createPet', Pet.createPet)
+router.post('/takeMeHome', Pet.takeMeHome)
+
+
 module.exports = router;

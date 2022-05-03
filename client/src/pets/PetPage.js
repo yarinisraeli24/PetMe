@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,10 +13,43 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { getUserDetails } from '../common/serverApi';
 
-export default function PetPage() {
+
+
+export default function PetPage(props) {
+
+
+  const [userDetails, setUserDetails] = useState({})
+  useEffect(()=>{
+    const userDetailsFunc = async () => {
+        const data = await getUserDetails();
+        setUserDetails(data);
+
+    }
+    userDetailsFunc();
+}, [])
+
+  const [pets, setPets] = useState([]);
 
     const [open1, setOpen1] = React.useState(false);
+
+    const [petId,setPetId] = useState()
+    // const [username,setUsername] = useState()
+
+
+    // const contactSaveAlert = () => {
+    //   handleClose1();
+    //   alert("your contact information saved succesfully !");
+    // }
+
+    const onSubmitHandler = async (e) => {
+      e.preventDefault();
+      handleClickOpen1();
+      console.log("hi: 2  :   " ,userDetails);
+
+      const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', email: userDetails.email});
+    }
 
     const handleClickOpen1 = () => {
       setOpen1(true);
@@ -57,37 +91,18 @@ export default function PetPage() {
         </Typography>
         </CardContent>
         <CardActions>
-        <Button onClick={handleClickOpen1}>
+        <Button onClick={onSubmitHandler}>
         Take Me Home ! 
       </Button>
       <Dialog open={open1} onClose={handleClose1}>
         <DialogTitle>Add me to your family!</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To take me home with you,
-            Please leave here your contact information and someone from the assosiation will contact you soon!
+          We got your request. Our team will contact you soon for more information !
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Phone Number"
-            fullWidth
-            variant="standard"
-          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose1}>Cancel</Button>
-          <Button onClick={handleClose1}>Submit</Button>
+          <Button onClick={handleClose1}>Close</Button>
         </DialogActions>
       </Dialog>
           <Button size="small" onClick={handleClickOpen2}>Contact with a Vet</Button>

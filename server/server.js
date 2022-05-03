@@ -16,6 +16,7 @@ const init = require('./common/init')
 const Pet = require('./models/pets')
 const port = process.env.PORT || 5000;
 const User = require('./controllers/user');
+const algo = require('./algorithm')
 
 
 app.use(cors({
@@ -40,5 +41,7 @@ app.get('/refreshToken', User.refreshToken);
 mongoose.connect('mongodb://localhost:27017',{ useNewUrlParser: true })
 const db = mongoose.connection
 db.on('error', error=>{console.error(error)})
+
+algo.runAlgorithm()
 
 module.exports = app
