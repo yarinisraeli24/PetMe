@@ -1,5 +1,6 @@
 const User = require('../models/users')
 const Pet = require('../models/pets')
+const TakeMeHome = require('../models/takeMeHome')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const { mongo } = require('mongoose')
@@ -39,8 +40,30 @@ const getAllPets = async (req, res, next) => {
     });
 }
 
+const getAllTakeMeHome = async (req, res, next) => {
+    const {associationId} = req.query;
+    TakeMeHome.find({associationId: associationId}, async (error,takeMeHomeList) => {
+        if(error) res.status(403).send(error);
+        const requestsDataList = await Promise.all(takeMeHomeList.map(async request => {
+            const petData = await Pet.findById(request.petId);
+            const user = await User.findById(request.userId);
+            const userData = user.data;
+            return {requestId: request._id, petData, userData}
+        }));
+        res.send(requestsDataList)
+    })
+}
 
+const removeTakeMeHome = async (req, res, next ) => {
+    const {requestId} = req.query
+    TakeMeHome.findOneAndRemove({_id: requestId}, (error,data) => {
+        if(error) res.status(403).send('Not Found')
+        res.status(200);
+    });
+}
 module.exports = {
+    removeTakeMeHome,
+    getAllTakeMeHome,
     createPet,
     getAllPets,
 }

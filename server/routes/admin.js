@@ -8,5 +8,7 @@ const Admin = require('../controllers/admin')
 // router.use(authorization)
 router.post('/createPet', Admin.createPet)
 router.get('/getAllPets', Admin.getAllPets)
+router.get('/getAllTakeMeHome', Admin.getAllTakeMeHome) 
+router.get('/removeTakeMeHome', Admin.removeTakeMeHome)
 
 module.exports = router;

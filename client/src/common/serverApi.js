@@ -47,6 +47,11 @@ export const register = async (payload) => {
 
 //Pets Endpoints
 
+export const takeMeHome = async (petId, associationId, userId) => {
+    const { data } = await axios.get(`/pets/takeMeHome?petId=${petId}&associationId=${associationId}&userId=${userId}`)
+    return data
+}
+
 export const getAllPets = async () => {
     const response = await axios.get('/pets/getAllPets');
     return response
@@ -63,6 +68,15 @@ export const getAssociationPets = async (associationId) => {
     return response
 }
 
+export const getTakeMeHomeRequests = async (associationId) => {
+    const {data} = await axios.get(`/admin/getAllTakeMeHome?associationId=${associationId}`);
+    return data
+}
+
+export const removeTakeMeHome = async (requestId) => {
+    await axios.get(`/admin/removeTakeMeHome?requestId=${requestId}`)
+}
+
 //Users Endpoints
 export const addPetToFavorites = async (userId, petId) => {
     await axios.post('/users/addPet', {userId, petId})
@@ -74,7 +88,6 @@ export const getUserFavoritePets = async (userId) => {
 }
 export const getUserDetails = async () => {
     const { data } = await axios.get('/users/getUserDetails')
-    console.log(data)
     return data
 }
 
