@@ -11,7 +11,7 @@ module.exports = (credentials = []) => {
             return res.redirect('/login');
         }
 
-        jwt.verify(token, config.JWT_SECRET, (error, decoded) => {
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decoded) => {
             if(error) return res.status(401).send("Error: Access Denied");
 
             if(credentials.length) {

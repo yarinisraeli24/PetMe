@@ -8,6 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import './CreatePetPage.css'
+import { createNewPet } from '../common/serverApi';
 
 const CreatePetPage = ({}) => {
     const [images, setImages] = useState([]);
@@ -22,7 +23,7 @@ const CreatePetPage = ({}) => {
 
     const onSubmitHandler = async (e) => {
       e.preventDefault();
-      const {data} = await axios.post('/pets/createPet', {name, age, color, breed, kind, gender,size, images});
+      const petData = await createNewPet({name, age, color, breed, kind, gender,size, images});
     }
     const onUploadImages = (images) => {
         const imagesData = images.map(image => {
@@ -33,7 +34,6 @@ const CreatePetPage = ({}) => {
     useEffect(() => {
       const fetchData = async () => {
         // const result = await getItems();
-        // console.log('fetch data;m', result)
         // setItems(result)
       }
       fetchData()

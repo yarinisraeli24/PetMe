@@ -8,22 +8,20 @@ import Preferences from './components/preferences/Preferences';
 import Register from './components/Register';
 import Home from './components/Home';
 import { BrowserRouter as Router,Routes, Route,Navigate } from 'react-router-dom';
-import { getToken } from './common/utils';
 import PrivateRoute from './components/routes/PrivateRoute';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import FavoritesPage from './components/favorites/FavoritesPage';
-import {UserDataProvider} from './contexts/UserDataContext';
 import AllAssociationsPage from './components/associations/AllAssociationsPage';
 import CreatePetPage from './pets/CreatePetPage';
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
-import PetPage from './components/PetPage';
+import PetPage from './pets/PetPage';
 
+import ProfileDetailsPage from './components/profile/ProfileDetailsPage';
 
 
 function App() {
   return (
-    <UserDataProvider>
       <div className="App"> 
         <Router>
         <NavBarMenu />
@@ -37,6 +35,7 @@ function App() {
             </Route>
 
             <Route path="/users/" element={<PrivateRoute />}>
+            <Route path="profile" element={<ProfileDetailsPage/>} />
               <Route path="swipes" element={<SwipesPage/>} />
               <Route path="favorites" element={<FavoritesPage/>} />
               <Route path='preferences' element={<Preferences />} />
@@ -51,7 +50,6 @@ function App() {
         </Routes>
         </Router>
       </div>
-    </UserDataProvider>
   );
 }
 
