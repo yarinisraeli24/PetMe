@@ -78,7 +78,14 @@ describe('Authentication check ',()=>{
     })
 
     test('Expect user pet to be equal the petDataMock', async () => {
+        accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1'});
         const response = await request(app).post('/users/getFavoritePets').send({userId: data.id}).set('Authorization', `Bearer ${accessToken}`)
         expect(response._body[0]).toEqual(petDataMock)
+    })
+
+    test('Should get a pet', async () => {
+        accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1'});
+        const response = await request(app).get('/pets/getPet').send({id: petDataMock._id}).set('Authorization', `Bearer ${accessToken}`)
+        expect(response.status).toEqual(200)
     })
 })

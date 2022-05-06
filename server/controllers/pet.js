@@ -13,8 +13,14 @@ const Image = require('../models/image')
 const getAllPets = (req, res, next) => {
      Pet.find({}, (error, pets)=>{ 
         res.send(pets)
-
     });
+}
+
+const getPet = (req, res, next) => {
+    const {id} = req
+    Pet.find({_id: id}, (error, pet)=>{ 
+       res.send(pet)
+   });
 }
 
 const addImages = async (req, res, next) => {
@@ -41,6 +47,7 @@ const takeMeHome = (req, res, next) => {
 
 module.exports = {
     getAllPets,
+    getPet,
     addImages,
     createPet,
     takeMeHome,

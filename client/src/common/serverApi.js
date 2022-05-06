@@ -65,3 +65,7 @@ export const createNewPet = async (petData) => {
     const { data } = await axios.post('/pets/createPet', petData);
     return data;
 }
+export const getPet = async (id) => {
+    const response = await axios.get('/pets/getPet', id);
+    return response
+}
