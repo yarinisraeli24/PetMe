@@ -37,7 +37,9 @@ const TakeMeHomeSection = () => {
                 <div>{userData.email}</div>
                 <div>
                     <Button href={mailtoBuilder(petData,userData)}>Contact User</Button>
-                    <Button>View Pet</Button>
+                    <Button onClick={() => navigate('/petPage', {state: {pet: petData}})}>
+                            View Pet
+                        </Button>
                     <Button onClick={() => deleteRequset(index)}>Delete</Button>
                 </div>
             </div>

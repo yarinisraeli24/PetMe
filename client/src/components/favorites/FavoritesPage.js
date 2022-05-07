@@ -7,15 +7,19 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
+import {Button} from '@mui/material'
 import { UserDataContext } from "../../contexts/UserDataContext";
 import { AdminContext } from "../../contexts/AdminContext";
 
 import { getUserFavoritePets } from '../../common/serverApi';
+import PetPage from "../../pets/PetPage";
+import { useNavigate } from "react-router-dom";
 
 const FavoritesPage = ({}) => {
     const { userData, isAdmin } = useContext(UserDataContext)
     const { petsData } = useContext(AdminContext);
     const [favoritePets, setFavoritePets] = useState([])
+    const navigate = useNavigate()
 
     useEffect(()=>{
         if(isAdmin) {
@@ -32,7 +36,6 @@ const FavoritesPage = ({}) => {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="caption table">
-            <caption>A basic table example with a caption</caption>
             <TableHead>
                 <TableRow>
                 <TableCell>Pet</TableCell>
@@ -40,6 +43,7 @@ const FavoritesPage = ({}) => {
                 <TableCell align="right">Association</TableCell>
                 <TableCell align="right">Age</TableCell>
                 <TableCell align="right">Kind</TableCell>
+                <TableCell align="right"></TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -55,6 +59,11 @@ const FavoritesPage = ({}) => {
                     <TableCell align="right">{pet.association}</TableCell>
                     <TableCell align="right">{pet.age}</TableCell>
                     <TableCell align="right">{pet.petKind}</TableCell>
+                    <TableCell align="right">
+                        <Button onClick={() => navigate('/petPage', {state: {pet}})}>
+                            View Pet
+                        </Button>
+                    </TableCell>
                 </TableRow>
                 ))}
             </TableBody>

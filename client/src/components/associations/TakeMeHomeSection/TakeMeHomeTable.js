@@ -3,8 +3,10 @@ import {Table, TableBody, TableCell, TableContainer,TableHead,TableRow, Paper, A
 import { AdminContext } from "../../../contexts/AdminContext";
 import { mailtoBuilder } from "../../../common/utils";
 import {removeTakeMeHome} from '../../../common/serverApi'
+import { useNavigate } from "react-router-dom";
 
 const TakeMeHomeTable = ({}) => {
+    const navigate = useNavigate();
     const { takeMeRequests, setTakeMeRequests } = useContext(AdminContext);
     const deleteRequset = async (index) => {
         const currentTakeMeHome = takeMeRequests[index];
@@ -59,7 +61,9 @@ const TakeMeHomeTable = ({}) => {
                             <Button href={mailtoBuilder(petData,userData)}>Send Email</Button>
                         </TableCell>
                         <TableCell>
-                        <Button>View Pet</Button>
+                        <Button onClick={() => navigate('/petPage', {state: {pet: petData}})}>
+                            View Pet
+                        </Button>
                         <Button onClick={() => deleteRequset(index)}>Delete</Button>
                         </TableCell>
                     </TableRow>
