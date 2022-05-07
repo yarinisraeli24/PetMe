@@ -71,9 +71,9 @@ export default function SwipesPage(props) {
 
     const handleSwipe = (direction, pet) => {
       switch (direction) {
-        case 'right': return addPetToFavorites(pet);
+        case 'right': return addPetToFavorites(userData.id, pet._id);
         case 'left': break;
-        case 'up': return addPetToFavorites(pet);
+        case 'up': return addPetToFavorites(userData.id, pet._id);
         case 'down': break;
         default: break;
       }
@@ -83,7 +83,7 @@ export default function SwipesPage(props) {
     <>
       {pets.length > 0? pets.map((pet, index) =>
     <CardSwiper key={pet.index} onSwipe={(direction) => handleSwipe(direction, pet)} className="swiper"  contents={
-      <Card sx={{background: `url() no-repeat center center`,backgroundSize: 'cover', maxWidth: 800, height: 750}}>
+      <Card sx={{background: `url(${pet.images[0]?.url}) no-repeat center center`,backgroundSize: 'cover', width: 800, height: 750}}>
         <div className="content">
           <div className="content-fade">
         <CardHeader

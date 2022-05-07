@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, useLocation} from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -19,7 +19,8 @@ import { getUserDetails } from '../common/serverApi';
 
 export default function PetPage(props) {
 
-
+  const location = useLocation()
+  const petData = location.state.pet;
   const [userDetails, setUserDetails] = useState({})
   useEffect(()=>{
     const userDetailsFunc = async () => {
@@ -73,19 +74,20 @@ export default function PetPage(props) {
         <CardMedia 
           component="img"
           height="650"
-          image="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=640:*"
+          image={petData.images[0]?.url}
         />
         <CardContent>
         <Typography gutterBottom variant="h3" component="div">
-            Tommy
+          {petData.name}
         </Typography>
         <Typography gutterBottom variant="h5" component="div">
-            Australian Shepherd
+            {petData.petKind + ' ' + petData.breed}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-            Tommy is a beutiful and energetic dog. <br></br>
-            He likes to play with toys all day. <br></br>
-            Will be happy to go with you to the park and catch a frizbi.
+            {'Gender: ' + petData.gender}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+            {'More Info: ' + petData.description}
         </Typography>
         </CardContent>
         <CardActions>

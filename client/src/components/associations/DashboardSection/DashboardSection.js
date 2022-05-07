@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, Typography, Button} from '@mui/material';
 import { useEffect } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { useNavigate } from 'react-router-dom';
+
 
 const data = [
 {name: 'Sunday', uv: 400, pv: 2400, amt: 2400}, 
@@ -10,12 +12,12 @@ const data = [
 {name: 'Wednesday', uv: 400, pv: 2400, amt: 2400}, 
 {name: 'Thursday', uv: 500, pv: 2400, amt: 2400}, 
 {name: 'Friday', uv: 600, pv: 2400, amt: 2400}, 
-{name: 'Saturday', uv: 700, pv: 2400, amt: 2400}, 
-
-
-
+{name: 'Saturday', uv: 700, pv: 2400, amt: 2400},
 ];
+
 const DashboardSection = () => {
+  const navigate = useNavigate();
+
     return (
         <Card sx={{width: '48%', height: '50%', margin: 1}}>
         <Typography variant="h6" sx={{mb: 1}}> Dashboard</Typography>
@@ -26,7 +28,7 @@ const DashboardSection = () => {
             <XAxis dataKey="name" />
         <YAxis />
         </LineChart>
-        <Button sx={{bottom: 0}}>Go to Dashboard</Button>
+        <Button sx={{bottom: 0}} onClick={() => navigate('/admin/dashboard')}>Go to Dashboard</Button>
         </Card>
         );
 }
