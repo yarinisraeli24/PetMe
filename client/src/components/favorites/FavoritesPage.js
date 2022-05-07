@@ -8,19 +8,26 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import { UserDataContext } from "../../contexts/UserDataContext";
+import { AdminContext } from "../../contexts/AdminContext";
+
 import { getUserFavoritePets } from '../../common/serverApi';
 
-const FavoritesPage = () => {
-    const { id } = useContext(UserDataContext)
+const FavoritesPage = ({isAdmin}) => {
+    const { userData } = useContext(UserDataContext)
+    const { petsData } = useContext(AdminContext);
     const [favoritePets, setFavoritePets] = useState([])
 
     useEffect(()=>{
-        const setUserFavoritePets = async (userId) => {
-            const data = await getUserFavoritePets(userId);
-            setFavoritePets(data)
+        if(isAdmin) {
+            setFavoritePets(petsData);
+            } else{
+            const setUserFavoritePets = async () => {
+                const data = await getUserFavoritePets(userData.id);
+                setFavoritePets(data)
+            }
+            setUserFavoritePets();
         }
-        setUserFavoritePets(id);
-    }, [])
+    }, [userData.id])
 
     return (
         <TableContainer component={Paper}>
@@ -41,7 +48,7 @@ const FavoritesPage = () => {
                     <TableCell component="th" scope="row">
                     <Avatar
                         alt="Remy Sharp"
-                        src={pet.media[0]}
+                        src={pet.images[0]}
                         sx={{ width: 56, height: 56 }}
                         /></TableCell>
                     <TableCell align="right">{pet.name}</TableCell>

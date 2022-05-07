@@ -24,7 +24,7 @@ export const UserDataProvider = ({children}) => {
             userData,
             isAdmin,
         }}>
-            {children}
+            {userData && children}
         </UserDataContext.Provider>
     )
 }

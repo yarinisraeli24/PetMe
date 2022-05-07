@@ -23,11 +23,13 @@ import PetPage from './pets/PetPage';
 
 import ProfileDetailsPage from './components/profile/ProfileDetailsPage';
 import { UserDataProvider } from './contexts/UserDataContext';
+import { AdminProvider } from './contexts/AdminContext';
 
 
 function App() {
   return (
     <UserDataProvider>
+        <AdminProvider>
       <div className="App"> 
         <Router>
         <NavBarMenu />
@@ -47,9 +49,11 @@ function App() {
               <Route path="favorites" element={<FavoritesPage/>} />
               <Route path='preferences' element={<Preferences />} />
             </Route>
+
             <Route path="/admin/" element={<PrivateRoute />}>
-              <Route path="home" element={<AdminHome/>} />
-              <Route path="createPet" element={<CreatePetPage/>} />
+                <Route path="home" element={<AdminHome/>} />
+                <Route path="createPet" element={<CreatePetPage/>} />
+                <Route path="pets" element={<FavoritesPage isAdmin={true}/>} />
             </Route>
 
             <Route path="/allAssociations" element={<AllAssociationsPage />}>
@@ -58,6 +62,7 @@ function App() {
         </Routes>
         </Router>
       </div>
+        </AdminProvider>
       </UserDataProvider>
   );
 }

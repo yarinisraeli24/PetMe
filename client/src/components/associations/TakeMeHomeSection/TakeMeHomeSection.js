@@ -4,35 +4,25 @@ import { getTakeMeHomeRequests, removeTakeMeHome } from '../../../common/serverA
 import { UserDataContext } from '../../../contexts/UserDataContext';
 import { mailtoBuilder } from '../../../common/utils';
 import './TakeMeHomeSection.css'
+import { AdminContext } from '../../../contexts/AdminContext';
 
 const TakeMeHomeSection = () => {
-    const {userData} = useContext(UserDataContext)
-    const [takeMeHomeList, setTakeMeHomeList] = useState([])
+    const {takeMeRequests, setTakeMeRequests} = useContext(AdminContext);
 
     const deleteRequset = async (index) => {
-        const currentTakeMeHome = takeMeHomeList[index];
-        setTakeMeHomeList(prevState => prevState.filter((data,idex) => idex !==index))
+        const currentTakeMeHome = takeMeRequests[index];
+        setTakeMeRequests(prevState => prevState.filter((data,idex) => idex !==index))
         console.log(currentTakeMeHome)
         await removeTakeMeHome(currentTakeMeHome.requestId)
     }
 
 
-    useEffect(()=>{
-        const getAllTakeMeHome = async () => {
-            if(userData.id){
-                const requests = await getTakeMeHomeRequests(userData.id) 
-                setTakeMeHomeList(requests);
-            }
-        }
-        getAllTakeMeHome();
-    },[userData.id])
-
     return (
     <Card sx={{width: '98%', height: '30%'}}>
     <Typography variant="h6" sx={{mb: 1}}> People ask for Adoption</Typography>
     <Typography sx={{mb: 5}}>Find all the people who asked to adupt pet, contact with the user and scadul the meet to find a warm home for your pets</Typography>
-    {takeMeHomeList.length > 0 ? 
-    takeMeHomeList.map((request, index) => {
+    {takeMeRequests.length > 0 ? 
+    takeMeRequests.map((request, index) => {
         const {petData, userData} = request;
         return (
             <div className='requestRow'>
