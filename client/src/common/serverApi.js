@@ -30,24 +30,54 @@ axios.interceptors.response.use(resp => resp, async error => {
     return error;
 });
 
-export const getAllPets = async () => {
-    const response = await axios.get('/pets/getAllPets');
-    return response
+//General Endpoints
+
+export const login = async (payload) => {
+    const { data } = await axios.post('/login', payload);
+    return data;
 }
 
 export const logout = async () => {
     await axios.get('/logout')
 }
 
-export const login = async (payload) => {
-    const { data } = await axios.post('/users/login', payload);
+export const register = async (payload) => {
+    await axios.post('/register', payload)
+}
+
+//Pets Endpoints
+
+export const takeMeHome = async (petId, associationId, userId) => {
+    const { data } = await axios.get(`/pets/takeMeHome?petId=${petId}&associationId=${associationId}&userId=${userId}`)
+    return data
+}
+
+export const getAllPets = async () => {
+    const response = await axios.get('/pets/getAllPets');
+    return response
+}
+
+//Admin Endpoints
+
+export const createNewPet = async (petData) => {
+    const { data } = await axios.post('/admin/createPet', petData);
     return data;
 }
-
-export const register = async (payload) => {
-    await axios.post('/users/register/member', payload)
+export const getAssociationPets = async (associationId) => {
+    const response = await axios.get(`/admin/getAllPets?id=${associationId}`);
+    return response
 }
 
+export const getTakeMeHomeRequests = async (associationId) => {
+    const {data} = await axios.get(`/admin/getAllTakeMeHome?associationId=${associationId}`);
+    return data
+}
+
+export const removeTakeMeHome = async (requestId) => {
+    await axios.get(`/admin/removeTakeMeHome?requestId=${requestId}`)
+}
+
+//Users Endpoints
 export const addPetToFavorites = async (userId, petId) => {
     await axios.post('/users/addPet', {userId, petId})
 }
@@ -58,10 +88,6 @@ export const getUserFavoritePets = async (userId) => {
 }
 export const getUserDetails = async () => {
     const { data } = await axios.get('/users/getUserDetails')
-    console.log(data)
     return data
 }
-export const createNewPet = async (petData) => {
-    const { data } = await axios.post('/pets/createPet', petData);
-    return data;
-}
+

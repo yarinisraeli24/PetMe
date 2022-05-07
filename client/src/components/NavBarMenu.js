@@ -23,8 +23,9 @@ import PetsIcon from '@mui/icons-material/Pets';
 import './Navbar.css';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import { getToken } from '../common/utils';
-import axios from 'axios';
+import {UserDataContext} from '../contexts/UserDataContext'
 import { logout } from '../common/serverApi';
+import { useContext } from 'react';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -35,6 +36,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const NavBarMenu = () => {
+  const {isAdmin} = useContext(UserDataContext)
   const navigate = useNavigate()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const token = getToken();
@@ -76,7 +78,7 @@ const NavBarMenu = () => {
         </DrawerHeader>
         <Divider />
           <List className='menu'>
-            <ListItem button className='listItem' onClick={() => navigate('/')}>
+            <ListItem button className='listItem' onClick={() => isAdmin ? navigate('/admin/home') : navigate('/')}>
             <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>

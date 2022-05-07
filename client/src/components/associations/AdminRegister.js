@@ -16,7 +16,7 @@ import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
 import PasswordStrengthBar from 'react-password-strength-bar';
-import { register } from '../common/serverApi';
+import { register } from '../../common/serverApi';
 
 const emailValidator = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
@@ -37,10 +37,8 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp({isAssociation}) {
+export default function AdminSignUp() {
   const [association, setAssociation] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
@@ -53,12 +51,13 @@ export default function SignUp({isAssociation}) {
     event.preventDefault();
     setDidSubmit(true);
     const payload = {
-      firstName,
-      lastName,
+      isAdmin: true,
+      association,
       username: email,
       password,
     }
-
+    if(!association)
+        return
     if(!emailValidator.test(email)){
       setErrorMessage("Email not valid")
       return
@@ -102,41 +101,6 @@ export default function SignUp({isAssociation}) {
             <Grid item xs={12}>
                 {errorMessage && <Alert variant="filled" severity="error">{errorMessage}</Alert>}
               </Grid>
-              {!isAssociation ? (
-                <>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  onChange={(event) => {
-                    setFirstName(event.target.value)
-                  }}
-                  error={didSubmit && !firstName}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                  onChange={(event) => {
-                    setLastName(event.target.value)
-                  }}
-                  error={didSubmit && !lastName}
-                />
-              </Grid>
-              </>
-              )
-               : 
-              (
                  <Grid item xs={12}>
                  <TextField
                    required
@@ -151,7 +115,6 @@ export default function SignUp({isAssociation}) {
                    error={didSubmit && !association}
                  />
                </Grid>
-              )}
               <Grid item xs={12}>
                 <TextField
                   required
