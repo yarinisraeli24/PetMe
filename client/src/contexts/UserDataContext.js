@@ -5,17 +5,17 @@ import {getUserDetails } from '../common/serverApi'
 export const UserDataContext = createContext();
 
 export const UserDataProvider = ({children}) => {
+    const [token, setToken] = useState(getToken())
+    const [userData, setUserData] = useState({});
+    const [isAdmin, setIsAdmin] = useState(false);
     useEffect(()=> {
         const getUserData = async () => {
             const data = await getUserDetails();
             setUserData(data)
             setIsAdmin(data.permissions === 'admin')
         }
-        getUserData()
-    }, [])
-    const [token, setToken] = useState(getToken())
-    const [userData, setUserData] = useState({});
-    const [isAdmin, setIsAdmin] = useState(false);
+        token && getUserData()
+    }, [token])
     return (
         <UserDataContext.Provider value={{
             token,

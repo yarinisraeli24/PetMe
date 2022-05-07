@@ -57,7 +57,7 @@ export default function SwipesPage(props) {
   };
   
   useEffect(()=> {
-    const tgetAllPets = async () => {
+    const getPetsData = async () => {
       try{
       const response = await getAllPets()
       setPets(response.data);
@@ -66,7 +66,7 @@ export default function SwipesPage(props) {
         console.log('please refresh the page')
       }
     }
-    tgetAllPets();
+    getPetsData();
    }, []);
 
     const handleSwipe = (direction, pet) => {

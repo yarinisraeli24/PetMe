@@ -70,9 +70,9 @@ export default function HorizontalNonLinearStepper() {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <PersonalSettings handleNext={handleNext}/> 
+        return <PersonalSettings handleComplete={handleComplete}/> 
       case 1:
-        return <PetSettings handleNext={handleNext}/>;
+        return <PetSettings handleComplete={handleComplete}/>;
       case 2:
         return <AdditionalInfo handleComplete={handleComplete}/>;
       default:
@@ -105,32 +105,7 @@ export default function HorizontalNonLinearStepper() {
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1}}> {getStepContent(activeStep)}</Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleNext} sx={{ mr: 1 }}>
-                Next
-              </Button>
-              {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1
-                      ? 'Finish'
-                      : 'Complete Step'}
-                  </Button>
-                ))}
-            </Box>
+            <Button onClick={handleBack} disabled={activeStep === 0}>Back</Button>
           </React.Fragment>
         )}
       </Container>

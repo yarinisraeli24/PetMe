@@ -9,7 +9,7 @@ export const PreferencesProvider = ({children}) => {
     const updatePreferences = (data) => {
         setPreferencesData((prevState) => {
             return{
-                ...prevState, 
+                ...prevState,
                 ...data,
             }
         })

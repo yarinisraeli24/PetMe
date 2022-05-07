@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "./utils";
 
 let refresh = false;
 
@@ -13,7 +14,7 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(resp => resp, async error => {
-    if (error.response.status === 401 && !refresh) {
+    if (error.response.status === 401 && !refresh && getToken()) {
         refresh = true;
         localStorage.setItem('token', localStorage.getItem('refreshToken'))
         const response = await axios.get('/users/refreshToken');

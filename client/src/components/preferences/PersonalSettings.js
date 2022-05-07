@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,15 +13,18 @@ import FormControl from '@mui/material/FormControl';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Avatar from '@mui/material/Avatar';
 import { Button } from '@mui/material';
-import { usePreviousProps } from '@mui/utils';
+
+import { PreferencesContext } from '../../contexts/PreferencesContext';
 
 export default function HorizontalNonLinearStepper(props) {
 
-  const [gender, setGender] = useState('');
-  const [status, setStatus] = useState('');
-  const [age, setAge] = useState('')
-  const [city, setCity] = useState('')
-  const [country, setCountry] = useState('')
+  const {updatePreferences, preferencesData} = useContext(PreferencesContext);
+
+  const [gender, setGender] = useState(preferencesData?.gender || '');
+  const [status, setStatus] = useState(preferencesData?.status || '');
+  const [age, setAge] = useState(preferencesData?.age || '')
+  const [city, setCity] = useState(preferencesData?.city || '')
+  const [country, setCountry] = useState(preferencesData?.country || '')
   
   const [didSubmit, setDidSubmit] = useState(false);
 
@@ -29,8 +32,16 @@ export default function HorizontalNonLinearStepper(props) {
   function validateNext() {
     const isValid = gender && status && age && city && country
     setDidSubmit(true);
-    if (isValid)
-      props.handleNext()
+    if (isValid){
+      updatePreferences({
+        gender,
+        status,
+        age,
+        city,
+        country,
+      })
+      props.handleComplete()
+    }
   }
 
   return (

@@ -18,22 +18,22 @@ import { PreferencesContext } from '../../contexts/PreferencesContext';
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
 export default function HorizontalNonLinearStepper(props) {
-  const {updatePreferences} = useContext(PreferencesContext);
+  const {updatePreferences, preferencesData} = useContext(PreferencesContext);
 
-  const [petGender, setPetGender] = useState('')
-  const [petKind, setPetKind] = useState('')
-  const [size, setSize] = useState('')
-  const [hair, setHair] = useState('')
-  const [age, setAge] = useState('')
-  const [color, setColor] = useState('')
-  const [district, setDistrict] = useState('')
+  const [petGender, setPetGender] = useState(preferencesData?.petGender || '')
+  const [petKind, setPetKind] = useState(preferencesData?.petKind || '')
+  const [size, setSize] = useState(preferencesData?.size || '')
+  const [hair, setHair] = useState(preferencesData?.hair || '')
+  const [petAge, setPetage] = useState(preferencesData?.petAge || '')
+  const [color, setColor] = useState(preferencesData?.color || '')
+  const [district, setDistrict] = useState(preferencesData?.district || '')
 
 
   const [didSubmit, setDidSubmit] = useState(false);
 
 
   function validateNext() {
-    const isValid = petGender && petKind && size && hair && age && color && district
+    const isValid = petGender && petKind && size && hair && petAge && color && district
     setDidSubmit(true);
     if (isValid){
       updatePreferences({
@@ -41,11 +41,11 @@ export default function HorizontalNonLinearStepper(props) {
         petKind,
         size,
         hair,
-        age,
+        petAge,
         color,
         district,
       })
-      props.handleNext()
+      props.handleComplete()
     }
   }
 
@@ -129,14 +129,14 @@ export default function HorizontalNonLinearStepper(props) {
             </Select>
             </FormControl>
             <FormControl fullWidth style={{marginTop: '20px'}}>
-            <InputLabel id="age-simple-select-label">Age</InputLabel>
+            <InputLabel id="petage-simple-select-label">Pet age</InputLabel>
             <Select
-                labelId="age-simple-select-label"
-                id="age-simple-select"
-                value={age}
-                label="Age"
-                onChange={(selected)=>{setAge(selected.target.value)}}
-                error={didSubmit && !age}
+                labelId="petage-simple-select-label"
+                id="petage-simple-select"
+                value={petAge}
+                label="petage"
+                onChange={(selected)=>{setPetage(selected.target.value)}}
+                error={didSubmit && !petAge}
               >
                   <MenuItem value="0-1">0-1</MenuItem>
                   <MenuItem value="2-4">2-4</MenuItem>

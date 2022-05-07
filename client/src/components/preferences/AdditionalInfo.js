@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,24 +16,36 @@ import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
 import { Button } from '@mui/material';
 
+import { PreferencesContext } from '../../contexts/PreferencesContext';
+
 
 
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
 export default function HorizontalNonLinearStepper(props) {
 
-  const [house, setHouse] = useState('')
-  const [kidsolds, setKidsolds] = useState('')
-  const [allergic, setAllergic] = useState('')
-  const [morepets, setMorepets] = useState('')
-  const [energy, setEnergy] = useState('')
+  const {updatePreferences, preferencesData} = useContext(PreferencesContext);
+
+  const [house, setHouse] = useState(preferencesData?.house || '')
+  const [kidsolds, setKidsolds] = useState(preferencesData?.kidsolds || '')
+  const [allergic, setAllergic] = useState(preferencesData?.allergic || '')
+  const [morepets, setMorepets] = useState(preferencesData?.morepets || '')
+  const [energy, setEnergy] = useState(preferencesData?.energy || '')
   
 
   const [didSubmit, setDidSubmit] = useState(false);
 
-
-  function Complete() {
-      props.handleComplete()
+  function validateNext() {
+    setDidSubmit(true);
+    updatePreferences({
+      house,
+      kidsolds,
+      allergic,
+      morepets,
+      energy,
+    })
+    props.handleComplete()
+    
   }
 
   return (
@@ -124,7 +136,7 @@ export default function HorizontalNonLinearStepper(props) {
         </FormControl>
         </div>
         </Box>
-        <Button onClick={Complete}>Finish</Button>
+        <Button onClick={validateNext}>Finish</Button>
       </Box>
     </Container>
   );

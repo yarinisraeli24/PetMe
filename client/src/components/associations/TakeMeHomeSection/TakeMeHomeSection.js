@@ -12,7 +12,6 @@ const TakeMeHomeSection = () => {
     const deleteRequset = async (index) => {
         const currentTakeMeHome = takeMeRequests[index];
         setTakeMeRequests(prevState => prevState.filter((data,idex) => idex !==index))
-        console.log(currentTakeMeHome)
         await removeTakeMeHome(currentTakeMeHome.requestId)
     }
 
