@@ -24,6 +24,7 @@ import PetPage from './pets/PetPage';
 import ProfileDetailsPage from './components/profile/ProfileDetailsPage';
 import { UserDataProvider } from './contexts/UserDataContext';
 import { AdminProvider } from './contexts/AdminContext';
+import TakeMeHomeTable from './components/associations/TakeMeHomeSection/TakeMeHomeTable'
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
                 <Route path="home" element={<AdminHome/>} />
                 <Route path="createPet" element={<CreatePetPage/>} />
                 <Route path="pets" element={<FavoritesPage isAdmin={true}/>} />
+                <Route path="takeMeHomeRequests" element={<TakeMeHomeTable />} />
             </Route>
 
             <Route path="/allAssociations" element={<AllAssociationsPage />}>

@@ -5,9 +5,12 @@ import { UserDataContext } from '../../../contexts/UserDataContext';
 import { mailtoBuilder } from '../../../common/utils';
 import './TakeMeHomeSection.css'
 import { AdminContext } from '../../../contexts/AdminContext';
+import { useNavigate } from 'react-router-dom';
+
 
 const TakeMeHomeSection = () => {
     const {takeMeRequests, setTakeMeRequests} = useContext(AdminContext);
+    const navigate = useNavigate();
 
     const deleteRequset = async (index) => {
         const currentTakeMeHome = takeMeRequests[index];
@@ -44,7 +47,7 @@ const TakeMeHomeSection = () => {
         <div>
             <CircularProgress/>
         </div>}
-    <Button sx={{bottom: 0}}>All Pets</Button>
+    <Button sx={{bottom: 0}} onClick={() => navigate('/admin/takeMeHomeRequests')}>All Requests</Button>
     </Card>
     );
 }
