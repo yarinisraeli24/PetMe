@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,12 +11,14 @@ import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
 import PetsIcon from '@mui/icons-material/Pets';
 import { Button } from '@mui/material';
+import { PreferencesContext } from '../../contexts/PreferencesContext';
 
 
 
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
 export default function HorizontalNonLinearStepper(props) {
+  const {updatePreferences} = useContext(PreferencesContext);
 
   const [petGender, setPetGender] = useState('')
   const [petKind, setPetKind] = useState('')
@@ -33,8 +35,18 @@ export default function HorizontalNonLinearStepper(props) {
   function validateNext() {
     const isValid = petGender && petKind && size && hair && age && color && district
     setDidSubmit(true);
-    if (isValid)
+    if (isValid){
+      updatePreferences({
+        petGender,
+        petKind,
+        size,
+        hair,
+        age,
+        color,
+        district,
+      })
       props.handleNext()
+    }
   }
 
   return (
