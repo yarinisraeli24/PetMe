@@ -52,7 +52,7 @@ const FavoritesPage = ({}) => {
                     <TableCell component="th" scope="row">
                     <Avatar
                         alt="Remy Sharp"
-                        src={pet.images[0]}
+                        src={pet.images[0]?.url}
                         sx={{ width: 56, height: 56 }}
                         /></TableCell>
                     <TableCell align="right">{pet.name}</TableCell>
