@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState} from "react";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Avatar from '@mui/material/Avatar';
+import {Table, TableBody, TableCell, TableContainer,TableHead,TableRow, Paper, Avatar, Button} from '@mui/material'
 import { AdminContext } from "../../../contexts/AdminContext";
+import { mailtoBuilder } from "../../../common/utils";
+import {removeTakeMeHome} from '../../../common/serverApi'
 
 const TakeMeHomeTable = ({}) => {
-    const { takeMeRequests } = useContext(AdminContext);
+    const { takeMeRequests, setTakeMeRequests } = useContext(AdminContext);
+    const deleteRequset = async (index) => {
+        const currentTakeMeHome = takeMeRequests[index];
+        setTakeMeRequests(prevState => prevState.filter((data,idex) => idex !==index))
+        console.log(currentTakeMeHome)
+        await removeTakeMeHome(currentTakeMeHome.requestId)
+    }
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="caption table">
@@ -23,10 +24,12 @@ const TakeMeHomeTable = ({}) => {
                 <TableCell>Association</TableCell>
                 <TableCell>Age</TableCell>
                 <TableCell>Kind</TableCell>
+                <TableCell>Contact</TableCell>
+                <TableCell></TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {takeMeRequests && takeMeRequests.map((request) => {
+                {takeMeRequests && takeMeRequests.map((request, index) => {
                     const {userData, petData} = request
                     return( 
                     <TableRow key={userData.firstName}>
@@ -52,6 +55,13 @@ const TakeMeHomeTable = ({}) => {
                         <TableCell>{petData.association}</TableCell>
                         <TableCell>{petData.age}</TableCell>
                         <TableCell>{petData.petKind}</TableCell>
+                        <TableCell>
+                            <Button href={mailtoBuilder(petData,userData)}>Send Email</Button>
+                        </TableCell>
+                        <TableCell>
+                        <Button>View Pet</Button>
+                        <Button onClick={() => deleteRequset(index)}>Delete</Button>
+                        </TableCell>
                     </TableRow>
                 )})}
             </TableBody>
