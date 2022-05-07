@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -10,7 +10,7 @@ import PetSettings from './PetSettings';
 import AdditionalInfo from './AdditionalInfo';
 import { Container } from '@mui/material';
 import { getToken } from '../../common/utils';
-
+import { PreferencesProvider } from '../../contexts/PreferencesContext';
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
 export default function HorizontalNonLinearStepper() {
@@ -80,6 +80,7 @@ export default function HorizontalNonLinearStepper() {
     }
   }
   return (
+    <PreferencesProvider>
     <Box sx={{ width: '100%' }}>
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
@@ -134,5 +135,6 @@ export default function HorizontalNonLinearStepper() {
         )}
       </Container>
     </Box>
+    </PreferencesProvider>
   );
 }

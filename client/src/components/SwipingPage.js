@@ -21,7 +21,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import {getAllPets, addPetToFavorites} from '../common/serverApi'
+import {getAllPets, addPetToFavorites, takeMeHome} from '../common/serverApi'
 
 
 import './Card.css'
@@ -40,7 +40,7 @@ const ExpandMore = styled((props) => {
 export default function SwipesPage(props) {
   
 
-
+  const { userData } = useContext(UserDataContext);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -119,27 +119,10 @@ export default function SwipesPage(props) {
             To take me home with you,
             Please leave here your contact information and someone from the assosiation will contact you soon!
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Phone Number"
-            fullWidth
-            variant="standard"
-          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Submit</Button>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={async () => await takeMeHome(pet._id, pet.associationId, userData.id)}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

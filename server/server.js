@@ -8,13 +8,15 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const users = require('./routes/user')
 const pets = require('./routes/pet')
+const admin = require('./routes/admin')
 const config = require('./config');
 const cors = require('cors');
 const authorization = require('./middlewares/authorization');
 const init = require('./common/init')
 const Pet = require('./models/pets')
 const port = process.env.PORT || 5000;
-// const algo = require('./algorithm')
+const User = require('./controllers/user');
+const algo = require('./algorithm')
 
 
 app.use(cors({
@@ -27,21 +29,18 @@ app.use(express.json({limit: "30mb",extended:true}));
 app.use(cookieParser());
 
 app.use('/users', users);
+app.use('/admin', admin);
 app.use('/pets', pets);
 
 
-app.use('/users/:id', authorization)
-
+app.post('/register' , User.register)
+app.post('/login', User.login);
+app.get('/logout', User.logout);
+app.get('/refreshToken', User.refreshToken);
 //mongo connection:
 mongoose.connect('mongodb://localhost:27017',{ useNewUrlParser: true })
 const db = mongoose.connection
 db.on('error', error=>{console.error(error)})
-db.once('open', ()=>{
-    init.map((pet) => {
-       const newPet = Pet({...pet})
-       newPet.save()
-    })
-})
 
 // algo.runAlgorithm()
 
