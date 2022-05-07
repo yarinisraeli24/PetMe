@@ -15,9 +15,9 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
 import { Button } from '@mui/material';
-
+import { UserDataContext } from '../../contexts/UserDataContext';
 import { PreferencesContext } from '../../contexts/PreferencesContext';
-
+import { userUpdate } from '../../common/serverApi';  
 
 
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
@@ -25,7 +25,7 @@ const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 export default function HorizontalNonLinearStepper(props) {
 
   const {updatePreferences, preferencesData} = useContext(PreferencesContext);
-
+  const {userData} = useContext(UserDataContext)
   const [house, setHouse] = useState(preferencesData?.house || '')
   const [kidsolds, setKidsolds] = useState(preferencesData?.kidsolds || '')
   const [allergic, setAllergic] = useState(preferencesData?.allergic || '')
@@ -44,8 +44,8 @@ export default function HorizontalNonLinearStepper(props) {
       morepets,
       energy,
     })
+    userUpdate({userId: userData.id, payload: preferencesData})
     props.handleComplete()
-    
   }
 
   return (

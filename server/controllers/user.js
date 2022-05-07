@@ -157,6 +157,21 @@ const getUserDetails = async (req, res, next) => {
         
     })
 }
+const userUpdate = async (req, res, next) => {
+    const { body } = req;
+    console.log(body.userId, body.payload)
+    if(!body.userId || !body.payload){
+        res.status(400).send('No such user or pet')
+    }
+    const filter = {_id: mongo.ObjectId(body.userId)}
+    const update = {data: body.payload}
+    const user = await User.findOneAndUpdate(filter, update)
+    if(!user){
+        res.status(400).send('Failed to update user')
+    }
+    res.status(200).send('Success')
+}
+
 
 module.exports = {
     login,
@@ -166,4 +181,5 @@ module.exports = {
     addPet,
     getUserDetails,
     getFavoritePets,
+    userUpdate,
 }

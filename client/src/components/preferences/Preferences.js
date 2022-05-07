@@ -11,6 +11,7 @@ import AdditionalInfo from './AdditionalInfo';
 import { Container } from '@mui/material';
 import { getToken } from '../../common/utils';
 import { PreferencesProvider } from '../../contexts/PreferencesContext';
+import { userUpdate } from '../../common/serverApi'; 
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
 export default function HorizontalNonLinearStepper() {
@@ -56,7 +57,7 @@ export default function HorizontalNonLinearStepper() {
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
     if(completedSteps() === totalSteps()){
-     localStorage.setItem('doneWizard' , 'true')
+     localStorage.setItem('doneWizard' , 'true');
      window.location.reload();
     }
     handleNext();

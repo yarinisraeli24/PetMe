@@ -79,6 +79,12 @@ export const removeTakeMeHome = async (requestId) => {
 }
 
 //Users Endpoints
+
+export const userUpdate = async (payload) => {
+    const { data } = await axios.post('/users/userUpdate', payload);
+    return data;
+}
+
 export const addPetToFavorites = async (userId, petId) => {
     await axios.post('/users/addPet', {userId, petId})
 }
