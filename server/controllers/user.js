@@ -4,16 +4,6 @@ const Pet = require('../models/pets')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const { mongo } = require('mongoose')
-function getCookie(cookie, name) {
-    const q = {}
-    cookie?.replace(/\s/g, '')
-      .split(';')
-      .map(i=>i.split('='))
-      .forEach(([key, value]) => {
-        q[key] = value
-      })
-    return q[name]??null;
-  }
 
 const login = async (req, res, next) => {
     const {body: { 
@@ -66,29 +56,33 @@ const logout = async (req, res, next) => {
 
 const register = async (req, res, next) => {
     const {body: { 
+        isAdmin,
+        association,
         username,
         firstName,
         lastName,
         password
     }} = req;
-
-    if(!username || !password || !firstName || !lastName){
+    console.log(typeof isAdmin)
+    if(!username || !password){
         return res.status(400).send("All the inputs are required")
     }
-
+    if(isAdmin && !association)
+        return res.status(400).send("All the inputs are required")
+    if(!isAdmin && (!firstName || !lastName))
+        return res.status(400).send("All the inputs are required")
     const isUserExists = await User.findOne({username})
     if(isUserExists){
         return res.status(409).send("Username Already Exist.")
     }
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const data = {
+    let data = {
         createdData: new Date(),
-        firstName,
-        lastName,
-        permissions: "user",
         email: username,
     }
 
+    data = isAdmin? {...data, association, permissions: 'admin'} : {...data, firstName,lastName , permissions: 'user'}
+    console.log(data)
     const user = User({
         username,
         password: encryptedPassword,

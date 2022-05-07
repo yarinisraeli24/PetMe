@@ -1,16 +1,15 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import FileBase64 from 'react-file-base64';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
+import {TextField, Grid, FormControl, Select, MenuItem, InputLabel, Button} from '@mui/material';
 import './CreatePetPage.css'
 import { createNewPet } from '../common/serverApi';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import {UserDataContext} from '../contexts/UserDataContext'
 
 const CreatePetPage = ({}) => {
+    const { userData } = useContext(UserDataContext)
     const [images, setImages] = useState([]);
     const [name,setName] = useState()
     const [age,setAge] = useState()
@@ -19,11 +18,12 @@ const CreatePetPage = ({}) => {
     const [kind,setKind] = useState()
     const [gender,setGender] = useState()
     const [size,setSize] = useState()
+    const navigate = useNavigate();
 
-
-    const onSubmitHandler = async (e) => {
-      e.preventDefault();
-      const petData = await createNewPet({name, age, color, breed, kind, gender,size, images});
+    const onSubmitHandler = async () => {
+      createNewPet({associationId: userData.id,name, age, color, breed, kind, gender,size, images})
+      .then(()=> navigate('/admin/home'))
+      .catch(error => console.log(error))
     }
     const onUploadImages = (images) => {
         const imagesData = images.map(image => {
@@ -104,7 +104,7 @@ const CreatePetPage = ({}) => {
             <Select
               labelId="kind-simple-select-label"
               id="kind-select"
-              value={''}
+              value={kind}
               label="Kind"
               onChange={(e)=>{setKind(e.target.value)}}
             >
@@ -120,7 +120,7 @@ const CreatePetPage = ({}) => {
             <Select
               labelId="gender-simple-select-label"
               id="gender-simple-select"
-              value={''}
+              value={gender}
               label="Gender"
               onChange={(e)=>{setGender(e.target.value)}}
             >
@@ -134,7 +134,7 @@ const CreatePetPage = ({}) => {
             <Select
             labelId="size-simple-select-label"
             id="size-simple-select"
-            value={''}
+            value={size}
             label="Size"
             onChange={(e)=>{setSize(e.target.value)}}
             >
@@ -147,10 +147,10 @@ const CreatePetPage = ({}) => {
             </div>
             <div className='images'>
           {images?.map((image,index) => 
-            <div class="imageContainer">
-            <img src={image.url} alt="can't display image" class="image" />
-            <div class="middle">
-            <button onClick={()=>setImages(images.filter((image, ind) => ind !== index))} class="text">remove</button>
+            <div className="imageContainer">
+            <img src={image.url} alt="can't display image" className="image" />
+            <div className="middle">
+            <button onClick={()=>setImages(images.filter((image, ind) => ind !== index))} className="text">remove</button>
             </div>
             </div>
          )}
@@ -161,7 +161,8 @@ const CreatePetPage = ({}) => {
             onDone={onUploadImages}
           />        
         <div>
-          <button className="btn" onClick={onSubmitHandler}>submit</button>
+          <Button onClick={()=> navigate('/admin/home')}>Back</Button>
+          <Button onClick={onSubmitHandler}>submit</Button>
         </div>
         </from>
         </>
