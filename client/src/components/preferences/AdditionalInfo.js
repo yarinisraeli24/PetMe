@@ -25,7 +25,7 @@ const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 export default function HorizontalNonLinearStepper(props) {
 
   const {updatePreferences, preferencesData} = useContext(PreferencesContext);
-  const {userData} = useContext(UserDataContext)
+  const {userData, setFinishedWizard} = useContext(UserDataContext)
   const [house, setHouse] = useState(preferencesData?.house || '')
   const [kidsolds, setKidsolds] = useState(preferencesData?.kidsolds || '')
   const [allergic, setAllergic] = useState(preferencesData?.allergic || '')
@@ -35,7 +35,7 @@ export default function HorizontalNonLinearStepper(props) {
 
   const [didSubmit, setDidSubmit] = useState(false);
 
-  function validateNext() {
+  const validateNext = async () => {
     setDidSubmit(true);
     updatePreferences({
       house,
@@ -44,8 +44,9 @@ export default function HorizontalNonLinearStepper(props) {
       morepets,
       energy,
     })
-    userUpdate({userId: userData.id, payload: preferencesData})
+    await userUpdate({userId: userData.id, payload: preferencesData})
     props.handleComplete()
+    setFinishedWizard(true);
   }
 
   return (
@@ -136,7 +137,7 @@ export default function HorizontalNonLinearStepper(props) {
         </FormControl>
         </div>
         </Box>
-        <Button onClick={validateNext}>Finish</Button>
+        <Button onClick={async () => await validateNext()}>Finish</Button>
       </Box>
     </Container>
   );

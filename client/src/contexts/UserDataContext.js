@@ -8,11 +8,14 @@ export const UserDataProvider = ({children}) => {
     const [token, setToken] = useState(getToken())
     const [userData, setUserData] = useState({});
     const [isAdmin, setIsAdmin] = useState(false);
+    const [finishedWizard, setFinishedWizard] = useState(true);
+
     useEffect(()=> {
         const getUserData = async () => {
             const data = await getUserDetails();
             setUserData(data)
             setIsAdmin(data.permissions === 'admin')
+            setFinishedWizard(!!data?.preferences) 
         }
         token && getUserData()
     }, [token])
@@ -21,6 +24,8 @@ export const UserDataProvider = ({children}) => {
             token,
             setToken,
             setUserData,
+            finishedWizard,
+            setFinishedWizard,
             userData,
             isAdmin,
         }}>
