@@ -27,7 +27,7 @@ const FavoritesPage = ({isAdmin}) => {
             }
             setUserFavoritePets();
         }
-    }, [userData.id])
+    }, [userData.id, isAdmin])
 
     return (
         <TableContainer component={Paper}>
