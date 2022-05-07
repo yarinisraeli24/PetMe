@@ -12,8 +12,8 @@ import { AdminContext } from "../../contexts/AdminContext";
 
 import { getUserFavoritePets } from '../../common/serverApi';
 
-const FavoritesPage = ({isAdmin}) => {
-    const { userData } = useContext(UserDataContext)
+const FavoritesPage = ({}) => {
+    const { userData, isAdmin } = useContext(UserDataContext)
     const { petsData } = useContext(AdminContext);
     const [favoritePets, setFavoritePets] = useState([])
 
@@ -43,7 +43,7 @@ const FavoritesPage = ({isAdmin}) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {favoritePets.map((pet) => (
+                {favoritePets && favoritePets.map((pet) => (
                 <TableRow key={pet.name}>
                     <TableCell component="th" scope="row">
                     <Avatar
