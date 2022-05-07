@@ -14,7 +14,7 @@ const authorization = require('./middlewares/authorization');
 const init = require('./common/init')
 const Pet = require('./models/pets')
 const port = process.env.PORT || 5000;
-const algo = require('./algorithm')
+// const algo = require('./algorithm')
 
 
 app.use(cors({
@@ -43,6 +43,6 @@ db.once('open', ()=>{
     })
 })
 
-algo.runAlgorithm()
+// algo.runAlgorithm()
 
 module.exports = app
