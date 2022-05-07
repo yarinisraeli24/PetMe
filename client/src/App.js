@@ -22,6 +22,7 @@ import "swagger-ui-react/swagger-ui.css"
 import PetPage from './pets/PetPage';
 
 import ProfileDetailsPage from './components/profile/ProfileDetailsPage';
+import DashboardPage from './components/associations/DashboardSection/DashboardPage'
 import { UserDataProvider } from './contexts/UserDataContext';
 import { AdminProvider } from './contexts/AdminContext';
 import TakeMeHomeTable from './components/associations/TakeMeHomeSection/TakeMeHomeTable'
@@ -56,6 +57,8 @@ function App() {
                 <Route path="createPet" element={<CreatePetPage/>} />
                 <Route path="pets" element={<FavoritesPage isAdmin={true}/>} />
                 <Route path="takeMeHomeRequests" element={<TakeMeHomeTable />} />
+                <Route path="dashboard" element={<DashboardPage />} />
+
             </Route>
 
             <Route path="/allAssociations" element={<AllAssociationsPage />}>
