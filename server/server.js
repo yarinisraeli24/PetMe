@@ -38,7 +38,7 @@ app.post('/login', User.login);
 app.get('/logout', User.logout);
 app.get('/refreshToken', User.refreshToken);
 //mongo connection:
-mongoose.connect('mongodb://localhost:27017',{ useNewUrlParser: true })
+mongoose.connect('mongodb+srv://petme120:PetMe120!@cluster0.l1qui.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{ useNewUrlParser: true })
 const db = mongoose.connection
 db.on('error', error=>{console.error(error)})
 
