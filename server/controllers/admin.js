@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs')
 const { mongo } = require('mongoose')
 
 const createPet = async (req, res, next) => {
-    console.log(req.body)
     const {associationId, name, age, color, breed, kind, gender,size, images} = req.body;
     User.findById(associationId, async (error, associationData) => {
         if(error) res.status(403)
@@ -23,8 +22,11 @@ const createPet = async (req, res, next) => {
             size, 
             images
         })
+        console.log(pet._id)
         const update = {pets: pet._id}
-        await User.findOneAndUpdate(associationId, {$push: update})
+        const filter = {_id: mongo.ObjectId(associationId)}
+        const user = await User.findOneAndUpdate(filter, {$push: update})
+        console.log(user)
         pet.save();
         res.send(pet)
     });
@@ -32,10 +34,11 @@ const createPet = async (req, res, next) => {
 
 const getAllPets = async (req, res, next) => {
     const id = req.query.id;
-    console.log(id)
     User.findById(id, async (error, associationData) => {
         if(error) res.status(403)
+        console.log(associationData)
         const pets = await Pet.find({_id: associationData.pets})
+        console.log(pets)
         res.send(pets)
     });
 }
