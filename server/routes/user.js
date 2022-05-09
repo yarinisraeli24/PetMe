@@ -10,6 +10,8 @@ const User = require('../controllers/user');
 router.post('/addPet', User.addPet);
 router.post('/getFavoritePets', User.getFavoritePets);
 router.get('/getUserDetails', User.getUserDetails);
+router.post('/userUpdate', User.userUpdate);
+
 
 
 

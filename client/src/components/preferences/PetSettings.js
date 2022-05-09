@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,16 +10,44 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
 import PetsIcon from '@mui/icons-material/Pets';
+import { Button } from '@mui/material';
+import { PreferencesContext } from '../../contexts/PreferencesContext';
+
 
 
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
-export default function HorizontalNonLinearStepper() {
+export default function HorizontalNonLinearStepper(props) {
+  const {updatePreferences, preferencesData} = useContext(PreferencesContext);
 
-  const [petGender, setPetGender] = useState('')
-  const [petKind, setPetKind] = useState('')
-  const [size, setSize] = useState('')
+  const [petGender, setPetGender] = useState(preferencesData?.petGender || '')
+  const [petKind, setPetKind] = useState(preferencesData?.petKind || '')
+  const [size, setSize] = useState(preferencesData?.size || '')
+  const [hair, setHair] = useState(preferencesData?.hair || '')
+  const [petAge, setPetage] = useState(preferencesData?.petAge || '')
+  const [color, setColor] = useState(preferencesData?.color || '')
+  const [district, setDistrict] = useState(preferencesData?.district || '')
 
+
+  const [didSubmit, setDidSubmit] = useState(false);
+
+
+  function validateNext() {
+    const isValid = petGender && petKind && size && hair && petAge && color && district
+    setDidSubmit(true);
+    if (isValid){
+      updatePreferences({
+        petGender,
+        petKind,
+        size,
+        hair,
+        petAge,
+        color,
+        district,
+      })
+      props.handleComplete()
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -38,11 +66,9 @@ export default function HorizontalNonLinearStepper() {
         <Typography component="h1" variant="h5">
         Wanted Pet Information
         </Typography>
-
-        </Box>
           <Box maxWidth={3000}>
-            <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '20px'}}>
-            <FormControl fullWidth>
+          <div style={{justifyContent: 'space-between', marginTop: '20px'}}>
+            <FormControl fullWidth style={{marginTop: '20px'}}>
             <InputLabel id="gender-simple-select-label">Gender</InputLabel>
             <Select
               labelId="gender-simple-select-label"
@@ -50,13 +76,14 @@ export default function HorizontalNonLinearStepper() {
               value={petGender}
               label="Gender"
               onChange={(selected)=>setPetGender(selected.target.value)}
+              error={didSubmit && !petGender}
             >
-              <MenuItem value={'male'}>Male</MenuItem>
-              <MenuItem value={'female'}>Female</MenuItem>
-              <MenuItem value={'None'}>Doesn't matter</MenuItem>
+              <MenuItem value='male'>Male</MenuItem>
+              <MenuItem value='female'>Female</MenuItem>
+              <MenuItem value='none'>Doesn't matter</MenuItem>
             </Select>
             </FormControl>
-            <FormControl fullWidth>
+            <FormControl fullWidth style={{marginTop: '20px'}}>
             <InputLabel id="kind-simple-select-label">Pet Kind</InputLabel>
             <Select
                 labelId="kind-simple-select-label"
@@ -64,13 +91,14 @@ export default function HorizontalNonLinearStepper() {
                 value={petKind}
                 label="Pet Kind"
                 onChange={(selected)=>{setPetKind(selected.target.value)}}
+                error={didSubmit && !petKind}
               >
-                  <MenuItem value="Dog">Dog</MenuItem>
-                  <MenuItem value="Cat">Cat</MenuItem>
-                  <MenuItem value="Others">Others</MenuItem>
+                  <MenuItem value="dog">Dog</MenuItem>
+                  <MenuItem value="cat">Cat</MenuItem>
+                  <MenuItem value="others">Others</MenuItem>
             </Select>
             </FormControl>
-            <FormControl fullWidth>
+            <FormControl fullWidth style={{marginTop: '20px'}}>
             <InputLabel id="size-simple-select-label">Size</InputLabel>
             <Select
                 labelId="size-simple-select-label"
@@ -78,14 +106,83 @@ export default function HorizontalNonLinearStepper() {
                 value={size}
                 label="Size"
                 onChange={(selected)=>{setSize(selected.target.value)}}
+                error={didSubmit && !size}
               >
                   <MenuItem value="small">Small</MenuItem>
                   <MenuItem value="medium">Medium</MenuItem>
                   <MenuItem value="large">Large</MenuItem>
             </Select>
             </FormControl>
+            <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="size-simple-select-label">Hair</InputLabel>
+            <Select
+                labelId="hair-simple-select-label"
+                id="hair-simple-select"
+                value={hair}
+                label="Hair"
+                onChange={(selected)=>{setHair(selected.target.value)}}
+                error={didSubmit && !hair}
+              >
+                  <MenuItem value="little">Little</MenuItem>
+                  <MenuItem value="medium">Medium</MenuItem>
+                  <MenuItem value="much">Much</MenuItem>
+            </Select>
+            </FormControl>
+            <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="petage-simple-select-label">Pet age</InputLabel>
+            <Select
+                labelId="petage-simple-select-label"
+                id="petage-simple-select"
+                value={petAge}
+                label="petage"
+                onChange={(selected)=>{setPetage(selected.target.value)}}
+                error={didSubmit && !petAge}
+              >
+                  <MenuItem value="0-1">0-1</MenuItem>
+                  <MenuItem value="2-4">2-4</MenuItem>
+                  <MenuItem value="5-9">5-9</MenuItem>
+                  <MenuItem value="10+">10+</MenuItem>
+                  <MenuItem value='none'>Doesn't matter</MenuItem>
+            </Select>
+            </FormControl>
+            <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="color-simple-select-label">Color</InputLabel>
+            <Select
+                labelId="color-simple-select-label"
+                id="color-simple-select"
+                value={color}
+                label="Color"
+                onChange={(selected)=>{setColor(selected.target.value)}}
+                error={didSubmit && !color}
+              >
+                  <MenuItem value="bright">Bright</MenuItem>
+                  <MenuItem value="dark">Dark</MenuItem>
+                  <MenuItem value='none'>Doesn't matter</MenuItem>
+            </Select>
+            </FormControl>
+            <FormControl fullWidth style={{marginTop: '20px'}}>
+            <InputLabel id="district-simple-select-label">District</InputLabel>
+            <Select
+                labelId="district-simple-select-label"
+                id="district-simple-select"
+                value={district}
+                label="District"
+                onChange={(selected)=>{setDistrict(selected.target.value)}}
+                error={didSubmit && !district}
+              >
+                  <MenuItem value="north">North</MenuItem>
+                  <MenuItem value="center">Center</MenuItem>
+                  <MenuItem value="south">South</MenuItem>
+                  <MenuItem value="jerusalem">Jerusalem</MenuItem>
+                  <MenuItem value='none'>Doesn't matter</MenuItem>
+            </Select>
+            </FormControl>
             </div>
           </Box>
+          <Button onClick={validateNext}>Next</Button>
+
+          </Box>
+
     </Container>
   );
 }

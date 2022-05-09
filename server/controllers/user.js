@@ -152,11 +152,26 @@ const getUserDetails = async (req, res, next) => {
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (error, user) => {
         if(error) res.status(401).send('Invalid token')
-        
-        res.send(user)
+        const userId = user.id;
+        const userInfo = await User.findById(userId)
+        const userData = userInfo.data;
+        res.send({...userData, id: userId})
         
     })
 }
+const userUpdate = async (req, res, next) => {
+    const { body } = req;
+    if(!body.userId || !body.payload){
+        res.status(400).send('No such user or pet')
+    }
+    const filter = {_id: mongo.ObjectId(body.userId)}
+    const user = await User.findOneAndUpdate(filter, {$set: {'data.preferences': body.payload}})
+    if(!user){
+        res.status(400).send('Failed to update user')
+    }
+    res.status(200).send('Success')
+}
+
 
 module.exports = {
     login,
@@ -166,4 +181,5 @@ module.exports = {
     addPet,
     getUserDetails,
     getFavoritePets,
+    userUpdate,
 }

@@ -26,7 +26,6 @@ export const AdminProvider = ({children}) => {
     useEffect(()=> {
         const initAdminData = async () => {
             await Promise.all([getPetsData(), getAllTakeMeRequests()])
-            console.log('test')
         }
         initAdminData()
     }, [userData.id])

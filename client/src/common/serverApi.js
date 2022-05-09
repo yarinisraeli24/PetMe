@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "./utils";
 
 let refresh = false;
 
@@ -13,7 +14,7 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(resp => resp, async error => {
-    if (error.response.status === 401 && !refresh) {
+    if (error.response.status === 401 && !refresh && getToken()) {
         refresh = true;
         localStorage.setItem('token', localStorage.getItem('refreshToken'))
         const response = await axios.get('/users/refreshToken');
@@ -78,6 +79,12 @@ export const removeTakeMeHome = async (requestId) => {
 }
 
 //Users Endpoints
+
+export const userUpdate = async (payload) => {
+    const { data } = await axios.post('/users/userUpdate', payload);
+    return data;
+}
+
 export const addPetToFavorites = async (userId, petId) => {
     await axios.post('/users/addPet', {userId, petId})
 }

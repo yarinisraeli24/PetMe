@@ -119,7 +119,7 @@ const NavBarMenu = () => {
         </Drawer>
 
         {isLoggedIn ?
-          <Button color="inherit" onClick={async () => {await onLogOut()}}>Login Out</Button> :
+          <Button color="inherit" onClick={async () => {await onLogOut()}}>Logout</Button> :
           <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
 
       </Toolbar>

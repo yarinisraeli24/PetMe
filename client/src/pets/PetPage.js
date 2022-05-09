@@ -47,8 +47,6 @@ export default function PetPage(props) {
     const onSubmitHandler = async (e) => {
       e.preventDefault();
       handleClickOpen1();
-      console.log("hi: 2  :   " ,userDetails);
-
       const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', email: userDetails.email});
     }
 
