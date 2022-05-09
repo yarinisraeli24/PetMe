@@ -10,14 +10,24 @@ export const UserDataProvider = ({children}) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [finishedWizard, setFinishedWizard] = useState(true);
 
+    const clearData = () => {
+        setUserData({})
+        setIsAdmin(false)
+        setFinishedWizard(true)
+    }
+
     useEffect(()=> {
+        if(token){
         const getUserData = async () => {
             const data = await getUserDetails();
             setUserData(data)
             setIsAdmin(data.permissions === 'admin')
             setFinishedWizard(!!data?.preferences) 
         }
-        token && getUserData()
+        getUserData()
+    } else {
+        clearData()
+    }
     }, [token])
     return (
         <UserDataContext.Provider value={{
