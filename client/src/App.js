@@ -16,7 +16,7 @@ import CreatePetPage from './pets/CreatePetPage';
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
 import PetPage from './pets/PetPage';
-
+import EditProfilePage from './components/profile/EditProfilePage';
 import ProfileDetailsPage from './components/profile/ProfileDetailsPage';
 
 
@@ -36,6 +36,7 @@ function App() {
 
             <Route path="/users/" element={<PrivateRoute />}>
             <Route path="profile" element={<ProfileDetailsPage/>} />
+            <Route path="editProfile" element={<EditProfilePage/>} />
               <Route path="swipes" element={<SwipesPage/>} />
               <Route path="favorites" element={<FavoritesPage/>} />
               <Route path='preferences' element={<Preferences />} />

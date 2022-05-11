@@ -15,7 +15,7 @@ router.post('/login', User.login);
 router.post('/addPet', User.addPet);
 router.post('/getFavoritePets', User.getFavoritePets);
 router.get('/getUserDetails', User.getUserDetails);
-
+router.put('/setUserDetails', User.setUserDetails)
 
 
 module.exports = router;

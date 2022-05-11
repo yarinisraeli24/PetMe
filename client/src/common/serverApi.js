@@ -61,6 +61,10 @@ export const getUserDetails = async () => {
     console.log(data)
     return data
 }
+export const setUserDetails = async (paylod) => {
+    await axios.put('/users/setUserDetails',paylod)
+}
+
 export const createNewPet = async (petData) => {
     const { data } = await axios.post('/pets/createPet', petData);
     return data;

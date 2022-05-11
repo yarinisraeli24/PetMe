@@ -10,9 +10,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import "./profile.css"
-
+import {useNavigate} from 'react-router-dom';
 
 export default function ProfileDetailsPage(){
+  const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({})
   useEffect(()=>{
     const userDetailsFunc = async () => {
@@ -29,7 +30,6 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'start',
   color: theme.palette.text.secondary,
 }));
-const onclickedlog=()=>{console.log(userDetails.firstName)}
   return (
     <Card sx={{ maxWidth: 500,margin: 'auto'}} >
       <div>
@@ -58,7 +58,7 @@ const onclickedlog=()=>{console.log(userDetails.firstName)}
       </Stack>
     </Box>
       </div>
-      <Button variant="contained">Edit</Button>
+      <Button variant="contained"onClick={()=>navigate('/users/editProfile')} sx={{cursor:'pointer'}}>Edit</Button>
   </Card>
   );
 
