@@ -170,13 +170,18 @@ const setUserDetails = async (req, res, next) => {
     if(!isUserExists){
         return res.status(409).send("user not exist")
     }
-    let userData = {...isUserExists.data,firstName:userFirstname,lastName:userLastname,email:userEmail};
+    console.log(isUserExists.data)
     const filter = {_id: mongo.ObjectId(userId)}
-    await User.findOneAndUpdate({filter}, {$set: {"data":userData}});
+    await User.findOneAndUpdate(filter, {$set: {
+        "data.firstName":userFirstname, 
+        "data.lastName":userLastname, 
+        "data.email":userEmail, 
+}});
 
     res.status(200).send('Success')
     })
 }
+
 const userUpdate = async (req, res, next) => {
     const { body } = req;
     if(!body.userId || !body.payload){

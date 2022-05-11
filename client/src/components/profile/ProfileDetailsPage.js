@@ -1,5 +1,5 @@
 import { getUserDetails } from '../../common/serverApi';
- import { useEffect,useState } from 'react';
+ import { useEffect,useState, useContext } from 'react';
  import Card from '@mui/material/Card';
  import * as React from 'react';
  import Box from '@mui/material/Box';
@@ -11,18 +11,12 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import "./profile.css"
 import {useNavigate} from 'react-router-dom';
+import { UserDataContext } from '../../contexts/UserDataContext';
 
 export default function ProfileDetailsPage(){
   const navigate = useNavigate()
-  const [userDetails, setUserDetails] = useState({})
-  useEffect(()=>{
-    const userDetailsFunc = async () => {
-        const data = await getUserDetails();
-        setUserDetails(data);
-        
-    }
-    userDetailsFunc();
-}, [])
+  const {userData} = useContext(UserDataContext);
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -47,14 +41,13 @@ const Item = styled(Paper)(({ theme }) => ({
           </Item>
         </Grid>
         </Grid>
-      
       </div>
       <div>
       <Box sx={{ width: '100%' }}>
       <Stack className="profileText" spacing={3}>
-        <Item><h4>First Name : {userDetails.firstName} </h4></Item>
-        <Item><h4>Last Name : {userDetails.lastName}</h4> </Item>
-        <Item><h4>Email : {userDetails.email}</h4> </Item>
+        <Item><h4>First Name : {userData.firstName} </h4></Item>
+        <Item><h4>Last Name : {userData.lastName}</h4> </Item>
+        <Item><h4>Email : {userData.email}</h4> </Item>
       </Stack>
     </Box>
       </div>

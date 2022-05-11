@@ -27,12 +27,20 @@ export default function EditProfilePage() {
   const [userFirstname, setUserFirstname] = useState('');
   const [userLastname, setUserLastname] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const { setUserData } = useContext(UserDataContext); 
 
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const payload={userFirstname,userLastname,userEmail};
+    setUserData(prev => {
+      return {
+      ...prev,
+      firstName:userFirstname,
+      lastName:userLastname,
+      email:userEmail,
+    }})
     await setUserDetails(payload);
     navigate('/users/profile')
   };
