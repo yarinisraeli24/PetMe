@@ -36,13 +36,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const NavBarMenu = () => {
-  const {isAdmin} = useContext(UserDataContext)
+  const {isAdmin, clearUserData} = useContext(UserDataContext)
   const navigate = useNavigate()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const token = getToken();
   const isLoggedIn = !!token;
   const onLogOut = async () => {
     try{
+    clearUserData()
     await logout();
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')

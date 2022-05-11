@@ -10,7 +10,7 @@ export const UserDataProvider = ({children}) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [finishedWizard, setFinishedWizard] = useState(true);
 
-    const clearData = () => {
+    const clearUserData = () => {
         setUserData({})
         setIsAdmin(false)
         setFinishedWizard(true)
@@ -26,7 +26,7 @@ export const UserDataProvider = ({children}) => {
         }
         getUserData()
     } else {
-        clearData()
+        clearUserData()
     }
     }, [token])
     return (
@@ -36,6 +36,7 @@ export const UserDataProvider = ({children}) => {
             setUserData,
             finishedWizard,
             setFinishedWizard,
+            clearUserData,
             userData,
             isAdmin,
         }}>

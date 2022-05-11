@@ -38,13 +38,14 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
-  const { setUserData } = useContext(UserDataContext)
+  const { setUserData, setToken } = useContext(UserDataContext)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const payload = { username, password };
     const {accessToken,refreshToken, data} = await login(payload);
     setUserData(data)
+    setToken(accessToken);
     if (!accessToken || !refreshToken) {
       return
     }
