@@ -157,6 +157,26 @@ const getUserDetails = async (req, res, next) => {
         
     })
 }
+const setUserDetails = async (req, res, next) => {
+    const authHeaders = req.headers['authorization']
+    const token = authHeaders && authHeaders.split(' ')[1];
+    console.log(req)
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (error, user) => {
+        if(error) res.status(401).send('Invalid token')
+
+    const {userFirstname,userLastname,userEmail } = req.body;
+    const userId = user.id;
+    const isUserExists = await User.findOne({userId})
+    if(!isUserExists){
+        return res.status(409).send("user not exist")
+    }
+    let userData = {...isUserExists.data,firstName:userFirstname,lastName:userLastname,email:userEmail};
+    const filter = {_id: mongo.ObjectId(userId)}
+    await User.findOneAndUpdate({filter}, {$set: {"data":userData}});
+
+    res.status(200).send('Success')
+    })
+}
 const userUpdate = async (req, res, next) => {
     const { body } = req;
     if(!body.userId || !body.payload){
@@ -179,5 +199,6 @@ module.exports = {
     addPet,
     getUserDetails,
     getFavoritePets,
+    setUserDetails,
     userUpdate,
 }

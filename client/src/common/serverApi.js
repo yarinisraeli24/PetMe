@@ -97,4 +97,7 @@ export const getUserDetails = async () => {
     const { data } = await axios.get('/users/getUserDetails')
     return data
 }
+export const setUserDetails = async (paylod) => {
+    await axios.put('/users/setUserDetails',paylod)
+}
 
