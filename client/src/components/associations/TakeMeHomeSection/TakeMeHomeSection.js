@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const TakeMeHomeSection = () => {
     const {takeMeRequests, setTakeMeRequests} = useContext(AdminContext);
+    const [showSpinner, setShowSpinner] = useState(true);
     const navigate = useNavigate();
 
     const deleteRequset = async (index) => {
@@ -17,13 +18,15 @@ const TakeMeHomeSection = () => {
         setTakeMeRequests(prevState => prevState.filter((data,idex) => idex !==index))
         await removeTakeMeHome(currentTakeMeHome.requestId)
     }
-
+    useEffect(() => {
+        if(typeof takeMeRequests === 'object') setShowSpinner(false)
+    }, [takeMeRequests]) 
 
     return (
     <Card sx={{width: '98%', height: '30%'}}>
     <Typography variant="h6" sx={{mb: 1}}> People ask for Adoption</Typography>
     <Typography sx={{mb: 5}}>Find all the people who asked to adupt pet, contact with the user and scadul the meet to find a warm home for your pets</Typography>
-    {takeMeRequests.length > 0 ? 
+    {takeMeRequests && takeMeRequests.length > 0 ? 
     takeMeRequests.map((request, index) => {
         const {petData, userData} = request;
         return (
@@ -46,7 +49,7 @@ const TakeMeHomeSection = () => {
         
     }) : 
         <div>
-            <CircularProgress/>
+            {showSpinner && <CircularProgress/>}
         </div>}
     <Button sx={{bottom: 0}} onClick={() => navigate('/admin/takeMeHomeRequests')}>All Requests</Button>
     </Card>

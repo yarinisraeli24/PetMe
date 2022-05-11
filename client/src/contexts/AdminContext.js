@@ -6,8 +6,8 @@ export const AdminContext = createContext();
 
 export const AdminProvider = ({children}) => {
     const { userData } = useContext(UserDataContext);
-    const [petsData, setPetsData] = useState([]);
-    const [takeMeRequests, setTakeMeRequests] = useState([]);
+    const [petsData, setPetsData] = useState();
+    const [takeMeRequests, setTakeMeRequests] = useState();
 
     const getPetsData = async () => {
         if(userData.id){
