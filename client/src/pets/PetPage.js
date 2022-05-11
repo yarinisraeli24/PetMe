@@ -13,7 +13,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { getUserDetails } from '../common/serverApi';
+import { getuserData, takeMeHome } from '../common/serverApi';
+import { UserDataContext } from '../contexts/UserDataContext';
 
 
 
@@ -21,34 +22,9 @@ export default function PetPage(props) {
 
   const location = useLocation()
   const petData = location.state.pet;
-  const [userDetails, setUserDetails] = useState({})
-  useEffect(()=>{
-    const userDetailsFunc = async () => {
-        const data = await getUserDetails();
-        setUserDetails(data);
-
-    }
-    userDetailsFunc();
-}, [])
-
-  const [pets, setPets] = useState([]);
+  const { userData } = useContext(UserDataContext);
 
     const [open1, setOpen1] = React.useState(false);
-
-    const [petId,setPetId] = useState()
-    // const [username,setUsername] = useState()
-
-
-    // const contactSaveAlert = () => {
-    //   handleClose1();
-    //   alert("your contact information saved succesfully !");
-    // }
-
-    const onSubmitHandler = async (e) => {
-      e.preventDefault();
-      handleClickOpen1();
-      const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', email: userDetails.email});
-    }
 
     const handleClickOpen1 = () => {
       setOpen1(true);
@@ -91,7 +67,7 @@ export default function PetPage(props) {
         </Typography>
         </CardContent>
         <CardActions>
-        <Button onClick={onSubmitHandler}>
+        <Button onClick={async () => await takeMeHome(petData._id, petData.associationId, userData.id)}>
         Take Me Home ! 
       </Button>
       <Dialog open={open1} onClose={handleClose1}>

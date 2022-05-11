@@ -63,7 +63,6 @@ const register = async (req, res, next) => {
         lastName,
         password
     }} = req;
-    console.log(typeof isAdmin)
     if(!username || !password){
         return res.status(400).send("All the inputs are required")
     }
@@ -82,7 +81,6 @@ const register = async (req, res, next) => {
     }
 
     data = isAdmin? {...data, association, permissions: 'admin'} : {...data, firstName,lastName , permissions: 'user'}
-    console.log(data)
     const user = User({
         username,
         password: encryptedPassword,

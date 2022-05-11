@@ -34,12 +34,11 @@ const createPet = (req, res, next) => {
 }
 
 const takeMeHome = (req, res, next) => {
-    console.log(req.query)
     const {petId, associationId, userId} = req.query;
     const takeMeHome = TakeMeHome({petId, associationId, userId})
     if(!takeMeHome) res.status(403)
     takeMeHome.save();
-    res.status(200);
+    res.status(200).send('ok');
 }
 
 module.exports = {
