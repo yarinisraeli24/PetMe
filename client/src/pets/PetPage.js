@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, useLocation} from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -13,43 +13,18 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { getUserDetails } from '../common/serverApi';
+import { getuserData, takeMeHome } from '../common/serverApi';
+import { UserDataContext } from '../contexts/UserDataContext';
 
 
 
 export default function PetPage(props) {
 
-
-  const [userDetails, setUserDetails] = useState({})
-  useEffect(()=>{
-    const userDetailsFunc = async () => {
-        const data = await getUserDetails();
-        setUserDetails(data);
-
-    }
-    userDetailsFunc();
-}, [])
-
-  const [pets, setPets] = useState([]);
+  const location = useLocation()
+  const petData = location.state.pet;
+  const { userData } = useContext(UserDataContext);
 
     const [open1, setOpen1] = React.useState(false);
-
-    const [petId,setPetId] = useState()
-    // const [username,setUsername] = useState()
-
-
-    // const contactSaveAlert = () => {
-    //   handleClose1();
-    //   alert("your contact information saved succesfully !");
-    // }
-
-    const onSubmitHandler = async (e) => {
-      e.preventDefault();
-      handleClickOpen1();
-      console.log("hi: 2  :   " ,userDetails);
-
-      const {data} = await axios.post('/pets/takeMeHome', {petId: 'pet-id', email: userDetails.email});
-    }
 
     const handleClickOpen1 = () => {
       setOpen1(true);
@@ -75,23 +50,24 @@ export default function PetPage(props) {
         <CardMedia 
           component="img"
           height="650"
-          image="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=640:*"
+          image={petData.images[0]?.url}
         />
         <CardContent>
         <Typography gutterBottom variant="h3" component="div">
-            Tommy
+          {petData.name}
         </Typography>
         <Typography gutterBottom variant="h5" component="div">
-            Australian Shepherd
+            {petData.petKind + ' ' + petData.breed}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-            Tommy is a beutiful and energetic dog. <br></br>
-            He likes to play with toys all day. <br></br>
-            Will be happy to go with you to the park and catch a frizbi.
+            {'Gender: ' + petData.gender}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+            {'More Info: ' + petData.description}
         </Typography>
         </CardContent>
         <CardActions>
-        <Button onClick={onSubmitHandler}>
+        <Button onClick={async () => await takeMeHome(petData._id, petData.associationId, userData.id)}>
         Take Me Home ! 
       </Button>
       <Dialog open={open1} onClose={handleClose1}>

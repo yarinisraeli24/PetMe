@@ -7,15 +7,13 @@ const User = require('../controllers/user');
 // router.use(authenticate)
 // router.use(authorization)
 
-
-router.post('/register/member' , User.register)
-router.get('/logout', User.logout);
-router.get('/refreshToken', User.refreshToken);
-router.post('/login', User.login);
 router.post('/addPet', User.addPet);
 router.post('/getFavoritePets', User.getFavoritePets);
 router.get('/getUserDetails', User.getUserDetails);
 router.put('/setUserDetails', User.setUserDetails)
+router.post('/userUpdate', User.userUpdate);
+
+
 
 
 module.exports = router;

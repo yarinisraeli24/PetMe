@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -10,7 +10,8 @@ import PetSettings from './PetSettings';
 import AdditionalInfo from './AdditionalInfo';
 import { Container } from '@mui/material';
 import { getToken } from '../../common/utils';
-
+import { PreferencesProvider } from '../../contexts/PreferencesContext';
+import { UserDataContext } from '../../contexts/UserDataContext';
 const steps = ['Personal settings', 'Pet settings', 'Additional info'];
 
 export default function HorizontalNonLinearStepper() {
@@ -55,10 +56,6 @@ export default function HorizontalNonLinearStepper() {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
-    if(completedSteps() === totalSteps()){
-     localStorage.setItem('doneWizard' , 'true')
-     window.location.reload();
-    }
     handleNext();
   };
 
@@ -70,16 +67,17 @@ export default function HorizontalNonLinearStepper() {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <PersonalSettings/>;
+        return <PersonalSettings handleComplete={handleComplete}/> 
       case 1:
-        return <PetSettings/>;
+        return <PetSettings handleComplete={handleComplete}/>;
       case 2:
-        return <AdditionalInfo/>;
+        return <AdditionalInfo handleComplete={handleComplete}/>;
       default:
         return "Unknown step";
     }
   }
   return (
+    <PreferencesProvider>
     <Box sx={{ width: '100%' }}>
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
@@ -104,35 +102,11 @@ export default function HorizontalNonLinearStepper() {
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1}}> {getStepContent(activeStep)}</Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleNext} sx={{ mr: 1 }}>
-                Next
-              </Button>
-              {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1
-                      ? 'Finish'
-                      : 'Complete Step'}
-                  </Button>
-                ))}
-            </Box>
+            <Button onClick={handleBack} disabled={activeStep === 0}>Back</Button>
           </React.Fragment>
         )}
       </Container>
     </Box>
+    </PreferencesProvider>
   );
 }

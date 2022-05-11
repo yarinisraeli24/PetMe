@@ -16,6 +16,10 @@ const petScheme = new mongoose.Schema({
         type: String,
         required: true
     },
+    associationId: {
+        type: String,
+        required: true
+    },
     color: {
         type: String,
         required: true
@@ -36,7 +40,7 @@ const petScheme = new mongoose.Schema({
     },
     images: [{
         title:  String,
-        image:  String
+        url:  String
     }],
     description: {
         type: String,

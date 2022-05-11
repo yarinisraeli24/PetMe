@@ -4,7 +4,6 @@ const config = require('../config');
 
 module.exports = (credentials = []) => {
     return (req, res, next) => {
-        console.log('Authorization Middleware');
 
         const token = req.headers.authorization;
         if(!token) {

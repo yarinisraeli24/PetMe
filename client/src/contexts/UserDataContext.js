@@ -1,18 +1,46 @@
 import React, {createContext, useState} from 'react';
+import { useEffect } from 'react';
 import { getToken } from '../common/utils';
+import {getUserDetails } from '../common/serverApi'
 export const UserDataContext = createContext();
 
 export const UserDataProvider = ({children}) => {
     const [token, setToken] = useState(getToken())
-    const [data, setData] = useState({});
+    const [userData, setUserData] = useState({});
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [finishedWizard, setFinishedWizard] = useState(true);
+
+    const clearUserData = () => {
+        setUserData({})
+        setIsAdmin(false)
+        setFinishedWizard(true)
+    }
+
+    useEffect(()=> {
+        if(token){
+        const getUserData = async () => {
+            const data = await getUserDetails();
+            setUserData(data)
+            setIsAdmin(data.permissions === 'admin')
+            setFinishedWizard(!!data?.preferences) 
+        }
+        getUserData()
+    } else {
+        clearUserData()
+    }
+    }, [token])
     return (
         <UserDataContext.Provider value={{
             token,
             setToken,
-            setData,
-            ...data
+            setUserData,
+            finishedWizard,
+            setFinishedWizard,
+            clearUserData,
+            userData,
+            isAdmin,
         }}>
-            {children}
+            {userData && children}
         </UserDataContext.Provider>
     )
 }

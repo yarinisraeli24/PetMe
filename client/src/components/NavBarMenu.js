@@ -23,8 +23,9 @@ import PetsIcon from '@mui/icons-material/Pets';
 import './Navbar.css';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import { getToken } from '../common/utils';
-import axios from 'axios';
+import {UserDataContext} from '../contexts/UserDataContext'
 import { logout } from '../common/serverApi';
+import { useContext } from 'react';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -35,12 +36,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const NavBarMenu = () => {
+  const {isAdmin, clearUserData} = useContext(UserDataContext)
   const navigate = useNavigate()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const token = getToken();
   const isLoggedIn = !!token;
   const onLogOut = async () => {
     try{
+    clearUserData()
     await logout();
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')
@@ -76,7 +79,7 @@ const NavBarMenu = () => {
         </DrawerHeader>
         <Divider />
           <List className='menu'>
-            <ListItem button className='listItem' onClick={() => navigate('/')}>
+            <ListItem button className='listItem' onClick={() => isAdmin ? navigate('/admin/home') : navigate('/')}>
             <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -117,7 +120,7 @@ const NavBarMenu = () => {
         </Drawer>
 
         {isLoggedIn ?
-          <Button color="inherit" onClick={async () => {await onLogOut()}}>Login Out</Button> :
+          <Button color="inherit" onClick={async () => {await onLogOut()}}>Logout</Button> :
           <Button color="inherit" onClick={()=> navigate('/login')}>Login</Button> }
 
       </Toolbar>

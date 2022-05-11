@@ -5,10 +5,14 @@ const takeMeHomeScheme = new mongoose.Schema({
         type: String,
         required: true
     },
-    email:{
+    userId:{
         type: String,
         required: true
     },
+    associationId: {
+        type: String,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('TakeMeHome',takeMeHomeScheme)

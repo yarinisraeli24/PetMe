@@ -35,7 +35,7 @@ const Item = styled(Paper)(({ theme }) => ({
       <div>
       <Grid container spacing={2}>
         <Grid item xs={8}>
-          <h1 class="headline">MY PROFILE</h1>
+          <h1 className="headline">MY PROFILE</h1>
         </Grid>
         <Grid item xs={4}>
           <Item>
@@ -51,7 +51,7 @@ const Item = styled(Paper)(({ theme }) => ({
       </div>
       <div>
       <Box sx={{ width: '100%' }}>
-      <Stack class="profileText" spacing={3}>
+      <Stack className="profileText" spacing={3}>
         <Item><h4>First Name : {userDetails.firstName} </h4></Item>
         <Item><h4>Last Name : {userDetails.lastName}</h4> </Item>
         <Item><h4>Email : {userDetails.email}</h4> </Item>

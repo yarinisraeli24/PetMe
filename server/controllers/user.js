@@ -4,16 +4,6 @@ const Pet = require('../models/pets')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const { mongo } = require('mongoose')
-function getCookie(cookie, name) {
-    const q = {}
-    cookie?.replace(/\s/g, '')
-      .split(';')
-      .map(i=>i.split('='))
-      .forEach(([key, value]) => {
-        q[key] = value
-      })
-    return q[name]??null;
-  }
 
 const login = async (req, res, next) => {
     const {body: { 
@@ -66,29 +56,31 @@ const logout = async (req, res, next) => {
 
 const register = async (req, res, next) => {
     const {body: { 
+        isAdmin,
+        association,
         username,
         firstName,
         lastName,
         password
     }} = req;
-
-    if(!username || !password || !firstName || !lastName){
+    if(!username || !password){
         return res.status(400).send("All the inputs are required")
     }
-
+    if(isAdmin && !association)
+        return res.status(400).send("All the inputs are required")
+    if(!isAdmin && (!firstName || !lastName))
+        return res.status(400).send("All the inputs are required")
     const isUserExists = await User.findOne({username})
     if(isUserExists){
         return res.status(409).send("Username Already Exist.")
     }
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const data = {
+    let data = {
         createdData: new Date(),
-        firstName,
-        lastName,
-        permissions: "user",
         email: username,
     }
 
+    data = isAdmin? {...data, association, permissions: 'admin'} : {...data, firstName,lastName , permissions: 'user'}
     const user = User({
         username,
         password: encryptedPassword,
@@ -158,8 +150,10 @@ const getUserDetails = async (req, res, next) => {
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (error, user) => {
         if(error) res.status(401).send('Invalid token')
-        
-        res.send(user)
+        const userId = user.id;
+        const userInfo = await User.findById(userId)
+        const userData = userInfo.data;
+        res.send({...userData, id: userId})
         
     })
 }
@@ -183,6 +177,19 @@ const setUserDetails = async (req, res, next) => {
     res.status(200).send('Success')
     })
 }
+const userUpdate = async (req, res, next) => {
+    const { body } = req;
+    if(!body.userId || !body.payload){
+        res.status(400).send('No such user or pet')
+    }
+    const filter = {_id: mongo.ObjectId(body.userId)}
+    const user = await User.findOneAndUpdate(filter, {$set: {'data.preferences': body.payload}})
+    if(!user){
+        res.status(400).send('Failed to update user')
+    }
+    res.status(200).send('Success')
+}
+
 
 module.exports = {
     login,
@@ -192,5 +199,6 @@ module.exports = {
     addPet,
     getUserDetails,
     getFavoritePets,
-    setUserDetails
+    setUserDetails,
+    userUpdate,
 }
