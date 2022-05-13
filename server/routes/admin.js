@@ -10,5 +10,6 @@ router.post('/createPet', Admin.createPet)
 router.get('/getAllPets', Admin.getAllPets)
 router.get('/getAllTakeMeHome', Admin.getAllTakeMeHome) 
 router.get('/removeTakeMeHome', Admin.removeTakeMeHome)
+router.get('/getBiEvents', Admin.getBiEvents)
 
 module.exports = router;

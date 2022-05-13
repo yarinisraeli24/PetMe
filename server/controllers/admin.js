@@ -1,5 +1,6 @@
 const User = require('../models/users')
 const Pet = require('../models/pets')
+const BI = require('../models/bi')
 const TakeMeHome = require('../models/takeMeHome')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
@@ -60,9 +61,17 @@ const removeTakeMeHome = async (req, res, next ) => {
         res.status(200);
     });
 }
-module.exports = {
+
+const getBiEvents = async  (req, res, next ) => {
+    const {associationId, eventType, withUsersData, withPetsData} = req.query;
+    const bis = await BI.find({type: eventType, associationId: associationId})
+    if(!bis) res.status(501).send('There is no event for this user');
+    res.send(bis);
+}
+    module.exports = {
     removeTakeMeHome,
     getAllTakeMeHome,
     createPet,
     getAllPets,
+    getBiEvents,
 }

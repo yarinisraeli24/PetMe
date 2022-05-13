@@ -132,7 +132,7 @@ const addPet = async (req, res, next) => {
         res.status(400).send('Failed on add pet')
     }
     const likedPet = await Pet.findById(body.petId);
-    const Bi = BI({type: 'Like', userId: body.userId, petId: body.petId, associationId: likedPet.associationId})
+    const Bi = BI({type: 'Likes', userId: body.userId, petId: body.petId, associationId: likedPet.associationId})
     Bi.save();
     res.status(200).send('Success')
 }

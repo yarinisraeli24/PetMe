@@ -1,6 +1,18 @@
+import { useEffect, useState, useContext } from "react";
+import { getBiEvents } from "../../../common/serverApi";
+import {UserDataContext} from '../../../contexts/UserDataContext'
 import DashboardCard from "./DashboardCard";
-const DashboardPage = () => {
 
+const DashboardPage = () => {
+    const [biData, setBiData] = useState();
+    const {userData} = useContext(UserDataContext)
+    useEffect(()=>{
+        const getBiData = async () => {
+            const bis = await getBiEvents('Likes', userData.id)
+            setBiData(bis);
+        }
+        getBiData()
+    },[userData])
     return (
         <div style={{display: 'flex'}}>
             <div style={{display: 'flex', flexWrap: 'wrap'}}>

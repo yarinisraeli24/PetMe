@@ -78,6 +78,11 @@ export const removeTakeMeHome = async (requestId) => {
     await axios.get(`/admin/removeTakeMeHome?requestId=${requestId}`)
 }
 
+export const getBiEvents = async(eventType, associationId, withUsersData, withPetsData ) => {
+    const {data} = await axios.get(`/admin/getBiEvents?eventType=${eventType}&associationId=${associationId}&withUsersData=${withUsersData}&withPetsData=${withPetsData}`)
+    return data; 
+}
+
 //Users Endpoints
 
 export const userUpdate = async (payload) => {
