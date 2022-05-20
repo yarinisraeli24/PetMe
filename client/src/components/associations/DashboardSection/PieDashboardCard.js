@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Typography} from '@mui/material'
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
 let graphData = [
@@ -23,14 +24,14 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 
 const PieDashboardCard = ({title, data}) =>  {
     if(data) {
-        graphData[0] = data.male;
-        graphData[1] = data.female;
+        graphData[0].value = data.male;
+        graphData[1].value = data.female;
     }
 
     return (
         <div>
-      {/* <ResponsiveContainer width="100%" height="100%"> */}
-        <PieChart width={650} height={600}>
+        <Typography variant="h6" sx={{mb: 1}}>{title}</Typography>
+        <PieChart width={650} height={375}>
           <Pie
             data={graphData}
             cx="50%"

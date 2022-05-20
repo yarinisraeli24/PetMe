@@ -39,7 +39,7 @@ const DashboardPage = () => {
             <div style={{display: 'flex', flexWrap: 'wrap'}}>
             <LinearDashboardCard title={'Likes'} data={likesBi}/>
             <LinearDashboardCard title={'Take Me Home Requests'} data={takeMeBi}/>
-            <PieDashboardCard title={'Dashboard'} data={likesRatioBi}/>
+            <PieDashboardCard title={'Female Male Ratio (Likes)'} data={likesRatioBi}/>
             <LinearDashboardCard title={'Dashboard'}/>
             </div>
             <div style={{width: '20%', margin: 20}}>

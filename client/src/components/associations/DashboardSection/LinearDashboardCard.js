@@ -18,7 +18,6 @@ const LinearDashboardCard = ({title, data}) => {
     data && graphData.forEach((element, index) => {
         element.uv = data[index];
     });
-    data && console.log(graphData)
     return (
         <div style={{margin: 25}}>
         <Typography variant="h6" sx={{mb: 1}}>{title}</Typography>
