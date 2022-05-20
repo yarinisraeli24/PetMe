@@ -1,8 +1,9 @@
 const User = require('../models/users')
 const Pet = require('../models/pets')
+const BI = require('../models/bi')
 const TakeMeHome = require('../models/takeMeHome')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
+const {getNumberOfLikes, getMaleFemaleRatio} = require('../common/utils');
 const { mongo } = require('mongoose')
 
 const createPet = async (req, res, next) => {
@@ -60,9 +61,34 @@ const removeTakeMeHome = async (req, res, next ) => {
         res.status(200);
     });
 }
-module.exports = {
+
+const getBiEvents = async  (req, res, next ) => {
+    const day = 24*60*60*1000;
+    const {associationId, eventType, withUsersData, withPetsData} = req.query;
+    const bis = await BI.find({type: eventType, associationId: associationId})
+    if(!bis.length) res.status(501).send('There is no event for this user');
+    let returnedData = {}
+    let typeData = [];
+    const now = Date.now();
+    for(let i = 0; i < 7; i++){
+        typeData[i] = getNumberOfLikes(bis, now - (i+2)*day, now - (i+1)*day)
+    }
+    typeData.reverse();
+    returnedData = {typeData};
+    console.log(withUsersData)
+    if(!!withUsersData){
+        let usersIds;
+        bis.forEach(bi => usersIds = {...usersIds, _id: bi.userId});
+        const usersData = await User.find(usersIds);
+        const ratio = getMaleFemaleRatio(usersData)
+        returnedData = {...returnedData, ratio};
+    }
+    res.send(returnedData);
+}
+    module.exports = {
     removeTakeMeHome,
     getAllTakeMeHome,
     createPet,
     getAllPets,
+    getBiEvents,
 }

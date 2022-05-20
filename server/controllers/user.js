@@ -1,6 +1,7 @@
 
 const User = require('../models/users')
 const Pet = require('../models/pets')
+const BI = require('../models/bi')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const { mongo } = require('mongoose')
@@ -130,6 +131,9 @@ const addPet = async (req, res, next) => {
     if(!user){
         res.status(400).send('Failed on add pet')
     }
+    const likedPet = await Pet.findById(body.petId);
+    const Bi = BI({type: 'Likes', userId: body.userId, petId: body.petId, associationId: likedPet.associationId})
+    Bi.save();
     res.status(200).send('Success')
 }
 const getFavoritePets = async (req, res, next) => {

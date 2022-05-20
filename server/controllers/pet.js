@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 const bcrypt = require('bcryptjs')
 const Pet = require('../models/pets')
+const BI = require('../models/bi')
 const pets = require('../models/pets')
 const TakeMeHome = require('../models/takeMeHome')
 const Image = require('../models/image')
@@ -37,6 +38,8 @@ const takeMeHome = (req, res, next) => {
     const {petId, associationId, userId} = req.query;
     const takeMeHome = TakeMeHome({petId, associationId, userId})
     if(!takeMeHome) res.status(403)
+    const takeMeBi = BI({type: 'takeMeHome', petId, associationId, userId})
+    takeMeBi.save();
     takeMeHome.save();
     res.status(200).send('ok');
 }
