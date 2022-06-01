@@ -12,7 +12,7 @@ router.post('/getFavoritePets', User.getFavoritePets);
 router.get('/getUserDetails', User.getUserDetails);
 router.put('/setUserDetails', User.setUserDetails)
 router.post('/userUpdate', User.userUpdate);
-
+router.post('/getSimilarPets',User.getSimilarPets);
 
 
 

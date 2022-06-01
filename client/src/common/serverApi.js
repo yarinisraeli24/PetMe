@@ -106,3 +106,8 @@ export const setUserDetails = async (paylod) => {
     await axios.put('/users/setUserDetails',paylod)
 }
 
+export const getSimilarPets = async (userId) => {
+    const { data } = await axios.post('/users/getSimilarPets', {userId})
+    return data
+}
+

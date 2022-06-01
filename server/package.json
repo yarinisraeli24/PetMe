@@ -14,6 +14,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
     "concurrently": "^7.0.0",
+    "content-based-recommender": "^1.5.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto-browserify": "^3.12.0",
