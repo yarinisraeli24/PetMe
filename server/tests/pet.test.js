@@ -14,6 +14,15 @@ const lastName = 'test'
 let accessToken;
 let data = {};
 
+/*
+########################################################################
+############ the "User.remove" delete all users from DB. ###############
+########################################################################
+
+
+
+
+
 beforeAll(done=>{
     User.remove({'email' : email}, (err)=>{
         done()
@@ -81,4 +90,6 @@ describe('Authentication check ',()=>{
         const response = await request(app).post('/users/getFavoritePets').send({userId: data.id}).set('Authorization', `Bearer ${accessToken}`)
         expect(response._body[0]).toEqual(petDataMock)
     })
-})
+}) 
+
+*/
