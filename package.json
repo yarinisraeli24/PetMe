@@ -14,7 +14,7 @@
     "supertest": "^6.2.2"
   },
   "scripts": {
-    "start": "concurrently \"cd server && npm run server\" \"cd client && npm start\"",
+    "start": "npm i concurrently && concurrently \"cd server && npm run server\" \"cd client && npm start\"",
     "test": "jest --detectOpenHandles --forceExit"
   }
 }
