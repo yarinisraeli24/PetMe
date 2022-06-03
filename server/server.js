@@ -20,7 +20,7 @@ const algo = require('./algorithm')
 
 
 app.use(cors({
-    origin: 'http://localhost:3000/'
+    origin: 'http://pet-me-120.herokuapp.com/' 
 }));
 
 // app.use(bodyParser.urlencoded({extended:true, limit: '1mb'}));
