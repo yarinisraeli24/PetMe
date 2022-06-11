@@ -11,14 +11,15 @@ const pets = require('./routes/pet')
 const admin = require('./routes/admin')
 const config = require('./config');
 const cors = require('cors');
-const authorization = require('./middlewares/authorization');
+const authorization = require('./middlewares/authorization');s
 const init = require('./common/init')
 const Pet = require('./models/pets')
 const port = process.env.PORT || 5000;
-const User = require('./controllers/user');
+const User = require('./controllers/user');s
 const algo = require('./algorithm')
+const path = require('path');
 
-
+app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(cors({
     origin: 'http://localhost:3000/'
 }));

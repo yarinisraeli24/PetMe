@@ -12,6 +12,9 @@
     "supertest": "^6.2.2"
   },
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit"
+    "start": "cd server && npm run server",
+    "test": "jest --detectOpenHandles --forceExit",
+    "heroku-postbuild": "cd client && npm i && npm run build",
+    "install": "concurrently \" cd server && npm i\" \" cd client && npm i\""
   }
 }
