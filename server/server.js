@@ -21,7 +21,7 @@ const path = require('path');
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(cors({
-    origin: 'http://localhost:3000/'
+    origin: 'https://petme1200.herokuapp.com/'
 }));
 
 // app.use(bodyParser.urlencoded({extended:true, limit: '1mb'}));
