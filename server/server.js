@@ -39,7 +39,9 @@ app.post('/login', User.login);
 app.get('/logout', User.logout);
 app.get('/refreshToken', User.refreshToken);
 
-app.use(path.join(__dirname + '../client/public/index.html'))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '../client/public/index.html'))
+})
 //mongo connection:
 mongoose.connect('mongodb+srv://petme120:PetMe120!@cluster0.l1qui.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{ useNewUrlParser: true }, () => {console.log('mongo connected')})
 const db = mongoose.connection
