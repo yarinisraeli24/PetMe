@@ -15,7 +15,7 @@ const authorization = require('./middlewares/authorization');
 const init = require('./common/init')
 const Pet = require('./models/pets')
 const port = process.env.PORT || 5000;
-const User = require('./controllers/user');s
+const User = require('./controllers/user');
 const algo = require('./algorithm')
 const path = require('path');
 
