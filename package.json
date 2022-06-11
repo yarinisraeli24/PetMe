@@ -16,6 +16,6 @@
   "scripts": {
     "start": "npm i concurrently && concurrently \"cd server && npm run server\" \"cd client && npm start\"",
     "test": "jest --detectOpenHandles --forceExit",
-    "install": "\"cd server && npm i\" \"cd client && npm i\""
+    "install": "concurrently \" cd server && npm i\" \"cd client && npm i\""
   }
 }
