@@ -24,6 +24,25 @@ app.use(cors({
     origin: 'https://petme1200.herokuapp.com/'
 }));
 
+if (process.env.NODE_ENV == "development") {
+    const swaggerUI = require("swagger-ui-express")
+    const swaggerJsDoc = require("swagger-jsdoc")
+    const options = {
+    definition: {
+    openapi: "3.0.0",
+    info: {
+    title: "Library API",
+    version: "1.0.0",
+    description: "A simple Express Library API",
+    },
+    servers: [{url: "http://localhost:3000",},],
+    },
+    apis: ["./routes/*.js"],
+    };
+    const specs = swaggerJsDoc(options);
+    app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+}
+
 // app.use(bodyParser.urlencoded({extended:true, limit: '1mb'}));
 // app.use(bodyParser.json());
 app.use(express.json({limit: "30mb",extended:true}));
