@@ -17,11 +17,31 @@ const Pet = require('./models/pets')
 const port = process.env.PORT || 5000;
 const User = require('./controllers/user');
 const algo = require('./algorithm')
+const path = require('path');
 
-
+app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(cors({
-    origin: 'http://localhost:3000/'
+    origin: 'https://petme1200.herokuapp.com/'
 }));
+
+if (process.env.NODE_ENV == "development") {
+    const swaggerUI = require("swagger-ui-express")
+    const swaggerJsDoc = require("swagger-jsdoc")
+    const options = {
+    definition: {
+    openapi: "3.0.0",
+    info: {
+    title: "Library API",
+    version: "1.0.0",
+    description: "A simple Express Library API",
+    },
+    servers: [{url: "http://localhost:3000",},],
+    },
+    apis: ["./routes/*.js"],
+    };
+    const specs = swaggerJsDoc(options);
+    app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+}
 
 // app.use(bodyParser.urlencoded({extended:true, limit: '1mb'}));
 // app.use(bodyParser.json());
@@ -37,6 +57,10 @@ app.post('/register' , User.register)
 app.post('/login', User.login);
 app.get('/logout', User.logout);
 app.get('/refreshToken', User.refreshToken);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '../client/public/index.html'))
+})
 //mongo connection:
 mongoose.connect('mongodb+srv://petme120:PetMe120!@cluster0.l1qui.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{ useNewUrlParser: true }, () => {console.log('mongo connected')})
 const db = mongoose.connection

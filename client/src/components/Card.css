@@ -7,6 +7,7 @@
 }
 .content {
     height: 750px;
+    width: 800px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -16,4 +17,5 @@
 
 .content-fade{
     background: linear-gradient(transparent 0%, white 100%);
+    width: 100%;
 }

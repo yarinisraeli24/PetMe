@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.992a4cd6.css",
+    "main.js": "/static/js/main.e6a9bfec.js",
+    "static/js/787.1784966e.chunk.js": "/static/js/787.1784966e.chunk.js",
+    "static/media/wade-austin-ellis-FtuJIuBbUhI-unsplash.jpg": "/static/media/wade-austin-ellis-FtuJIuBbUhI-unsplash.f4646f23e81f4ab13ffe.jpg",
+    "index.html": "/index.html",
+    "main.992a4cd6.css.map": "/static/css/main.992a4cd6.css.map",
+    "main.e6a9bfec.js.map": "/static/js/main.e6a9bfec.js.map",
+    "787.1784966e.chunk.js.map": "/static/js/787.1784966e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.992a4cd6.css",
+    "static/js/main.e6a9bfec.js"
+  ]
+}
