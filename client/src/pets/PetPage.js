@@ -44,6 +44,8 @@ export default function PetPage(props) {
       setOpen2(false);
     };
 
+    const [open, setOpen] = React.useState(false);
+
     return (
         <div className='cardContainer' sx={{ display: 'inline-block'}}>
       <Card sx={{ maxWidth: 1000, margin: 'auto'}}>
@@ -67,9 +69,25 @@ export default function PetPage(props) {
         </Typography>
         </CardContent>
         <CardActions>
-        <Button onClick={async () => await takeMeHome(petData._id, petData.associationId, userData.id)}>
+        <Button onClick={() => setOpen(true)}>
         Take Me Home ! 
       </Button>
+      <Dialog open={open} onClose={()=> setOpen(false)}>
+        <DialogTitle>Add me to your family!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To take me home with you,
+            Please leave here your contact information and someone from the assosiation will contact you soon!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={async () => {
+            await takeMeHome(petData._id, petData.associationId, userData.id)
+            setOpen(false);
+          }}>Submit</Button>
+        </DialogActions>
+      </Dialog>
       <Dialog open={open1} onClose={handleClose1}>
         <DialogTitle>Add me to your family!</DialogTitle>
         <DialogContent>
