@@ -8,6 +8,7 @@ const User = require('../controllers/user');
 // router.use(authorization)
 
 router.post('/addPet', User.addPet);
+router.post('/addPetToViewed',User.addPetToViewed)
 router.post('/getFavoritePets', User.getFavoritePets);
 router.get('/getUserDetails', User.getUserDetails);
 router.put('/setUserDetails', User.setUserDetails)

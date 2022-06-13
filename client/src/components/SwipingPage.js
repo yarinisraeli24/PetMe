@@ -21,11 +21,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { getAllPets, getSimilarPets, addPetToFavorites, takeMeHome } from '../common/serverApi'
+import { getAllPets, getSimilarPets, addPetToFavorites, addPetToViewed, takeMeHome } from '../common/serverApi'
 
 
 import './Card.css'
-
+let numOfPets = 0;
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -38,8 +38,6 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function SwipesPage(props) {
-
-
   const { userData } = useContext(UserDataContext);
   const [open, setOpen] = React.useState(false);
 
@@ -52,26 +50,39 @@ export default function SwipesPage(props) {
   };
   const [expanded, setExpanded] = useState(false);
   const [pets, setPets] = useState([]);
+  const [flag, setFlag] = useState(0);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   useEffect(() => {
     const getPetsData = async () => {
-      if(userData.id){
-      const data = await getSimilarPets(userData.id);
-      setPets(data)
+      if (userData.id) {
+        const data = await getSimilarPets(userData.id);
+        setPets(pets.concat(data));
       }
     }
     getPetsData();
-  }, [userData.id]);
+  }, [userData.id, flag]);
 
   const handleSwipe = (direction, pet) => {
+    numOfPets++;
+    if (numOfPets % 4 === 0) {
+      setFlag(numOfPets);
+    }
     switch (direction) {
-      case 'right': return addPetToFavorites(userData.id, pet._id);
-      case 'left': break;
-      case 'up': return addPetToFavorites(userData.id, pet._id);
-      case 'down': break;
+      case 'right': {
+        addPetToFavorites(userData.id, pet._id);
+        addPetToViewed(userData.id, pet._id);
+        break;
+      }
+      case 'left': return addPetToViewed(userData.id, pet._id);
+      case 'up': {
+        addPetToFavorites(userData.id, pet._id);
+        addPetToViewed(userData.id, pet._id);
+        break;
+      }
+      case 'down': return addPetToViewed(userData.id, pet._id);;
       default: break;
     }
   }
@@ -136,6 +147,7 @@ export default function SwipesPage(props) {
             </div>
           </Card>
         } />
+
       ) : <div></div>}
     </>
   )

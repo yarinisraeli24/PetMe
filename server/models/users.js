@@ -21,6 +21,11 @@ const usersScheme = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pet',
 
+    }],
+    viewedPets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pet',
+
     }]
 
 })

@@ -93,7 +93,9 @@ export const userUpdate = async (payload) => {
 export const addPetToFavorites = async (userId, petId) => {
     await axios.post('/users/addPet', {userId, petId})
 }
-
+export const addPetToViewed= async (userId, petId) => {
+    await axios.post('/users/addPetToViewed', {userId, petId})
+}
 export const getUserFavoritePets = async (userId) => {
     const { data } = await axios.post('/users/getFavoritePets', {userId})
     return data

@@ -138,6 +138,19 @@ const addPet = async (req, res, next) => {
     Bi.save();
     res.status(200).send('Success')
 }
+const addPetToViewed = async (req, res, next) => {
+    const { body } = req;
+    if (!body.userId || !body.petId) {
+        res.status(400).send('No such user or pet')
+    }
+    const filter = { _id: mongo.ObjectId(body.userId) }
+    const update = { viewedPets: body.petId }
+    const user = await User.findOneAndUpdate(filter, { $push: update })
+    if (!user) {
+        res.status(400).send('Failed on add pet')
+    }
+    res.status(200).send('Success')
+}
 const getFavoritePets = async (req, res, next) => {
     const { body } = req;
     if (!body.userId) {
@@ -215,29 +228,35 @@ const getSimilarPets = async (req, res, next) => {
     if (!user) {
         // res.status(400).send('Cant find userId')
     }
-    var userFavoritePets;
+    var userFavoritePets, petsFavorites;
+    var pets;
     if (!user.pets.length) {
-        userFavoritePets  = await Pet.find({});
+        userFavoritePets = await Pet.find({});
+        petsFavorites = await createPetsObject(userFavoritePets);
+        pets = await Pet.find({});
     }
     else {
-        userFavoritePets = await Pet.find({ _id: user.pets })
+        userFavoritePets = await Pet.find({ _id: user.pets });
+        petsFavorites = await createPetsObject(userFavoritePets);
+        const petsId = (await Pet.find({ _id: user.viewedPets })).map(pet => pet._id);
+        pets = await Pet.find({ _id: { $nin: petsId } });
     }
-    const pets=userFavoritePets;
-    const petsToDisplay =await createPetsObject(userFavoritePets);
-    recommender.train(petsToDisplay);
-    const similarDocuments = recommender.getSimilarDocuments(petsToDisplay[0].id, 0, 3);
-    res.send(await findMatchingPets(similarDocuments));
+    const petsTrain=await createPetsObject(pets);
+    recommender.train(petsTrain);
+    const similarDocuments = recommender.getSimilarDocuments(petsTrain[0].id, 0, 8);
+    const response=await findMatchingPets(similarDocuments);
+    res.send(response);
 }
-const findMatchingPets = async(similarDocuments)=>{
-    const idList = similarDocuments.map(e=>e.id);
-    const pets= await Pet.find({_id:{$in:idList}});
+const findMatchingPets = async (similarDocuments) => {
+    const idList = similarDocuments.map(e => e.id);
+    const pets = await Pet.find({ _id: { $in: idList } });
     return pets;
 }
-const createPetsObject = async(pets)=>{
-    let petObject=[];
+const createPetsObject = async (pets) => {
+    let petObject = [];
     pets.forEach(pet => {
-        const petJson=pet.age+" "+pet.petKind+" "+pet.color+" "+pet.breed+" "+pet.gender+" "+pet.size;
-        petObject.push({id:(pet._id).toString(),content:petJson});
+        const petJson = pet.age + " " + pet.petKind + " " + pet.color + " " + pet.breed + " " + pet.gender + " " + pet.size;
+        petObject.push({ id: (pet._id).toString(), content: petJson });
     });
     return petObject;
 }
@@ -247,6 +266,7 @@ module.exports = {
     refreshToken,
     register,
     addPet,
+    addPetToViewed,
     getUserDetails,
     getFavoritePets,
     setUserDetails,
